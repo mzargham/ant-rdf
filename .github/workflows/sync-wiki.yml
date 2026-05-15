@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Push the in-repo wiki/ directory to the GitHub Wiki repo
+# (<repo>.wiki.git) on every change to main. The Wiki repo uses Gollum,
+# which renders Markdown pages and supports subdirectories — our existing
+# wiki/Cases/, wiki/Actants/, etc. structure works as-is.
+#
+# Internal Markdown links of the form [label](Cases/foo.md) resolve in
+# Gollum by filesystem path; we keep them as authored by wiki.py.
+
+name: sync-wiki
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'wiki/**'
+      - '.github/workflows/sync-wiki.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          path: source
+
+      - name: Clone wiki repo
+        run: |
+          git clone "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git" wiki-repo
+
+      - name: Mirror wiki/ into the wiki repo
+        run: |
+          # Remove everything in wiki-repo except .git, then copy source/wiki/ in.
+          find wiki-repo -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          cp -a source/wiki/. wiki-repo/
+
+      - name: Commit + push if changed
+        working-directory: wiki-repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "Wiki up-to-date; nothing to push."
+            exit 0
+          fi
+          git commit -m "Sync from main @ ${GITHUB_SHA:0:7}"
+          git push
