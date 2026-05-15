@@ -1,0 +1,12 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/hotel-keys/translation/main> a ant:Translation ;
+    rdfs:label "The hotel-keys translation chain" ;
+    dcterms:description "Latour's classical demonstration that technologies act — the heavy fob enrols the guest's body where the polite sign could not. Reads through all four Callon moments." ;
+    ant:hasMoment <https://w3id.org/ant/cases/hotel-keys/moment/enrolment>,
+        <https://w3id.org/ant/cases/hotel-keys/moment/interessement>,
+        <https://w3id.org/ant/cases/hotel-keys/moment/mobilization>,
+        <https://w3id.org/ant/cases/hotel-keys/moment/problematization> .
+

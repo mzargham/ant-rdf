@@ -1,0 +1,20 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/hotel-keys/moment/enrolment> a ant:Enrolment ;
+    rdfs:label "Enrolment: guests start returning keys" ;
+    dcterms:description "Guests, finding the weighted key uncomfortable in pocket or bag, increasingly return it to the desk on the way out. The fob has enrolled the guest's body into the manager's program." .
+
+<https://w3id.org/ant/cases/hotel-keys/moment/interessement> a ant:Interessement ;
+    rdfs:label "Interessement: try a sign, then try a fob" ;
+    dcterms:description "The manager tries to interest guests with a polite sign. Sign fails (Latour 1991's key empirical finding). Manager swaps in a heavy fob, cutting off the alternative of pocketing the key comfortably." .
+
+<https://w3id.org/ant/cases/hotel-keys/moment/mobilization> a ant:Mobilization ;
+    rdfs:label "Mobilization: the fob speaks for the manager" ;
+    dcterms:description "Even when the manager is asleep, the fob continues to enforce the program. Latour's point: the network's voice is delegated to a non-human spokesperson that never gets tired." .
+
+<https://w3id.org/ant/cases/hotel-keys/moment/problematization> a ant:Problematization ;
+    rdfs:label "Problematization: guests leave with keys" ;
+    dcterms:description "The manager problematizes: 'guests are leaving with the keys, and we need them back to turn over rooms'." .
+

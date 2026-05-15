@@ -1,0 +1,8 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/hotel-keys/network> a ant:Network ;
+    rdfs:label "The hotel-keys assemblage" ;
+    dcterms:description "The network of hotel manager, guests, front-desk staff, key, weighted fob, and request sign analyzed by Latour (1991) in 'Technology is society made durable'. The fob translates the moral injunction 'please return your key' into a physical inconvenience that achieves what the polite sign alone cannot. Reproduces Goodwin & Kuehn (2021) 'Latour's Hotel Keys: An Actor-Network Ontology' (NASKO 8) using the synthesized ant-rdf vocabulary." .
+

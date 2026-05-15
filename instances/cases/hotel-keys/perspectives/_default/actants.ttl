@@ -1,0 +1,39 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/hotel-keys/actant/fob> a ant:Actant ;
+    rdfs:label "Weighted brass fob" ;
+    dcterms:description "The heavy metal weight attached to the key. The material delegate that translates the manager's moral program into physical inconvenience. Latour's central exhibit: the missing mass that closes the circuit of the network." ;
+    ant:participatesIn <https://w3id.org/ant/cases/hotel-keys/network> .
+
+<https://w3id.org/ant/cases/hotel-keys/actant/front-desk> a ant:Actant ;
+    rdfs:label "Front-desk staff" ;
+    dcterms:description "The hotel staff who receive returned keys and notice missing ones." ;
+    ant:participatesIn <https://w3id.org/ant/cases/hotel-keys/network> .
+
+<https://w3id.org/ant/cases/hotel-keys/actant/guest> a ant:Actant ;
+    rdfs:label "Hotel guest" ;
+    dcterms:description "The guest occupying a room. Has an anti-program (taking the key with them, intentionally or by forgetting it)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/hotel-keys/network> .
+
+<https://w3id.org/ant/cases/hotel-keys/actant/hotel> a ant:Actant ;
+    rdfs:label "The hotel building" ;
+    dcterms:description "The infrastructural actant whose continued operation depends on keys being available for room turnover." ;
+    ant:participatesIn <https://w3id.org/ant/cases/hotel-keys/network> .
+
+<https://w3id.org/ant/cases/hotel-keys/actant/key> a ant:Actant ;
+    rdfs:label "Room key" ;
+    dcterms:description "The mechanical key itself that opens the door. Without delegation, has no agency over guest behaviour." ;
+    ant:participatesIn <https://w3id.org/ant/cases/hotel-keys/network> .
+
+<https://w3id.org/ant/cases/hotel-keys/actant/manager> a ant:Actant ;
+    rdfs:label "Hotel manager" ;
+    dcterms:description "The hotel's manager who originally posts the sign requesting key returns. Problematizer of the network: defines guests leaving with keys as the problem." ;
+    ant:participatesIn <https://w3id.org/ant/cases/hotel-keys/network> .
+
+<https://w3id.org/ant/cases/hotel-keys/actant/sign> a ant:Actant ;
+    rdfs:label "Polite request sign" ;
+    dcterms:description "A sign in the room asking guests to leave their key at the front desk. The pre-delegation inscription. Latour's foil — proof that words alone are insufficient." ;
+    ant:participatesIn <https://w3id.org/ant/cases/hotel-keys/network> .
+

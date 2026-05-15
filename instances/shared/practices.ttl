@@ -17,3 +17,11 @@
 <https://w3id.org/ant/practices/network-funding> a ant:Practice ;
     rdfs:label "Network funding" ;
     dcterms:description "The administrative practice of resource allocation across the experimental network; the frame in which OPPs emerge by virtue of who controls the pipeline." .
+
+<https://w3id.org/ant/practices/hotel-administration> a ant:Practice ;
+    rdfs:label "Hotel administration" ;
+    dcterms:description "The managerial practice of running a hotel — keeping rooms turning over, staff coordinated, and material flows (keys, linens, registers) reliable. The frame within which the fob is a productive delegate." .
+
+<https://w3id.org/ant/practices/room-occupancy> a ant:Practice ;
+    rdfs:label "Room occupancy" ;
+    dcterms:description "The guest's situated practice of using a hotel room — sleeping, working, going out. The frame within which the fob's weight registers as inconvenience, not as meaning." .

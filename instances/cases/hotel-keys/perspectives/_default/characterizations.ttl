@@ -1,0 +1,35 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://w3id.org/ant/cases/hotel-keys/char/fob-as-intermediary> a ant:Characterization ;
+    dcterms:description "From the guest's room-occupancy practice, the fob just transmits its physical mass without further transformation — uncomfortable, but not productive of meaning. Demonstrates §4.1.1 observer-relativity in the Latour 1991 case." ;
+    ant:assignsRole ant:Intermediary ;
+    ant:characterizes <https://w3id.org/ant/cases/hotel-keys/actant/fob> ;
+    ant:invarianceCriterion "weight-as-weight" ;
+    ant:perPractice <https://w3id.org/ant/practices/room-occupancy> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/hotel-keys/network> .
+
+<https://w3id.org/ant/cases/hotel-keys/char/fob-as-mediator> a ant:Characterization ;
+    dcterms:description "From the hotel-administration practice, the fob transforms what it transmits — the manager's polite request becomes physical compliance. Outputs (returned keys) cannot be predicted from inputs (a metal weight)." ;
+    ant:assignsRole ant:Mediator ;
+    ant:characterizes <https://w3id.org/ant/cases/hotel-keys/actant/fob> ;
+    ant:invarianceCriterion "behavioural-compliance-outcome" ;
+    ant:perPractice <https://w3id.org/ant/practices/hotel-administration> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/hotel-keys/network> .
+
+<https://w3id.org/ant/cases/hotel-keys/char/fob-as-opp> a ant:Characterization ;
+    dcterms:description "Within the hotel-administration practice, every guest's key-disposition decision now passes through the fob — they cannot ignore the weight. Manual OPP assignment per §4.1.2; v2 rule-based tagging could derive this from network topology." ;
+    ant:assignsRole ant:ObligatoryPassagePoint ;
+    ant:characterizes <https://w3id.org/ant/cases/hotel-keys/actant/fob> ;
+    ant:invarianceCriterion "key-circulation" ;
+    ant:perPractice <https://w3id.org/ant/practices/hotel-administration> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/hotel-keys/network> .
+
+<https://w3id.org/ant/cases/hotel-keys/char/manager-as-spokesperson> a ant:Characterization ;
+    dcterms:description "The manager speaks for the hotel's interest in key returns, originally via the sign and later via the delegate that is the fob." ;
+    ant:assignsRole ant:Spokesperson ;
+    ant:characterizes <https://w3id.org/ant/cases/hotel-keys/actant/manager> ;
+    ant:invarianceCriterion "key-return-policy" ;
+    ant:perPractice <https://w3id.org/ant/practices/hotel-administration> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/hotel-keys/network> .
+

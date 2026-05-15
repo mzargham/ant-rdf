@@ -1,0 +1,14 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/hotel-keys/program/return-keys> a ant:ProgramOfAction ;
+    rdfs:label "Return keys to front desk before leaving" ;
+    dcterms:description "The manager's program of action: guests must hand their key to the front desk when they leave the building. Originally inscribed only in the polite sign." ;
+    ant:opposes <https://w3id.org/ant/cases/hotel-keys/program/take-key> .
+
+<https://w3id.org/ant/cases/hotel-keys/program/take-key> a ant:ProgramOfAction ;
+    rdfs:label "Take key with you (or forget at home)" ;
+    dcterms:description "The guest's anti-program: take the key wherever you're going, in pocket or bag, intentionally or by forgetting it on the night table. The empirically dominant program before the fob's introduction." ;
+    ant:opposes <https://w3id.org/ant/cases/hotel-keys/program/return-keys> .
+
