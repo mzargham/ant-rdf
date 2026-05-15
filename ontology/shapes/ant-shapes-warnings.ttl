@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: CC0-1.0
 #
 # ant-rdf — SHACL shapes (Tier 2: should-conform, waivable)
-# Severity: sh:Warning
+# Severity: sh:Warning  (per plan §4.6)
 #
 # These shapes encode ANALYTICAL HYGIENE — constraints that should not be
 # violated silently but may be overridden via ant:ConstraintWaiver with a
@@ -9,6 +9,11 @@
 #
 # Per plan §4.6 / R9b: CI default is non-strict — warnings surface in the log
 # but do not break builds. Teams that want stricter gating run `ant verify --strict`.
+#
+# IMPLEMENTATION NOTE: sh:severity must be placed on the *property shape*
+# (the blank node), not only on the NodeShape, because pyshacl emits the
+# constraint's own severity in validation results. The NodeShape-level
+# sh:severity is kept for documentation but is not what pyshacl reads.
 
 @prefix ant:     <https://w3id.org/ant#> .
 @prefix sh:      <http://www.w3.org/ns/shacl#> .
@@ -28,6 +33,7 @@ ant:CharacterizationPracticeShape
     sh:property [
         sh:path ant:perPractice ;
         sh:minCount 1 ;
+        sh:severity sh:Warning ;
         sh:message "Characterization without an explicit practice/observer obscures the observer-frame (§4.1.1). Waive with justification if intentional (e.g., 'Provisional characterization pending practice identification')." ;
     ] .
 
@@ -38,6 +44,7 @@ ant:CharacterizationInvarianceShape
     sh:property [
         sh:path ant:invarianceCriterion ;
         sh:minCount 1 ;
+        sh:severity sh:Warning ;
         sh:message "Characterization without a stated invariance hides the analytical move (transformation-vs-preservation under what). Waive with justification if invariance is not yet separable from practice." ;
     ] .
 
@@ -53,11 +60,13 @@ ant:ActantLabelShape
         sh:path rdfs:label ;
         sh:minCount 1 ;
         sh:datatype xsd:string ;
+        sh:severity sh:Warning ;
         sh:message "ant:Actant should have rdfs:label. Waive (e.g., 'Anonymized informant; description recorded in offline notes')." ;
     ] ;
     sh:property [
         sh:path dcterms:description ;
         sh:minCount 1 ;
+        sh:severity sh:Warning ;
         sh:message "ant:Actant should have dcterms:description for downstream readability." ;
     ] .
 
@@ -72,6 +81,7 @@ ant:TranslationCompletenessShape
     sh:property [
         sh:path ant:hasMoment ;
         sh:minCount 4 ;
+        sh:severity sh:Warning ;
         sh:message "Translation has fewer than 4 Callon moments. If the translation failed at some point or is still in progress, record a waiver naming the moment-of-failure (e.g., 'Translation failed at interessement; no enrolment or mobilization observed')." ;
     ] .
 
@@ -86,6 +96,7 @@ ant:InscriptionSourceShape
     sh:property [
         sh:path dcterms:source ;
         sh:minCount 1 ;
+        sh:severity sh:Warning ;
         sh:message "ant:Inscription should have dcterms:source (URL, file hash, or citation). Waive if withheld for confidentiality (e.g., 'Source URL withheld for participant confidentiality')." ;
     ] .
 
