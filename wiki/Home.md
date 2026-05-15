@@ -23,40 +23,40 @@ Hyperlinked traversal of the canonical RDF in `instances/`. Every actant, transl
 
 ## Cases
 
-- **[hotel-keys](Cases/hotel-keys)** — The hotel-keys assemblage
+- **[hotel-keys](Case-hotel-keys)** — The hotel-keys assemblage
   > The network of hotel manager, guests, front-desk staff, key, weighted fob, and request sign analyzed by Latour (1991) in 'Technology is society made durable'. The fob translates the moral injunction 'please return your key' into a physical …
-- **[scallops](Cases/scallops)** — St Brieuc Bay scallop-farming network
+- **[scallops](Case-scallops)** — St Brieuc Bay scallop-farming network
   > The heterogeneous network Michel Callon analyzed in 'Some Elements of a Sociology of Translation' (1986). Three researchers from the Brest Oceanographic Centre attempt to enrol scallops, fishermen of St Brieuc Bay, and scientific colleagues…
 
 ## Actants by case
 
 ### hotel-keys
 
-- [Weighted brass fob](Actants/hotel-keys--fob)
-- [Front-desk staff](Actants/hotel-keys--front-desk)
-- [Hotel guest](Actants/hotel-keys--guest)
-- [The hotel building](Actants/hotel-keys--hotel)
-- [Room key](Actants/hotel-keys--key)
-- [Hotel manager](Actants/hotel-keys--manager)
-- [Polite request sign](Actants/hotel-keys--sign)
+- [Weighted brass fob](Actant-hotel-keys--fob)
+- [Front-desk staff](Actant-hotel-keys--front-desk)
+- [Hotel guest](Actant-hotel-keys--guest)
+- [The hotel building](Actant-hotel-keys--hotel)
+- [Room key](Actant-hotel-keys--key)
+- [Hotel manager](Actant-hotel-keys--manager)
+- [Polite request sign](Actant-hotel-keys--sign)
 
 ### scallops
 
-- [Scientific colleagues](Actants/scallops--colleagues)
-- [Fishermen of St Brieuc Bay](Actants/scallops--fishermen)
-- [Larvae collectors (towlines)](Actants/scallops--larvae-collectors)
-- [Three researchers from Brest](Actants/scallops--researchers)
-- [Scallops (Pecten maximus)](Actants/scallops--scallops)
+- [Scientific colleagues](Actant-scallops--colleagues)
+- [Fishermen of St Brieuc Bay](Actant-scallops--fishermen)
+- [Larvae collectors (towlines)](Actant-scallops--larvae-collectors)
+- [Three researchers from Brest](Actant-scallops--researchers)
+- [Scallops (Pecten maximus)](Actant-scallops--scallops)
 
 ## Translations
 
-- [The hotel-keys translation chain](Translations/hotel-keys--main) _(case: [hotel-keys](Cases/hotel-keys))_
-- [The Callon-1986 translation chain](Translations/scallops--main) _(case: [scallops](Cases/scallops))_
+- [The hotel-keys translation chain](Translation-hotel-keys--main) _(case: [hotel-keys](Case-hotel-keys))_
+- [The Callon-1986 translation chain](Translation-scallops--main) _(case: [scallops](Case-scallops))_
 
 ## Perspectives
 
-- [hotel-keys::_default](Perspectives/hotel-keys--_default)
-- [scallops::_default](Perspectives/scallops--_default)
+- [hotel-keys::_default](Perspective-hotel-keys--_default)
+- [scallops::_default](Perspective-scallops--_default)
 
 ## Concepts (the ontology as a glossary)
 
@@ -64,60 +64,60 @@ Every term below renders as a page with `rdfs:comment` and `dcterms:source` to a
 
 **Classes**
 
-- [Actant](Concepts/Actant)
-- [Analysis](Concepts/Analysis)
-- [AnalysisReport](Concepts/AnalysisReport)
-- [AntiProgram](Concepts/AntiProgram)
-- [BlackBox](Concepts/BlackBox)
-- [Characterization](Concepts/Characterization)
-- [ConstraintWaiver](Concepts/ConstraintWaiver)
-- [DiscursiveStability](Concepts/DiscursiveStability)
-- [Durability](Concepts/Durability)
-- [Enrolment](Concepts/Enrolment)
-- [ImmutableMobile](Concepts/ImmutableMobile)
-- [Inscription](Concepts/Inscription)
-- [Interessement](Concepts/Interessement)
-- [Intermediary](Concepts/Intermediary)
-- [MaterialDurability](Concepts/MaterialDurability)
-- [Mediator](Concepts/Mediator)
-- [Mobilization](Concepts/Mobilization)
-- [ModeOfOrdering](Concepts/ModeOfOrdering)
-- [Network](Concepts/Network)
-- [ObligatoryPassagePoint](Concepts/ObligatoryPassagePoint)
-- [Perspective](Concepts/Perspective)
-- [Practice](Concepts/Practice)
-- [Problematization](Concepts/Problematization)
-- [ProgramOfAction](Concepts/ProgramOfAction)
-- [ProvAgent](Concepts/ProvAgent)
-- [ProvInfluencer](Concepts/ProvInfluencer)
-- [Scope](Concepts/Scope)
-- [Spokesperson](Concepts/Spokesperson)
-- [StrategicDurability](Concepts/StrategicDurability)
-- [Translation](Concepts/Translation)
+- [Actant](Concept-Actant)
+- [Analysis](Concept-Analysis)
+- [AnalysisReport](Concept-AnalysisReport)
+- [AntiProgram](Concept-AntiProgram)
+- [BlackBox](Concept-BlackBox)
+- [Characterization](Concept-Characterization)
+- [ConstraintWaiver](Concept-ConstraintWaiver)
+- [DiscursiveStability](Concept-DiscursiveStability)
+- [Durability](Concept-Durability)
+- [Enrolment](Concept-Enrolment)
+- [ImmutableMobile](Concept-ImmutableMobile)
+- [Inscription](Concept-Inscription)
+- [Interessement](Concept-Interessement)
+- [Intermediary](Concept-Intermediary)
+- [MaterialDurability](Concept-MaterialDurability)
+- [Mediator](Concept-Mediator)
+- [Mobilization](Concept-Mobilization)
+- [ModeOfOrdering](Concept-ModeOfOrdering)
+- [Network](Concept-Network)
+- [ObligatoryPassagePoint](Concept-ObligatoryPassagePoint)
+- [Perspective](Concept-Perspective)
+- [Practice](Concept-Practice)
+- [Problematization](Concept-Problematization)
+- [ProgramOfAction](Concept-ProgramOfAction)
+- [ProvAgent](Concept-ProvAgent)
+- [ProvInfluencer](Concept-ProvInfluencer)
+- [Scope](Concept-Scope)
+- [Spokesperson](Concept-Spokesperson)
+- [StrategicDurability](Concept-StrategicDurability)
+- [Translation](Concept-Translation)
 
 **Properties**
 
-- [assignsRole](Concepts/assignsRole)
-- [characterizes](Concepts/characterizes)
-- [enrols](Concepts/enrols)
-- [hasMoment](Concepts/hasMoment)
-- [hasProgram](Concepts/hasProgram)
-- [inscribes](Concepts/inscribes)
-- [invarianceCriterion](Concepts/invarianceCriterion)
-- [isPunctualizationOf](Concepts/isPunctualizationOf)
-- [opposes](Concepts/opposes)
-- [participatesIn](Concepts/participatesIn)
-- [passesThrough](Concepts/passesThrough)
-- [perPractice](Concepts/perPractice)
-- [perspectiveGroundedIn](Concepts/perspectiveGroundedIn)
-- [perspectiveHeldBy](Concepts/perspectiveHeldBy)
-- [perspectiveTracksInvariance](Concepts/perspectiveTracksInvariance)
-- [speaksFor](Concepts/speaksFor)
-- [translates](Concepts/translates)
-- [waivedBy](Concepts/waivedBy)
-- [waiverExpires](Concepts/waiverExpires)
-- [waiverJustification](Concepts/waiverJustification)
-- [waivesForTarget](Concepts/waivesForTarget)
-- [waivesShape](Concepts/waivesShape)
-- [withinNetwork](Concepts/withinNetwork)
+- [assignsRole](Concept-assignsRole)
+- [characterizes](Concept-characterizes)
+- [enrols](Concept-enrols)
+- [hasMoment](Concept-hasMoment)
+- [hasProgram](Concept-hasProgram)
+- [inscribes](Concept-inscribes)
+- [invarianceCriterion](Concept-invarianceCriterion)
+- [isPunctualizationOf](Concept-isPunctualizationOf)
+- [opposes](Concept-opposes)
+- [participatesIn](Concept-participatesIn)
+- [passesThrough](Concept-passesThrough)
+- [perPractice](Concept-perPractice)
+- [perspectiveGroundedIn](Concept-perspectiveGroundedIn)
+- [perspectiveHeldBy](Concept-perspectiveHeldBy)
+- [perspectiveTracksInvariance](Concept-perspectiveTracksInvariance)
+- [speaksFor](Concept-speaksFor)
+- [translates](Concept-translates)
+- [waivedBy](Concept-waivedBy)
+- [waiverExpires](Concept-waiverExpires)
+- [waiverJustification](Concept-waiverJustification)
+- [waivesForTarget](Concept-waivesForTarget)
+- [waivesShape](Concept-waivesShape)
+- [withinNetwork](Concept-withinNetwork)
 

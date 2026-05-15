@@ -9,17 +9,17 @@ Pages produced:
 
 - ``Home.md`` — landing: cases (with embedded summary), perspectives,
   actants grouped by case, translations, concept glossary
-- ``Cases/<slug>.md`` — RICH case page: network description, translations
+- ``Case-<slug>.md`` — RICH case page: network description, translations
   inline, characterization table (§4.1.1 surface), actants, perspectives,
   inscriptions, programs of action
-- ``Translations/<slug>.md`` — the four Callon moments rendered narratively
+- ``Translation-<slug>.md`` — the four Callon moments rendered narratively
   (reuses the TranslationTrace logic)
-- ``Actants/<case>--<slug>.md`` — per-actant: description, characterizations
+- ``Actant-<case>--<slug>.md`` — per-actant: description, characterizations
   targeting this actant (the §4.1.1 surface again), enrols-relations,
   inscriptions produced, programs of action carried
-- ``Perspectives/<case>--<slug>.md`` — disambiguated by case prefix to
+- ``Perspective-<case>--<slug>.md`` — disambiguated by case prefix to
   avoid collisions when two cases both have a ``_default`` perspective
-- ``Concepts/<term>.md`` — one page per ontology term with founding-text
+- ``Concept-<term>.md`` — one page per ontology term with founding-text
   citation; the ontology rendered as a navigable glossary
 """
 
@@ -55,17 +55,20 @@ _MOMENT_ORDER = ["Problematization", "Interessement", "Enrolment", "Mobilization
 # Wiki's renderer) treats them as page lookups rather than serving the raw
 # file as plain text.
 #
-# Symptom this fixes: a link like `(Cases/hotel-keys.md)` generates the URL
-# `https://github.com/<owner>/<repo>/wiki/Cases/hotel-keys.md`. Gollum's URL
-# router doesn't recognise a `.md` extension on a subdirectory page lookup
-# and falls back to serving the file as `text/plain`, so the page renders
-# as raw Markdown source instead of formatted HTML. With the `.md` stripped
-# (`(Cases/hotel-keys)`), the URL is `/wiki/Cases/hotel-keys`, which Gollum
-# resolves to the page and renders correctly.
+# Background: Gollum / GitHub Wiki has two related limitations:
+#   (1) Subdirectories in the wiki repo are not URL-routable — a file at
+#       `Cases/hotel-keys.md` cannot be reached at `/wiki/Cases/hotel-keys`
+#       (404) or `/wiki/Cases/hotel-keys.md` (served as raw text/plain).
+#       The fix is the flat layout used here: every page at the wiki root
+#       with the kind encoded as a filename prefix (`Case-hotel-keys.md`).
+#   (2) Even at the root, links that include the `.md` extension cause
+#       Gollum to serve the file as text/plain instead of rendering. So
+#       link targets must be the bare page name (no `.md`).
 #
-# Absolute URLs (http://, https://) are left untouched — those are real
-# .md files served via github.com's normal file viewer, which DOES handle
-# the extension correctly.
+# This regex enforces (2): it strips `.md` from any relative link target
+# (anything that doesn't start with http(s)://). Absolute URLs are left
+# untouched — they point to real source-repo .md files served via
+# github.com's normal file viewer, which DOES handle the extension.
 _LINK_RE = re.compile(r'(\[[^\]]*\]\()((?!https?://)[^)\s]+)\.md(?=[)\s])')
 
 
@@ -279,24 +282,30 @@ def _disambiguated_slug(iri: str) -> str:
     return tail or slugify(iri)
 
 
+# GitHub Wiki / Gollum only routes URLs at the wiki root — files in
+# subdirectories of the wiki repo are not reachable as rendered pages.
+# So we flatten: every page lives at the wiki root, with the kind encoded
+# as a singular-noun filename prefix (e.g., ``Case-hotel-keys``,
+# ``Actant-hotel-keys--fob``). Internal links use the same flat names
+# without any path prefix and without the ``.md`` extension.
 def _actant_page(actant: URIRef) -> str:
-    return f"../Actants/{_disambiguated_slug(str(actant))}.md"
+    return f"Actant-{_disambiguated_slug(str(actant))}"
 
 
 def _case_page(case_slug: str) -> str:
-    return f"../Cases/{case_slug}.md"
+    return f"Case-{case_slug}"
 
 
 def _translation_page(t: URIRef) -> str:
-    return f"../Translations/{_disambiguated_slug(str(t))}.md"
+    return f"Translation-{_disambiguated_slug(str(t))}"
 
 
 def _perspective_page(p: URIRef) -> str:
-    return f"../Perspectives/{_disambiguated_slug(str(p))}.md"
+    return f"Perspective-{_disambiguated_slug(str(p))}"
 
 
 def _concept_page(term: str) -> str:
-    return f"../Concepts/{slugify(term)}.md"
+    return f"Concept-{slugify(term)}"
 
 
 # ---------------------------------------------------------------------------
@@ -406,13 +415,10 @@ def _term_kind(types: list) -> str:
 
 
 def run_wiki(output_dir: str | None = None) -> None:
+    import shutil
+
     out = Path(output_dir) if output_dir else DEFAULT_WIKI_DIR
     out.mkdir(parents=True, exist_ok=True)
-    (out / "Cases").mkdir(exist_ok=True)
-    (out / "Actants").mkdir(exist_ok=True)
-    (out / "Translations").mkdir(exist_ok=True)
-    (out / "Perspectives").mkdir(exist_ok=True)
-    (out / "Concepts").mkdir(exist_ok=True)
 
     ds = load_full_dataset()
     g = ds.default_graph
@@ -422,20 +428,23 @@ def run_wiki(output_dir: str | None = None) -> None:
     perspectives = _gather_by_type(g, ANT.Perspective)
     concepts = _gather_concepts(ont)
 
-    # Map each actant / translation / perspective to its case for cross-linking
     pages_written = 0
 
-    # Sweep wiki/ subdirs of stale generated content so removed records don't
-    # leave orphan pages behind.
-    for sub in ("Cases", "Actants", "Translations", "Perspectives", "Concepts"):
-        for f in (out / sub).glob("*.md"):
-            f.unlink()
-    # Also sweep the federated front-matter pages and Home so abstract changes
-    # don't leave stale top-level pages.
-    for stem in ("Home", "About", *(stem for _, stem in _FEDERATED_PAGES)):
-        p = out / f"{stem}.md"
-        if p.exists():
-            p.unlink()
+    # GitHub Wiki / Gollum only routes URLs at the wiki ROOT. Subdirectory
+    # files in the wiki repo aren't reachable as rendered pages — they
+    # either 404 or get served as text/plain. So everything lives flat at
+    # the wiki root with the kind encoded as a filename prefix
+    # (Case-, Actant-, Translation-, Perspective-, Concept-).
+    #
+    # Sweep step: delete any leftover .md at the root AND any pre-flatten
+    # subdirectories (Cases/, Actants/, Translations/, Perspectives/,
+    # Concepts/) so renames/removals don't leave orphan pages.
+    for stale in ("Cases", "Actants", "Translations", "Perspectives", "Concepts"):
+        p = out / stale
+        if p.exists() and p.is_dir():
+            shutil.rmtree(p)
+    for f in out.glob("*.md"):
+        f.unlink()
 
     # Home
     _write_wiki_page(out / "Home.md", _render_home(g, cases, perspectives, concepts))
@@ -449,13 +458,13 @@ def run_wiki(output_dir: str | None = None) -> None:
             _write_wiki_page(out / f"{stem}.md", body)
             pages_written += 1
 
-    # Cases
+    # Cases — flat at root with Case- prefix
     for case_slug in sorted(cases):
         page = _render_case(g, case_slug, cases[case_slug])
-        _write_wiki_page(out / "Cases" / f"{case_slug}.md", page)
+        _write_wiki_page(out / f"Case-{case_slug}.md", page)
         pages_written += 1
 
-    # Actants — disambiguated by case to avoid collisions
+    # Actants — flat with Actant- prefix; disambiguated stem includes case
     seen_actant_pages: set[str] = set()
     for slug in sorted(cases):
         for a in sorted(cases[slug]["actants"]):
@@ -463,10 +472,10 @@ def run_wiki(output_dir: str | None = None) -> None:
             if stem in seen_actant_pages:
                 continue
             seen_actant_pages.add(stem)
-            _write_wiki_page(out / "Actants" / f"{stem}.md", _render_actant(g, a))
+            _write_wiki_page(out / f"Actant-{stem}.md", _render_actant(g, a))
             pages_written += 1
 
-    # Translations
+    # Translations — flat with Translation- prefix
     seen_t_pages: set[str] = set()
     for slug in sorted(cases):
         for t in sorted(cases[slug]["translations"]):
@@ -474,22 +483,22 @@ def run_wiki(output_dir: str | None = None) -> None:
             if stem in seen_t_pages:
                 continue
             seen_t_pages.add(stem)
-            _write_wiki_page(out / "Translations" / f"{stem}.md", _render_translation(g, t))
+            _write_wiki_page(out / f"Translation-{stem}.md", _render_translation(g, t))
             pages_written += 1
 
-    # Perspectives — disambiguated by case so two ``_default``s don't collide
+    # Perspectives — flat with Perspective- prefix
     seen_p_pages: set[str] = set()
     for p in perspectives:
         stem = _disambiguated_slug(str(p))
         if stem in seen_p_pages:
             continue
         seen_p_pages.add(stem)
-        _write_wiki_page(out / "Perspectives" / f"{stem}.md", _render_perspective(g, p))
+        _write_wiki_page(out / f"Perspective-{stem}.md", _render_perspective(g, p))
         pages_written += 1
 
-    # Concepts (the ontology as a glossary)
+    # Concepts (the ontology as a glossary) — flat with Concept- prefix
     for term, data in sorted(concepts.items()):
-        _write_wiki_page(out / "Concepts" / f"{slugify(term)}.md", _render_concept(g, term, data, concepts))
+        _write_wiki_page(out / f"Concept-{slugify(term)}.md", _render_concept(g, term, data, concepts))
         pages_written += 1
 
     console.print(f"[green]✓ wrote {pages_written} wiki pages to {out}[/green]")
@@ -531,12 +540,12 @@ def _render_home(
             nets = sorted(c["networks"])
             if nets:
                 label = label_of(g, nets[0])
-                lines.append(f"- **[{slug}](Cases/{slug}.md)** — {label}")
+                lines.append(f"- **[{slug}](Case-{slug})** — {label}")
                 desc = description_of(g, nets[0])
                 if desc:
                     lines.append(f"  > {desc[:240]}{'…' if len(desc) > 240 else ''}")
             else:
-                lines.append(f"- [{slug}](Cases/{slug}.md)")
+                lines.append(f"- [{slug}](Case-{slug})")
     else:
         lines.append("_No cases recorded yet._")
     lines.append("")
@@ -552,7 +561,7 @@ def _render_home(
         lines.append(f"### {slug}")
         lines.append("")
         for a in actants:
-            lines.append(f"- [{label_of(g, a)}](Actants/{_disambiguated_slug(str(a))}.md)")
+            lines.append(f"- [{label_of(g, a)}](Actant-{_disambiguated_slug(str(a))})")
         lines.append("")
 
     # Translations
@@ -562,8 +571,8 @@ def _render_home(
         for t in sorted(all_translations):
             slug = _case_slug_of(str(t)) or "?"
             lines.append(
-                f"- [{label_of(g, t)}](Translations/{_disambiguated_slug(str(t))}.md) "
-                f"_(case: [{slug}](Cases/{slug}.md))_"
+                f"- [{label_of(g, t)}](Translation-{_disambiguated_slug(str(t))}) "
+                f"_(case: [{slug}](Case-{slug}))_"
             )
     else:
         lines.append("_No translations recorded yet._")
@@ -577,7 +586,7 @@ def _render_home(
             slug = local_name(str(p))
             stem = _disambiguated_slug(str(p))
             display = f"{case}::{slug}" if case else slug
-            lines.append(f"- [{display}](Perspectives/{stem}.md)")
+            lines.append(f"- [{display}](Perspective-{stem})")
     else:
         lines.append("_No perspectives recorded yet._")
     lines.append("")
@@ -593,11 +602,11 @@ def _render_home(
     ]
     classes = [t for t, d in concepts.items() if d["kind"] == "Class"]
     for term in sorted(classes):
-        lines.append(f"- [{local_name(term)}](Concepts/{slugify(term)}.md)")
+        lines.append(f"- [{local_name(term)}](Concept-{slugify(term)})")
     lines += ["", "**Properties**", ""]
     props = [t for t, d in concepts.items() if d["kind"] in {"Object property", "Datatype property"}]
     for term in sorted(props):
-        lines.append(f"- [{local_name(term)}](Concepts/{slugify(term)}.md)")
+        lines.append(f"- [{local_name(term)}](Concept-{slugify(term)})")
     lines.append("")
 
     return "\n".join(lines) + "\n"
@@ -609,7 +618,7 @@ def _render_home(
 
 
 def _render_case(g: Graph, slug: str, case: dict) -> str:
-    lines = [f"# Case: {slug}", "", "[← Home](../Home.md)", ""]
+    lines = [f"# Case: {slug}", "", "[← Home](Home)", ""]
 
     # Networks (usually one per case)
     for net in sorted(case["networks"]):
@@ -654,7 +663,7 @@ def _render_case(g: Graph, slug: str, case: dict) -> str:
         lines += [
             "## Characterizations (observer-relative role assignments)",
             "",
-            "Each row records an analyst's claim *within a context*: the (target, network, practice, invariance) tuple grounds the role assignment. The same actant may appear with different roles across rows — that's not contradiction, it's [§4.1.1 observer-relativity](../Concepts/Characterization.md).",
+            "Each row records an analyst's claim *within a context*: the (target, network, practice, invariance) tuple grounds the role assignment. The same actant may appear with different roles across rows — that's not contradiction, it's [§4.1.1 observer-relativity](Concept-Characterization).",
             "",
         ]
         rows = []
@@ -751,7 +760,7 @@ def _render_translation(g: Graph, t: URIRef) -> str:
     lines = [
         f"# Translation: {label_of(g, t)}",
         "",
-        f"[← Home](../Home.md) · [Case: {case_slug}]({_case_page(case_slug)})",
+        f"[← Home](Home) · [Case: {case_slug}]({_case_page(case_slug)})",
         "",
         f"<!-- {t} -->",
         "",
@@ -808,7 +817,7 @@ def _render_translation(g: Graph, t: URIRef) -> str:
 
 def _render_actant(g: Graph, actant: URIRef) -> str:
     case_slug = _case_slug_of(str(actant))
-    breadcrumb = "[← Home](../Home.md)"
+    breadcrumb = "[← Home](Home)"
     if case_slug:
         breadcrumb += f" · [Case: {case_slug}]({_case_page(case_slug)})"
     lines = [
@@ -839,7 +848,7 @@ def _render_actant(g: Graph, actant: URIRef) -> str:
         lines += [
             "## Characterizations of this actant",
             "",
-            "This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [§4.1.1 observer-relativity](../Concepts/Characterization.md), not contradiction.",
+            "This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [§4.1.1 observer-relativity](Concept-Characterization), not contradiction.",
             "",
         ]
         rows = []
@@ -923,7 +932,7 @@ def _render_actant(g: Graph, actant: URIRef) -> str:
 
 def _render_perspective(g: Graph, p: URIRef) -> str:
     case_slug = _case_slug_of(str(p))
-    breadcrumb = "[← Home](../Home.md)"
+    breadcrumb = "[← Home](Home)"
     if case_slug:
         breadcrumb += f" · [Case: {case_slug}]({_case_page(case_slug)})"
     lines = [
@@ -964,7 +973,7 @@ def _render_concept(
     lines = [
         f"# {local_name(term)} _({data['kind']})_",
         "",
-        "[← Home](../Home.md)",
+        "[← Home](Home)",
         "",
         f"**IRI:** `{term}`",
         "",
