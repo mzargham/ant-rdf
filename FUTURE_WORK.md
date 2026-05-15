@@ -86,7 +86,7 @@ What:
 - Library of rules to consider: maximum-betweenness OPP detection; immutable-mobile detection (an actant whose properties stay constant across translations); spokesperson detection (an actant that's the source of `ant:speaksFor` to many others within a translation's mobilization moment).
 - **Critical UX commitment:** tagged Characterizations always render distinctly in compiled briefs ("⚙ computed from rule X" vs "✍ asserted by ethnographer Y"), so a reader can never confuse machine and human attributions.
 
-Why: scaling — when a case has hundreds of actants, manual OPP assignment becomes impractical, and a rule that flags candidates for ethnographer confirmation is a useful prosthesis.
+Why: scaling — when a case has hundreds of actants, manual OPP assignment becomes impractical, and a rule that flags candidates for ethnographer confirmation is a useful prosthesis. methodology - when algebraic graph theory or other quantitative methods are attached to relevant quantitive phenomena by qualified domain experts.
 
 When: after a real case generates enough actants that manual characterization is the bottleneck, and after the comparison-study programme (§2.4) has begun so we have evidence about how machine-mediated tagging affects ethnographic readings.
 
@@ -225,7 +225,7 @@ Practical norms:
 
 ---
 
-## 4. Open follow-ups for the expert call
+## 4. Open follow-ups
 
 Carrying forward from [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md):
 
