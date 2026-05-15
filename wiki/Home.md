@@ -8,7 +8,7 @@ The move worth naming up front is reflexive: **`ant-rdf` is itself an assemblage
 
 - **[About](About.md)** — the full socio-material reading: four operational consequences (toolkit as prosthesis; three-tier validation; comparison studies; git/RDF complementarity).
 - **[Theoretical Frame](Theoretical-Frame.md)** — Artificial Organisational Intelligence (AOI) and "building the loop"; DSG as a self-infrastructuring organisation (Rennie et al. 2026).
-- **[Lineage](Lineage.md)** — the small pattern language `ant-rdf` extends.
+- **[Lineage](Lineage.md)** — *intellectual* (Callon / Latour / Law / Mol — the founding-text moves each ontology term inherits) and *technical* (the small pattern language `ant-rdf` extends).
 
 Below: navigation across the cases, actants, translations, perspectives, and the ontology as a glossary.
 

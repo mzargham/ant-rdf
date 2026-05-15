@@ -97,7 +97,7 @@ studies; git/RDF complementarity).
 - **[Theoretical Frame](Theoretical-Frame.md)** — Artificial Organisational \
 Intelligence (AOI) and "building the loop"; DSG as a self-infrastructuring \
 organisation (Rennie et al. 2026).
-- **[Lineage](Lineage.md)** — the small pattern language `ant-rdf` extends.
+- **[Lineage](Lineage.md)** — *intellectual* (Callon / Latour / Law / Mol — the founding-text moves each ontology term inherits) and *technical* (the small pattern language `ant-rdf` extends).
 
 Below: navigation across the cases, actants, translations, perspectives, and \
 the ontology as a glossary.
@@ -192,7 +192,7 @@ def _split_abstract() -> dict[str, str] | None:
         "## Where this continues",
         "",
         "- [Theoretical Frame](Theoretical-Frame.md) — AOI / building-the-loop framing and DSG's self-infrastructuring",
-        "- [Lineage](Lineage.md) — the small pattern language `ant-rdf` extends",
+        "- [Lineage](Lineage.md) — *intellectual* (Callon/Latour/Law/Mol) and *technical* (the docs-as-code pattern family) lineages",
     ]
     if further_reading_body:
         about_lines += [

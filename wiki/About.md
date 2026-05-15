@@ -23,7 +23,7 @@ The repository is therefore both an instrument and an object of study — a self
 ## Where this continues
 
 - [Theoretical Frame](Theoretical-Frame.md) — AOI / building-the-loop framing and DSG's self-infrastructuring
-- [Lineage](Lineage.md) — the small pattern language `ant-rdf` extends
+- [Lineage](Lineage.md) — *intellectual* (Callon/Latour/Law/Mol) and *technical* (the docs-as-code pattern family) lineages
 
 ## Further reading
 
