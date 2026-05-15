@@ -10,6 +10,12 @@ The vocabulary itself is the first serious synthesis of Callon's sociology of tr
 
 > **Note on naming.** Following Law 2008, "actor-network theory" is one strand of a broader **material semiotics** — a *toolkit of sensibilities*, not a theory. We keep `ant-rdf` as the repo name for recognition but frame the vocabulary as material-semiotic throughout.
 
+## A reflexive note (see the [abstract](abstract.md))
+
+`ant-rdf` is itself an assemblage of the kind that material-semiotic analysis is built to interrogate: ethnographers, ANT/STS scholars, a Python toolchain, an LLM mediator, deterministic Turtle, SHACL constraints, GitHub Actions, a wiki, and the cases being studied — all actants in a network that produces the analytical work attributed downstream to "the ethnographer's reading." The toolkit is therefore a **prosthesis**, not a neutral instrument, and the project treats it that way: a [three-tier validation regime](FUTURE_WORK.md#2-validation-regime-training-testing-novel) (training cases / testing cases / novel results) plus a [paired comparison-study programme](FUTURE_WORK.md#24-machine-mediation-comparison-studies-the-key-future-research-thread) (the same field site analysed with and without `ant-rdf`, by independent teams) are how we try to stay honest about what machine mediation gains, loses, and *transforms*.
+
+→ **Read the [abstract](abstract.md)** for the full socio-material reading of the project itself.
+
 ## Quickstart
 
 ```bash
