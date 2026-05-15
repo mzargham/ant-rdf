@@ -1,6 +1,6 @@
 # Mobilization _(Class)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#Mobilization`
 
@@ -16,6 +16,6 @@ Callon, M. (1986). Some Elements of a Sociology of Translation.
 
 ## Examples (records typed with this term)
 
-- [Mobilization: the fob speaks for the manager](../Cases/hotel-keys.md)
-- [Mobilization: spokespersons emerge](../Cases/scallops.md)
+- [Mobilization: the fob speaks for the manager](../Cases/hotel-keys)
+- [Mobilization: spokespersons emerge](../Cases/scallops)
 

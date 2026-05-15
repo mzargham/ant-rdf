@@ -1,6 +1,6 @@
 # perPractice _(Object property)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#perPractice`
 

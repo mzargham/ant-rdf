@@ -1,6 +1,6 @@
 # Problematization _(Class)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#Problematization`
 
@@ -16,6 +16,6 @@ Callon, M. (1986). Some Elements of a Sociology of Translation.
 
 ## Examples (records typed with this term)
 
-- [Problematization: guests leave with keys](../Cases/hotel-keys.md)
-- [Problematization: declining scallop populations](../Cases/scallops.md)
+- [Problematization: guests leave with keys](../Cases/hotel-keys)
+- [Problematization: declining scallop populations](../Cases/scallops)
 

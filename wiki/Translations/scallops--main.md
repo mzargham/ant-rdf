@@ -1,6 +1,6 @@
 # Translation: The Callon-1986 translation chain
 
-[← Home](../Home.md) · [Case: scallops](../Cases/scallops.md)
+[← Home](../Home) · [Case: scallops](../Cases/scallops)
 
 <!-- https://w3id.org/ant/cases/scallops/translation/main -->
 

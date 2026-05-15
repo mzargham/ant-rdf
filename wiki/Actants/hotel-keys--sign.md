@@ -1,6 +1,6 @@
 # Actant: Polite request sign
 
-[← Home](../Home.md) · [Case: hotel-keys](../Cases/hotel-keys.md)
+[← Home](../Home) · [Case: hotel-keys](../Cases/hotel-keys)
 
 <!-- https://w3id.org/ant/cases/hotel-keys/actant/sign -->
 
@@ -8,5 +8,5 @@ A sign in the room asking guests to leave their key at the front desk. The pre-d
 
 ## Participates in
 
-- [The hotel-keys assemblage](../Cases/hotel-keys.md)
+- [The hotel-keys assemblage](../Cases/hotel-keys)
 

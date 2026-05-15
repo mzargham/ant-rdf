@@ -1,6 +1,6 @@
 # Actant: The hotel building
 
-[← Home](../Home.md) · [Case: hotel-keys](../Cases/hotel-keys.md)
+[← Home](../Home) · [Case: hotel-keys](../Cases/hotel-keys)
 
 <!-- https://w3id.org/ant/cases/hotel-keys/actant/hotel -->
 
@@ -8,5 +8,5 @@ The infrastructural actant whose continued operation depends on keys being avail
 
 ## Participates in
 
-- [The hotel-keys assemblage](../Cases/hotel-keys.md)
+- [The hotel-keys assemblage](../Cases/hotel-keys)
 

@@ -1,6 +1,6 @@
 # Actant: Scientific colleagues
 
-[← Home](../Home.md) · [Case: scallops](../Cases/scallops.md)
+[← Home](../Home) · [Case: scallops](../Cases/scallops)
 
 <!-- https://w3id.org/ant/cases/scallops/actant/colleagues -->
 
@@ -8,5 +8,5 @@ The wider scientific community whose acceptance of the experimental findings is 
 
 ## Participates in
 
-- [St Brieuc Bay scallop-farming network](../Cases/scallops.md)
+- [St Brieuc Bay scallop-farming network](../Cases/scallops)
 

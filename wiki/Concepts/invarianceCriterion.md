@@ -1,6 +1,6 @@
 # invarianceCriterion _(Datatype property)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#invarianceCriterion`
 

@@ -1,6 +1,6 @@
 # Characterization _(Class)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#Characterization`
 
@@ -16,12 +16,12 @@ Synthesized per plan §4.1.1, post-Law 2008.
 
 ## Examples (records typed with this term)
 
-- [fob-as-intermediary](../Cases/hotel-keys.md)
-- [fob-as-mediator](../Cases/hotel-keys.md)
-- [fob-as-opp](../Cases/hotel-keys.md)
-- [manager-as-spokesperson](../Cases/hotel-keys.md)
-- [collectors-as-intermediary](../Cases/scallops.md)
-- [collectors-as-mediator](../Cases/scallops.md)
-- [researchers-as-opp](../Cases/scallops.md)
-- [researchers-as-spokesperson](../Cases/scallops.md)
+- [fob-as-intermediary](../Cases/hotel-keys)
+- [fob-as-mediator](../Cases/hotel-keys)
+- [fob-as-opp](../Cases/hotel-keys)
+- [manager-as-spokesperson](../Cases/hotel-keys)
+- [collectors-as-intermediary](../Cases/scallops)
+- [collectors-as-mediator](../Cases/scallops)
+- [researchers-as-opp](../Cases/scallops)
+- [researchers-as-spokesperson](../Cases/scallops)
 

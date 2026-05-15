@@ -1,6 +1,6 @@
 # Actant: Room key
 
-[← Home](../Home.md) · [Case: hotel-keys](../Cases/hotel-keys.md)
+[← Home](../Home) · [Case: hotel-keys](../Cases/hotel-keys)
 
 <!-- https://w3id.org/ant/cases/hotel-keys/actant/key -->
 
@@ -8,5 +8,5 @@ The mechanical key itself that opens the door. Without delegation, has no agency
 
 ## Participates in
 
-- [The hotel-keys assemblage](../Cases/hotel-keys.md)
+- [The hotel-keys assemblage](../Cases/hotel-keys)
 

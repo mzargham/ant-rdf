@@ -1,6 +1,6 @@
 # Actant: Fishermen of St Brieuc Bay
 
-[← Home](../Home.md) · [Case: scallops](../Cases/scallops.md)
+[← Home](../Home) · [Case: scallops](../Cases/scallops)
 
 <!-- https://w3id.org/ant/cases/scallops/actant/fishermen -->
 
@@ -8,5 +8,5 @@ The local fishing community whose long-term cooperation is essential for the tec
 
 ## Participates in
 
-- [St Brieuc Bay scallop-farming network](../Cases/scallops.md)
+- [St Brieuc Bay scallop-farming network](../Cases/scallops)
 

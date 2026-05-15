@@ -1,6 +1,6 @@
 # Case: hotel-keys
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 ## Network — The hotel-keys assemblage
 
@@ -10,7 +10,7 @@ The network of hotel manager, guests, front-desk staff, key, weighted fob, and r
 
 ## Translations
 
-### [The hotel-keys translation chain](../Translations/hotel-keys--main.md)
+### [The hotel-keys translation chain](../Translations/hotel-keys--main)
 
 Latour's classical demonstration that technologies act — the heavy fob enrols the guest's body where the polite sign could not. Reads through all four Callon moments.
 
@@ -22,29 +22,29 @@ Latour's classical demonstration that technologies act — the heavy fob enrols 
 
 **Mobilization.** Mobilization: the fob speaks for the manager — Even when the manager is asleep, the fob continues to enforce the program. Latour's point: the network's voice is delegated to a non-human spokesperson that never gets tired.
 
-_See the full trace: [The hotel-keys translation chain](../Translations/hotel-keys--main.md)_
+_See the full trace: [The hotel-keys translation chain](../Translations/hotel-keys--main)_
 
 ## Characterizations (observer-relative role assignments)
 
-Each row records an analyst's claim *within a context*: the (target, network, practice, invariance) tuple grounds the role assignment. The same actant may appear with different roles across rows — that's not contradiction, it's [§4.1.1 observer-relativity](../Concepts/Characterization.md).
+Each row records an analyst's claim *within a context*: the (target, network, practice, invariance) tuple grounds the role assignment. The same actant may appear with different roles across rows — that's not contradiction, it's [§4.1.1 observer-relativity](../Concepts/Characterization).
 
 | Target | Role | Network | Practice | Invariance | Note |
 | --- | --- | --- | --- | --- | --- |
-| [Weighted brass fob](../Actants/hotel-keys--fob.md) | [Intermediary](../Concepts/Intermediary.md) | [The hotel-keys assemblage](../Cases/hotel-keys.md) | room-occupancy | weight-as-weight | From the guest's room-occupancy practice, the fob just transmits its physical mass without further transformation — unco… |
-| [Weighted brass fob](../Actants/hotel-keys--fob.md) | [Mediator](../Concepts/Mediator.md) | [The hotel-keys assemblage](../Cases/hotel-keys.md) | hotel-administration | behavioural-compliance-outcome | From the hotel-administration practice, the fob transforms what it transmits — the manager's polite request becomes phys… |
-| [Weighted brass fob](../Actants/hotel-keys--fob.md) | [ObligatoryPassagePoint](../Concepts/ObligatoryPassagePoint.md) | [The hotel-keys assemblage](../Cases/hotel-keys.md) | hotel-administration | key-circulation | Within the hotel-administration practice, every guest's key-disposition decision now passes through the fob — they canno… |
-| [Hotel manager](../Actants/hotel-keys--manager.md) | [Spokesperson](../Concepts/Spokesperson.md) | [The hotel-keys assemblage](../Cases/hotel-keys.md) | hotel-administration | key-return-policy | The manager speaks for the hotel's interest in key returns, originally via the sign and later via the delegate that is t… |
+| [Weighted brass fob](../Actants/hotel-keys--fob) | [Intermediary](../Concepts/Intermediary) | [The hotel-keys assemblage](../Cases/hotel-keys) | room-occupancy | weight-as-weight | From the guest's room-occupancy practice, the fob just transmits its physical mass without further transformation — unco… |
+| [Weighted brass fob](../Actants/hotel-keys--fob) | [Mediator](../Concepts/Mediator) | [The hotel-keys assemblage](../Cases/hotel-keys) | hotel-administration | behavioural-compliance-outcome | From the hotel-administration practice, the fob transforms what it transmits — the manager's polite request becomes phys… |
+| [Weighted brass fob](../Actants/hotel-keys--fob) | [ObligatoryPassagePoint](../Concepts/ObligatoryPassagePoint) | [The hotel-keys assemblage](../Cases/hotel-keys) | hotel-administration | key-circulation | Within the hotel-administration practice, every guest's key-disposition decision now passes through the fob — they canno… |
+| [Hotel manager](../Actants/hotel-keys--manager) | [Spokesperson](../Concepts/Spokesperson) | [The hotel-keys assemblage](../Cases/hotel-keys) | hotel-administration | key-return-policy | The manager speaks for the hotel's interest in key returns, originally via the sign and later via the delegate that is t… |
 
 
 ## Actants in this case
 
-- **[Weighted brass fob](../Actants/hotel-keys--fob.md)** — The heavy metal weight attached to the key. The material delegate that translates the manager's moral program into physical inconvenience. Latour's central exhibit: the missing mass that closes the ci…
-- **[Front-desk staff](../Actants/hotel-keys--front-desk.md)** — The hotel staff who receive returned keys and notice missing ones.
-- **[Hotel guest](../Actants/hotel-keys--guest.md)** — The guest occupying a room. Has an anti-program (taking the key with them, intentionally or by forgetting it).
-- **[The hotel building](../Actants/hotel-keys--hotel.md)** — The infrastructural actant whose continued operation depends on keys being available for room turnover.
-- **[Room key](../Actants/hotel-keys--key.md)** — The mechanical key itself that opens the door. Without delegation, has no agency over guest behaviour.
-- **[Hotel manager](../Actants/hotel-keys--manager.md)** — The hotel's manager who originally posts the sign requesting key returns. Problematizer of the network: defines guests leaving with keys as the problem.
-- **[Polite request sign](../Actants/hotel-keys--sign.md)** — A sign in the room asking guests to leave their key at the front desk. The pre-delegation inscription. Latour's foil — proof that words alone are insufficient.
+- **[Weighted brass fob](../Actants/hotel-keys--fob)** — The heavy metal weight attached to the key. The material delegate that translates the manager's moral program into physical inconvenience. Latour's central exhibit: the missing mass that closes the ci…
+- **[Front-desk staff](../Actants/hotel-keys--front-desk)** — The hotel staff who receive returned keys and notice missing ones.
+- **[Hotel guest](../Actants/hotel-keys--guest)** — The guest occupying a room. Has an anti-program (taking the key with them, intentionally or by forgetting it).
+- **[The hotel building](../Actants/hotel-keys--hotel)** — The infrastructural actant whose continued operation depends on keys being available for room turnover.
+- **[Room key](../Actants/hotel-keys--key)** — The mechanical key itself that opens the door. Without delegation, has no agency over guest behaviour.
+- **[Hotel manager](../Actants/hotel-keys--manager)** — The hotel's manager who originally posts the sign requesting key returns. Problematizer of the network: defines guests leaving with keys as the problem.
+- **[Polite request sign](../Actants/hotel-keys--sign)** — A sign in the room asking guests to leave their key at the front desk. The pre-delegation inscription. Latour's foil — proof that words alone are insufficient.
 
 ## Programs of action
 
@@ -57,5 +57,5 @@ Each row records an analyst's claim *within a context*: the (target, network, pr
 
 ## Perspectives
 
-- [_default](../Perspectives/hotel-keys--_default.md)
+- [_default](../Perspectives/hotel-keys--_default)
 

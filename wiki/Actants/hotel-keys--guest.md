@@ -1,6 +1,6 @@
 # Actant: Hotel guest
 
-[← Home](../Home.md) · [Case: hotel-keys](../Cases/hotel-keys.md)
+[← Home](../Home) · [Case: hotel-keys](../Cases/hotel-keys)
 
 <!-- https://w3id.org/ant/cases/hotel-keys/actant/guest -->
 
@@ -8,5 +8,5 @@ The guest occupying a room. Has an anti-program (taking the key with them, inten
 
 ## Participates in
 
-- [The hotel-keys assemblage](../Cases/hotel-keys.md)
+- [The hotel-keys assemblage](../Cases/hotel-keys)
 

@@ -1,6 +1,6 @@
 # Perspective: Auto-created perspective stub: _default
 
-[← Home](../Home.md) · [Case: hotel-keys](../Cases/hotel-keys.md)
+[← Home](../Home) · [Case: hotel-keys](../Cases/hotel-keys)
 
 <!-- https://w3id.org/ant/cases/hotel-keys/perspectives/_default -->
 

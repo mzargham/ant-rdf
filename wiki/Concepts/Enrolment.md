@@ -1,6 +1,6 @@
 # Enrolment _(Class)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#Enrolment`
 
@@ -16,6 +16,6 @@ Callon, M. (1986). Some Elements of a Sociology of Translation.
 
 ## Examples (records typed with this term)
 
-- [Enrolment: guests start returning keys](../Cases/hotel-keys.md)
-- [Enrolment: coordinated roles](../Cases/scallops.md)
+- [Enrolment: guests start returning keys](../Cases/hotel-keys)
+- [Enrolment: coordinated roles](../Cases/scallops)
 

@@ -1,6 +1,6 @@
 # ObligatoryPassagePoint _(Class)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#ObligatoryPassagePoint`
 
@@ -16,6 +16,6 @@ Callon, M. (1986). Some Elements of a Sociology of Translation.
 
 ## Characterizations that assign this role
 
-- [Weighted brass fob](../Actants/hotel-keys--fob.md) *(in network, per hotel-administration)*
-- [Three researchers from Brest](../Actants/scallops--researchers.md) *(in network, per network-funding)*
+- [Weighted brass fob](../Actants/hotel-keys--fob) *(in network, per hotel-administration)*
+- [Three researchers from Brest](../Actants/scallops--researchers) *(in network, per network-funding)*
 

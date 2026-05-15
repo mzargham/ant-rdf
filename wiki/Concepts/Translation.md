@@ -1,6 +1,6 @@
 # Translation _(Class)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#Translation`
 
@@ -16,6 +16,6 @@ Callon, M. (1986). Some Elements of a Sociology of Translation; Serres, M. (1974
 
 ## Examples (records typed with this term)
 
-- [The hotel-keys translation chain](../Translations/hotel-keys--main.md)
-- [The Callon-1986 translation chain](../Translations/scallops--main.md)
+- [The hotel-keys translation chain](../Translations/hotel-keys--main)
+- [The Callon-1986 translation chain](../Translations/scallops--main)
 

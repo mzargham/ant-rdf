@@ -1,6 +1,6 @@
 # Mediator _(Class)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#Mediator`
 
@@ -16,6 +16,6 @@ Latour, B. (2005). Reassembling the Social.
 
 ## Characterizations that assign this role
 
-- [Weighted brass fob](../Actants/hotel-keys--fob.md) *(in network, per hotel-administration)*
-- [Larvae collectors (towlines)](../Actants/scallops--larvae-collectors.md) *(in network, per seasonal-fishing-labor)*
+- [Weighted brass fob](../Actants/hotel-keys--fob) *(in network, per hotel-administration)*
+- [Larvae collectors (towlines)](../Actants/scallops--larvae-collectors) *(in network, per seasonal-fishing-labor)*
 

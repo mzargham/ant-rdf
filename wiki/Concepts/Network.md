@@ -1,6 +1,6 @@
 # Network _(Class)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#Network`
 
@@ -16,6 +16,6 @@ Shared across Callon, Latour, Law.
 
 ## Examples (records typed with this term)
 
-- [The hotel-keys assemblage](../Cases/hotel-keys.md)
-- [St Brieuc Bay scallop-farming network](../Cases/scallops.md)
+- [The hotel-keys assemblage](../Cases/hotel-keys)
+- [St Brieuc Bay scallop-farming network](../Cases/scallops)
 

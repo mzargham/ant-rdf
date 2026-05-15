@@ -1,6 +1,6 @@
 # Theoretical frame — Artificial Organisational Intelligence and "building the loop"
 
-[← Home](Home.md) · [← About](About.md)
+[← Home](Home) · [← About](About)
 
 The reflexive move above is named and theorised in ***Building the Loop: The Role of Ethnography in Artificial Organisational Intelligence*** (Rennie, Nabben, Zargham, Potts, Coco, Miller, and Green, 2026, *EPIC Proceedings* 2025/1, [DOI:10.1111/epic.70009](https://doi.org/10.1111/epic.70009)). The paper introduces **Artificial Organisational Intelligence (AOI)** — "the capacity for organisations to make their knowledge (including routines, practices, rules, boundaries, and tacit know-how) legible and governable" through regulated feedback loops, *not* by replacing organisations with AI. Its methodological corollary is **building the loop**: moving from "human *in* the loop" (oversight as a performative check on automation) to "human *building* the loop" (deliberate, co-governed construction of socio-technical pipelines for context, governance, and interpretability).
 

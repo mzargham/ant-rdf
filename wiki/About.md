@@ -1,6 +1,6 @@
 # About ant-rdf — a material-semiotic reading of this repository
 
-[← Home](Home.md)
+[← Home](Home)
 
 `ant-rdf` is a docs-as-code semantic-web vocabulary and authoring toolkit for actor-network / material-semiotic analysis, synthesising Callon's sociology of translation, Latour's classical ANT, and post-ANT material semiotics (Law, Mol). The canonical form of every record is RDF (Turtle in the [`https://w3id.org/ant#`](https://w3id.org/ant) namespace); compilers render the canonical RDF into reviewable Markdown briefs and a hyperlinked wiki; a Python CLI authors the records, callable directly or through an LLM-mediated conversational catechism.
 
@@ -22,9 +22,9 @@ The repository is therefore both an instrument and an object of study — a self
 
 ## Where this continues
 
-- [Theoretical Frame](Theoretical-Frame.md) — AOI / building-the-loop framing and DSG's self-infrastructuring
-- [Lineage](Lineage.md) — *intellectual* (Callon/Latour/Law/Mol) and *technical* (the docs-as-code pattern family) lineages
+- [Theoretical Frame](Theoretical-Frame) — AOI / building-the-loop framing and DSG's self-infrastructuring
+- [Lineage](Lineage) — *intellectual* (Callon/Latour/Law/Mol) and *technical* (the docs-as-code pattern family) lineages
 
 ## Further reading
 
-The eight ontological commitments that ground the vocabulary are in [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md); the ten resolved foundational decisions are in [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md); the scope-out items, the three-tier validation regime, and the comparison-study programme are in [FUTURE_WORK.md](FUTURE_WORK.md); the AOI / "building the loop" theoretical frame is developed at length in Rennie et al. (2026), [DOI:10.1111/epic.70009](https://doi.org/10.1111/epic.70009). The two worked cases that exist today — Callon's scallops and Latour's hotel-keys — are in [instances/cases/](instances/cases/), compiled to briefs in [briefs/](briefs/), and navigable through the [wiki](wiki/).
+The eight ontological commitments that ground the vocabulary are in [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS); the ten resolved foundational decisions are in [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions); the scope-out items, the three-tier validation regime, and the comparison-study programme are in [FUTURE_WORK.md](FUTURE_WORK); the AOI / "building the loop" theoretical frame is developed at length in Rennie et al. (2026), [DOI:10.1111/epic.70009](https://doi.org/10.1111/epic.70009). The two worked cases that exist today — Callon's scallops and Latour's hotel-keys — are in [instances/cases/](instances/cases/), compiled to briefs in [briefs/](briefs/), and navigable through the [wiki](wiki/).

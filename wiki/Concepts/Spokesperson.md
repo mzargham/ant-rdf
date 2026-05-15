@@ -1,6 +1,6 @@
 # Spokesperson _(Class)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#Spokesperson`
 
@@ -16,6 +16,6 @@ Callon, M. (1986); Latour, B. (1987). Science in Action.
 
 ## Characterizations that assign this role
 
-- [Hotel manager](../Actants/hotel-keys--manager.md) *(in network, per hotel-administration)*
-- [Three researchers from Brest](../Actants/scallops--researchers.md) *(in network, per scientific-publication)*
+- [Hotel manager](../Actants/hotel-keys--manager) *(in network, per hotel-administration)*
+- [Three researchers from Brest](../Actants/scallops--researchers) *(in network, per scientific-publication)*
 

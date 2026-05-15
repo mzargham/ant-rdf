@@ -1,6 +1,6 @@
 # ProgramOfAction _(Class)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#ProgramOfAction`
 
@@ -16,6 +16,6 @@ Latour, B. (1991). Technology is society made durable.
 
 ## Examples (records typed with this term)
 
-- [Return keys to front desk before leaving](../Cases/hotel-keys.md)
-- [Take key with you (or forget at home)](../Cases/hotel-keys.md)
+- [Return keys to front desk before leaving](../Cases/hotel-keys)
+- [Take key with you (or forget at home)](../Cases/hotel-keys)
 

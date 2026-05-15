@@ -1,6 +1,6 @@
 # Interessement _(Class)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#Interessement`
 
@@ -16,6 +16,6 @@ Callon, M. (1986). Some Elements of a Sociology of Translation.
 
 ## Examples (records typed with this term)
 
-- [Interessement: try a sign, then try a fob](../Cases/hotel-keys.md)
-- [Interessement: locking in roles](../Cases/scallops.md)
+- [Interessement: try a sign, then try a fob](../Cases/hotel-keys)
+- [Interessement: locking in roles](../Cases/scallops)
 

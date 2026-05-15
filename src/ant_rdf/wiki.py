@@ -25,6 +25,7 @@ Pages produced:
 
 from __future__ import annotations
 
+import re
 from collections.abc import Iterable
 from pathlib import Path
 
@@ -48,6 +49,40 @@ ABSTRACT_PATH = REPO_ROOT / "abstract.md"
 
 # Canonical Callon moment order, used in case + translation rendering.
 _MOMENT_ORDER = ["Problematization", "Interessement", "Enrolment", "Mobilization"]
+
+
+# Strip `.md` from relative-path Markdown link targets so Gollum (GitHub
+# Wiki's renderer) treats them as page lookups rather than serving the raw
+# file as plain text.
+#
+# Symptom this fixes: a link like `(Cases/hotel-keys.md)` generates the URL
+# `https://github.com/<owner>/<repo>/wiki/Cases/hotel-keys.md`. Gollum's URL
+# router doesn't recognise a `.md` extension on a subdirectory page lookup
+# and falls back to serving the file as `text/plain`, so the page renders
+# as raw Markdown source instead of formatted HTML. With the `.md` stripped
+# (`(Cases/hotel-keys)`), the URL is `/wiki/Cases/hotel-keys`, which Gollum
+# resolves to the page and renders correctly.
+#
+# Absolute URLs (http://, https://) are left untouched — those are real
+# .md files served via github.com's normal file viewer, which DOES handle
+# the extension correctly.
+_LINK_RE = re.compile(r'(\[[^\]]*\]\()((?!https?://)[^)\s]+)\.md(?=[)\s])')
+
+
+def _strip_md_from_wiki_links(md: str) -> str:
+    """Strip `.md` from relative Markdown link targets for Gollum compat."""
+    return _LINK_RE.sub(r'\1\2', md)
+
+
+def _write_wiki_page(path: Path, body: str) -> None:
+    """Post-process a wiki page body and write it.
+
+    The post-process step strips `.md` from wiki-internal links — see
+    ``_strip_md_from_wiki_links``. Centralising the call here means every
+    page that goes into the wiki gets the same treatment without each
+    render-site needing to remember.
+    """
+    path.write_text(_strip_md_from_wiki_links(body), encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------
@@ -403,7 +438,7 @@ def run_wiki(output_dir: str | None = None) -> None:
             p.unlink()
 
     # Home
-    (out / "Home.md").write_text(_render_home(g, cases, perspectives, concepts), encoding="utf-8")
+    _write_wiki_page(out / "Home.md", _render_home(g, cases, perspectives, concepts))
     pages_written += 1
 
     # Federated front-matter pages (About, Theoretical-Frame, Lineage)
@@ -411,13 +446,13 @@ def run_wiki(output_dir: str | None = None) -> None:
     federated = _split_abstract()
     if federated:
         for stem, body in federated.items():
-            (out / f"{stem}.md").write_text(body, encoding="utf-8")
+            _write_wiki_page(out / f"{stem}.md", body)
             pages_written += 1
 
     # Cases
     for case_slug in sorted(cases):
         page = _render_case(g, case_slug, cases[case_slug])
-        (out / "Cases" / f"{case_slug}.md").write_text(page, encoding="utf-8")
+        _write_wiki_page(out / "Cases" / f"{case_slug}.md", page)
         pages_written += 1
 
     # Actants — disambiguated by case to avoid collisions
@@ -428,9 +463,7 @@ def run_wiki(output_dir: str | None = None) -> None:
             if stem in seen_actant_pages:
                 continue
             seen_actant_pages.add(stem)
-            (out / "Actants" / f"{stem}.md").write_text(
-                _render_actant(g, a), encoding="utf-8",
-            )
+            _write_wiki_page(out / "Actants" / f"{stem}.md", _render_actant(g, a))
             pages_written += 1
 
     # Translations
@@ -441,9 +474,7 @@ def run_wiki(output_dir: str | None = None) -> None:
             if stem in seen_t_pages:
                 continue
             seen_t_pages.add(stem)
-            (out / "Translations" / f"{stem}.md").write_text(
-                _render_translation(g, t), encoding="utf-8",
-            )
+            _write_wiki_page(out / "Translations" / f"{stem}.md", _render_translation(g, t))
             pages_written += 1
 
     # Perspectives — disambiguated by case so two ``_default``s don't collide
@@ -453,16 +484,12 @@ def run_wiki(output_dir: str | None = None) -> None:
         if stem in seen_p_pages:
             continue
         seen_p_pages.add(stem)
-        (out / "Perspectives" / f"{stem}.md").write_text(
-            _render_perspective(g, p), encoding="utf-8",
-        )
+        _write_wiki_page(out / "Perspectives" / f"{stem}.md", _render_perspective(g, p))
         pages_written += 1
 
     # Concepts (the ontology as a glossary)
     for term, data in sorted(concepts.items()):
-        (out / "Concepts" / f"{slugify(term)}.md").write_text(
-            _render_concept(g, term, data, concepts), encoding="utf-8",
-        )
+        _write_wiki_page(out / "Concepts" / f"{slugify(term)}.md", _render_concept(g, term, data, concepts))
         pages_written += 1
 
     console.print(f"[green]✓ wrote {pages_written} wiki pages to {out}[/green]")

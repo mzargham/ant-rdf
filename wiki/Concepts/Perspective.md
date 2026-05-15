@@ -1,6 +1,6 @@
 # Perspective _(Class)_
 
-[← Home](../Home.md)
+[← Home](../Home)
 
 **IRI:** `https://w3id.org/ant#Perspective`
 
@@ -16,6 +16,6 @@ Synthesized for quad-readiness, post-Mol & Law.
 
 ## Examples (records typed with this term)
 
-- [Auto-created perspective stub: _default](../Perspectives/hotel-keys--_default.md)
-- [Auto-created perspective stub: _default](../Perspectives/scallops--_default.md)
+- [Auto-created perspective stub: _default](../Perspectives/hotel-keys--_default)
+- [Auto-created perspective stub: _default](../Perspectives/scallops--_default)
 
