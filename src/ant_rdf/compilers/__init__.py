@@ -20,10 +20,14 @@ console = Console()
 # DocumentKind → import path of the compiler module.
 REGISTRY: dict[str, str] = {
     "NetworkBrief": "ant_rdf.compilers.networkbrief",
-    # "ActantProfile": "ant_rdf.compilers.actantprofile",        # step 12
-    # "TranslationTrace": "ant_rdf.compilers.translationtrace",  # step 12
-    # "CaseCatalog": "ant_rdf.compilers.casecatalog",            # step 12
+    "ActantProfile": "ant_rdf.compilers.actantprofile",
+    "TranslationTrace": "ant_rdf.compilers.translationtrace",
+    "CaseCatalog": "ant_rdf.compilers.casecatalog",
 }
+
+# Compilers in this set load the FULL dataset rather than just one case —
+# they're cross-case indexes / catalogs.
+_CROSS_CASE_KINDS: set[str] = {"CaseCatalog"}
 
 
 def compile_document(
@@ -38,27 +42,29 @@ def compile_document(
             f"Available: {sorted(REGISTRY)}"
         )
 
-    # Build the dataset: the explicit file plus everything it cross-references.
-    # v1 simplest path: load the file plus all sibling files in its case directory.
+    # Build the dataset. Cross-case kinds load the full dataset; per-case
+    # kinds load the named file plus sibling TTL in the same case for
+    # crossref resolution.
     src = Path(file)
-    ds = new_dataset()
-    if src.exists() and src.is_file():
-        # Load the named file and (for crossref resolution) all TTL in the
-        # surrounding case directory.
-        ds.parse(src, format="turtle")
-        case_root = _case_root_for(src)
-        if case_root:
-            for p in sorted(case_root.rglob("*.ttl")):
-                if p.resolve() == src.resolve():
-                    continue
-                ds.parse(p, format="turtle")
+    if document_kind in _CROSS_CASE_KINDS:
+        from ant_rdf.graph import load_full_dataset
+        ds = load_full_dataset()
     else:
-        # Treat ``file`` as a case slug
-        case_dir = CASES_DIR / file
-        if not case_dir.exists():
-            raise SystemExit(f"No such file or case directory: {file}")
-        for p in sorted(case_dir.rglob("*.ttl")):
-            ds.parse(p, format="turtle")
+        ds = new_dataset()
+        if src.exists() and src.is_file():
+            ds.parse(src, format="turtle")
+            case_root = _case_root_for(src)
+            if case_root:
+                for p in sorted(case_root.rglob("*.ttl")):
+                    if p.resolve() == src.resolve():
+                        continue
+                    ds.parse(p, format="turtle")
+        else:
+            case_dir = CASES_DIR / file
+            if not case_dir.exists():
+                raise SystemExit(f"No such file or case directory: {file}")
+            for p in sorted(case_dir.rglob("*.ttl")):
+                ds.parse(p, format="turtle")
 
     module = import_module(REGISTRY[document_kind])
     md = module.compile_(ds, subject=None)
