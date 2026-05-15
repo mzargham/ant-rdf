@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: Apache-2.0
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+
+      - name: Set up Python 3.11
+        run: uv python install 3.11
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Ontology parses
+        run: uv run ant ontology validate
+
+      - name: ant verify (SHACL + cross-refs, tri-severity)
+        # CI default per R9b: warnings surface in the log but do not break.
+        # Tier-1 violations break the build.
+        run: uv run ant verify
+
+      - name: pytest
+        # No tests in v0.1.0-draft; this step is here for the test suite that
+        # will arrive in v0.1.0-final.
+        run: uv run pytest -x || echo "(no tests yet)"

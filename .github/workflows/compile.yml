@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Compile-and-diff: regenerate briefs and wiki from the canonical RDF; if
+# the regenerated output differs from what's committed, fail the build with
+# instructions to run `ant compile` / `ant wiki` locally and commit the
+# updated artifacts. This enforces the RIME determinism invariant for v1:
+# same RDF → byte-identical compiled output.
+
+name: compile-determinism
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  compile-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+
+      - name: Set up Python 3.11
+        run: uv python install 3.11
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Regenerate scallops brief
+        run: |
+          uv run ant compile \
+            instances/cases/scallops/perspectives/_default/networks.ttl \
+            NetworkBrief \
+            -o briefs/scallops-network.md
+
+      - name: Regenerate wiki
+        run: uv run ant wiki
+
+      - name: Diff committed vs regenerated
+        run: |
+          if ! git diff --quiet briefs/ wiki/; then
+            echo "::error::Committed briefs/ or wiki/ are out of sync with the canonical RDF."
+            echo "Run \`ant compile\` and \`ant wiki\` locally, then commit the regenerated artifacts."
+            echo ""
+            echo "Diff:"
+            git diff --stat briefs/ wiki/
+            git diff briefs/ wiki/ | head -200
+            exit 1
+          fi
+          echo "✓ briefs and wiki are byte-identical to canonical RDF output"
