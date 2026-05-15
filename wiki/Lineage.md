@@ -1,0 +1,15 @@
+# Lineage — a small pattern language
+
+[← Home](Home.md) · [← About](About.md)
+
+The docs-as-code paradigm this repo follows — versioned RDF as canonical source, deterministic compilers producing reviewable Markdown, an LLM-callable CLI as authoring surface, three-tier SHACL severity with waivers as recorded analytical decisions, an authoring contract for both humans and LLMs (`CLAUDE.md` / `SKILL.md`), and an ontologically-disciplined wiki for navigation — is a pattern that has been developed across several repositories before landing here. The lineage, in order of appearance:
+
+1. **`trl-knowledgebase`** *(DSG-internal — referenced not linked)* is the original exemplar of the pattern (Zargham et al.) — Technology Readiness Level documentation as core OWL + SHACL shapes + Python CLI + instances split into per-initiative directories + compiled Markdown reports + a wiki for navigation. The structural pattern `ant-rdf` follows — `ontology/`, `instances/`, `src/`, `wiki/`, plus the `CLAUDE.md` / `SKILL.md` / `USER_GUIDE.md` authoring contracts — was first crystallised here.
+2. **`RIME-product-docs`** *(DSG-internal — referenced not linked)* is the immediate template `ant-rdf` was scaffolded against — it inherits the pattern from `trl-knowledgebase` and sharpens conventions (tri-severity SHACL, deterministic-Turtle invariant, the verify/compile/wiki discipline that `ant verify` and `ant wiki` borrow directly).
+3. **[Open-MBEE/flexo-conflict-resolution-policy-research](https://github.com/Open-MBEE/flexo-conflict-resolution-policy-research)** is a parallel research-side sibling (Zargham et al., 2026): not a docs-as-code instance itself, but the experiments in its `experiments/` directory — particularly the Exp 14–20 arc — empirically tested the git/RDF complementarity claim that §4 above inherits.
+
+The first two are part of the Dynamical Systems Group's own AOI (per the theoretical-frame section above): DSG is *enacting* the theory by self-infrastructuring its operational knowledge through this pattern-family. `ant-rdf` is the publicly-shared iteration that extends the pattern beyond DSG's own operations to material-semiotic analysis of external assemblages.
+
+The pattern is *replicating* across these repos because its ergonomics suit the kind of accountability that contemporary LLM-mediated work — being adopted widely and frequently mindlessly — has so far avoided. By forcing every claim through a versioned, validatable, reviewable artifact, the pattern adds rigour, reproducibility, and explainability without requiring the analyst to be sceptical of the LLM at every moment. We name this a small *pattern language* (in the Christopher Alexander sense) deliberately: the pattern is not specific to any one domain (TRL maturation, product management, conflict-resolution research, ANT/material-semiotic analysis), and each new repository it instantiates contributes back to the language's shared affordances. `ant-rdf` is the latest iteration; the comparison-study programme is, in part, a stress-test of whether the pattern itself holds up under sustained ethnographic use.
+
+---

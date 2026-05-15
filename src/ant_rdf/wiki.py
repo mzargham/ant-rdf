@@ -50,16 +50,77 @@ ABSTRACT_PATH = REPO_ROOT / "abstract.md"
 _MOMENT_ORDER = ["Problematization", "Interessement", "Enrolment", "Mobilization"]
 
 
-def _load_abstract_body() -> str | None:
-    """Return the body of abstract.md (without its leading H1 and SPDX comment).
+# ---------------------------------------------------------------------------
+# Federated front-matter pages
+# ---------------------------------------------------------------------------
+#
+# abstract.md at the repo root is the canonical socio-material reading of
+# the project (≈1500 words). Putting all of it at the top of the wiki Home
+# page buried the navigation surface, so we federate: each H2 section of
+# abstract.md becomes its own top-level wiki page (About.md, Theoretical-
+# Frame.md, Lineage.md), and Home gets a ~200-word hand-curated summary
+# with links out to the federated pages.
+#
+# This keeps abstract.md as the single source of truth — no duplicated
+# content — while making the wiki Home page scannable in seconds.
 
-    The wiki Home page injects this at the top so the socio-material framing
-    of the repo is the first thing a visitor encounters. Returns None if the
-    file doesn't exist — abstract injection is optional.
+# Maps the H2 heading-prefix (case-insensitive) to the federated page stem.
+# The order here is also the rendering order in the About-page footer.
+_FEDERATED_PAGES: list[tuple[str, str]] = [
+    ("theoretical frame", "Theoretical-Frame"),
+    ("lineage", "Lineage"),
+]
+
+# Hand-curated Home summary. Kept under 200 words to honour the
+# "shrink the home page front matter" constraint. Links to the federated
+# pages carry the positioning/lineage detail.
+_HOME_SUMMARY = """\
+`ant-rdf` is a docs-as-code semantic-web vocabulary and authoring toolkit \
+for **actor-network / material-semiotic analysis**, synthesising Callon, \
+Latour, Law, and Mol. Records are RDF (canonical); compilers render \
+reviewable Markdown briefs and this hyperlinked wiki; a Python CLI authors \
+records, callable directly or via an LLM-mediated catechism.
+
+The move worth naming up front is reflexive: **`ant-rdf` is itself an \
+assemblage of the kind material-semiotic analysis is built to interrogate** \
+— ethnographers, toolchain, LLM mediator, deterministic Turtle, SHACL, this \
+wiki, and the cases studied are all actants whose webs of relations produce \
+what gets attributed downstream to "the ethnographer's reading." The toolkit \
+is therefore a **prosthesis**, not a neutral instrument, and the project \
+treats it that way.
+
+**Read further (positioning and lineage pages):**
+
+- **[About](About.md)** — the full socio-material reading: four operational \
+consequences (toolkit as prosthesis; three-tier validation; comparison \
+studies; git/RDF complementarity).
+- **[Theoretical Frame](Theoretical-Frame.md)** — Artificial Organisational \
+Intelligence (AOI) and "building the loop"; DSG as a self-infrastructuring \
+organisation (Rennie et al. 2026).
+- **[Lineage](Lineage.md)** — the small pattern language `ant-rdf` extends.
+
+Below: navigation across the cases, actants, translations, perspectives, and \
+the ontology as a glossary.
+"""
+
+
+def _split_abstract() -> dict[str, str] | None:
+    """Split abstract.md into federated wiki pages.
+
+    Returns ``{page_stem: page_markdown}`` for ``About``, ``Theoretical-Frame``,
+    ``Lineage`` (and any other H2-bounded section in abstract.md whose
+    heading is in ``_FEDERATED_PAGES``). The ``Further reading`` H2 is folded
+    into ``About`` as its footer.
+
+    Returns ``None`` if abstract.md isn't present.
     """
     if not ABSTRACT_PATH.exists():
         return None
+
     text = ABSTRACT_PATH.read_text(encoding="utf-8")
+
+    # Strip SPDX header comment and leading H1 (the doc-level title is
+    # replaced per-page below)
     body_lines: list[str] = []
     seen_h1 = False
     for line in text.splitlines():
@@ -68,10 +129,90 @@ def _load_abstract_body() -> str | None:
         if not seen_h1 and line.startswith("# "):
             seen_h1 = True
             continue
-        # Skip leading blank lines after the H1
         if seen_h1 or body_lines:
             body_lines.append(line)
-    return "\n".join(body_lines).strip() or None
+    body = "\n".join(body_lines).strip()
+
+    # Split by H2 markers. The text before the first H2 is the "prelude".
+    sections: list[tuple[str | None, str]] = []
+    current_heading: str | None = None
+    current_buf: list[str] = []
+    for line in body.splitlines():
+        if line.startswith("## "):
+            if current_heading is not None or current_buf:
+                sections.append((current_heading, "\n".join(current_buf).strip()))
+            current_heading = line[3:].strip()
+            current_buf = []
+        else:
+            current_buf.append(line)
+    if current_heading is not None or current_buf:
+        sections.append((current_heading, "\n".join(current_buf).strip()))
+
+    # First section may be the prelude (heading=None)
+    prelude = ""
+    h2_sections: list[tuple[str, str]] = []
+    for heading, content in sections:
+        if heading is None:
+            prelude = content
+        else:
+            h2_sections.append((heading, content))
+
+    pages: dict[str, str] = {}
+
+    # Federated H2 pages
+    further_reading_body: str | None = None
+    for heading, content in h2_sections:
+        page_stem = _match_federated(heading)
+        if page_stem:
+            breadcrumb = "[← Home](Home.md) · [← About](About.md)"
+            pages[page_stem] = (
+                f"# {heading}\n\n"
+                f"{breadcrumb}\n\n"
+                f"{content}\n"
+            )
+        elif heading.lower().startswith("further reading"):
+            further_reading_body = content
+        # Unknown H2: silently fold into About at the end so nothing is dropped
+        else:
+            further_reading_body = (
+                (further_reading_body or "")
+                + f"\n\n## {heading}\n\n{content}"
+            )
+
+    # About: prelude + (footer with cross-links and further-reading)
+    about_lines = [
+        "# About ant-rdf — a material-semiotic reading of this repository",
+        "",
+        "[← Home](Home.md)",
+        "",
+        prelude,
+        "",
+        "---",
+        "",
+        "## Where this continues",
+        "",
+        "- [Theoretical Frame](Theoretical-Frame.md) — AOI / building-the-loop framing and DSG's self-infrastructuring",
+        "- [Lineage](Lineage.md) — the small pattern language `ant-rdf` extends",
+    ]
+    if further_reading_body:
+        about_lines += [
+            "",
+            "## Further reading",
+            "",
+            further_reading_body,
+        ]
+    pages["About"] = "\n".join(about_lines) + "\n"
+
+    return pages
+
+
+def _match_federated(heading: str) -> str | None:
+    """Return the federated page stem for an H2 heading, or None if unmatched."""
+    h = heading.lower()
+    for prefix, stem in _FEDERATED_PAGES:
+        if h.startswith(prefix):
+            return stem
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -254,13 +395,24 @@ def run_wiki(output_dir: str | None = None) -> None:
     for sub in ("Cases", "Actants", "Translations", "Perspectives", "Concepts"):
         for f in (out / sub).glob("*.md"):
             f.unlink()
-    home_path = out / "Home.md"
-    if home_path.exists():
-        home_path.unlink()
+    # Also sweep the federated front-matter pages and Home so abstract changes
+    # don't leave stale top-level pages.
+    for stem in ("Home", "About", *(stem for _, stem in _FEDERATED_PAGES)):
+        p = out / f"{stem}.md"
+        if p.exists():
+            p.unlink()
 
     # Home
     (out / "Home.md").write_text(_render_home(g, cases, perspectives, concepts), encoding="utf-8")
     pages_written += 1
+
+    # Federated front-matter pages (About, Theoretical-Frame, Lineage)
+    # split out of abstract.md so Home stays scannable.
+    federated = _split_abstract()
+    if federated:
+        for stem, body in federated.items():
+            (out / f"{stem}.md").write_text(body, encoding="utf-8")
+            pages_written += 1
 
     # Cases
     for case_slug in sorted(cases):
@@ -330,23 +482,13 @@ def _render_home(
     lines: list[str] = [
         "# ant-rdf wiki",
         "",
+        _HOME_SUMMARY,
+        "",
+        "_Source for the federated front-matter pages: [`abstract.md`](https://github.com/mzargham/ant-rdf/blob/main/abstract.md) in the main repo. Pages are regenerated by `ant wiki`._",
+        "",
+        "---",
+        "",
     ]
-
-    # Inject abstract.md as the opening framing, if present. Keeps the
-    # socio-material reading of the repo prominent — the first thing a
-    # visitor lands on, before the navigation surface.
-    abstract = _load_abstract_body()
-    if abstract:
-        lines += [
-            "## Abstract — a material-semiotic reading of this repository",
-            "",
-            abstract,
-            "",
-            "_Source: [`abstract.md`](https://github.com/mzargham/ant-rdf/blob/main/abstract.md) in the main repo. Regenerated into this Home page by `ant wiki`._",
-            "",
-            "---",
-            "",
-        ]
 
     lines += [
         "## Navigation",

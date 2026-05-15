@@ -41,4 +41,6 @@ The pattern is *replicating* across these repos because its ergonomics suit the 
 
 ---
 
+## Further reading
+
 The eight ontological commitments that ground the vocabulary are in [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md); the ten resolved foundational decisions are in [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md); the scope-out items, the three-tier validation regime, and the comparison-study programme are in [FUTURE_WORK.md](FUTURE_WORK.md); the AOI / "building the loop" theoretical frame is developed at length in Rennie et al. (2026), [DOI:10.1111/epic.70009](https://doi.org/10.1111/epic.70009). The two worked cases that exist today — Callon's scallops and Latour's hotel-keys — are in [instances/cases/](instances/cases/), compiled to briefs in [briefs/](briefs/), and navigable through the [wiki](wiki/).
