@@ -82,15 +82,21 @@ def run_verify(
     # 3. Load ontology for OWL hints
     ont = load_ontology()
 
-    # 4. Run pyshacl with the shapes graph we'll re-use for walkback
+    # 4. Run pyshacl with the shapes graph we'll re-use for walkback.
+    #    advanced=False because pyshacl's advanced mode propagates
+    #    rdfs:subClassOf from ont_graph into target resolution — which would
+    #    make sh:targetClass ant:Translation also match Problematization /
+    #    Interessement / Enrolment / Mobilization (subclasses), causing
+    #    TranslationShape and TranslationCompletenessShape to fire on
+    #    every moment. v1 SHACL targeting is direct-typing only.
     conforms, report_g, _report_text = _pyshacl_validate(
         data_graph=data_ds.default_graph,
         shacl_graph=shapes,
-        ont_graph=ont,
+        ont_graph=None,
         inference="none",
         debug=False,
         meta_shacl=False,
-        advanced=True,
+        advanced=False,
     )
 
     violations, warnings = _classify_results(report_g, shapes)
