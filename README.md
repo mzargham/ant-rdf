@@ -109,14 +109,15 @@ ant-rdf/
 
 1. [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) — C1–C8, the philosophical commitments
 2. [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) — resolved design decisions (R1–R10)
-3. [CLAUDE.md](CLAUDE.md) — the LLM workflow contract (how Claude Code should interact with this repo)
-4. [wiki/Home.md](wiki/Home.md) — the navigable wiki (each Concept page is a glossary entry with founding-text citations)
+3. [FUTURE_WORK.md](FUTURE_WORK.md) — what v1 left out of scope, how features arrive, and the three-tier training/testing/novel validation regime (with the machine-mediation comparison-study programme)
+4. [CLAUDE.md](CLAUDE.md) — the LLM workflow contract (how Claude Code should interact with this repo)
+5. [wiki/Home.md](wiki/Home.md) — the navigable wiki (each Concept page is a glossary entry with founding-text citations)
 
 ## Citation
 
 If you use this vocabulary in academic work, please cite:
 
-> Zargham, M., Rennie, E., et al. (2026). *ant-rdf: A material-semiotics vocabulary for actor-network analysis.* https://github.com/mzargham/ant-rdf
+> Zargham, M. and Rennie, E. (2026). *ant-rdf: A material-semiotics vocabulary for actor-network analysis.* https://github.com/mzargham/ant-rdf
 
 And the founding texts the vocabulary synthesizes — Callon (1986), Latour (1991, 2005), Law (1986, 1994, 2008), Mol (2002). Every term in the ontology carries a `dcterms:source` pointing to its founding text.
 
