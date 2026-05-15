@@ -1,0 +1,35 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://w3id.org/ant/cases/scallops/char/collectors-as-intermediary> a ant:Characterization ;
+    dcterms:description "From the experimental-oceanography practice, the larvae collectors are immutable mobiles — they transmit the Japanese anchoring technique without transformation." ;
+    ant:assignsRole ant:Intermediary ;
+    ant:characterizes <https://w3id.org/ant/cases/scallops/actant/larvae-collectors> ;
+    ant:invarianceCriterion "anchoring-substrate-as-designed" ;
+    ant:perPractice <https://w3id.org/ant/practices/experimental-oceanography> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/scallops/network> .
+
+<https://w3id.org/ant/cases/scallops/char/collectors-as-mediator> a ant:Characterization ;
+    dcterms:description "From the fishermen's seasonal-labor practice, the same collectors transform what they transmit — they reframe stretches of bay as off-limits, restructuring the rhythm of fishing work. Demonstrates §4.1.1: the same actant simultaneously Intermediary and Mediator under different observer-frames." ;
+    ant:assignsRole ant:Mediator ;
+    ant:characterizes <https://w3id.org/ant/cases/scallops/actant/larvae-collectors> ;
+    ant:invarianceCriterion "rhythms-of-bay-work" ;
+    ant:perPractice <https://w3id.org/ant/practices/seasonal-fishing-labor> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/scallops/network> .
+
+<https://w3id.org/ant/cases/scallops/char/researchers-as-opp> a ant:Characterization ;
+    dcterms:description "Within the funding/credit network, every actant must pass through the researchers (who control the experimental design and the publication-rights). Manual OPP assignment per §4.1.2 — v2 will also support rule-based assignment from topology." ;
+    ant:assignsRole ant:ObligatoryPassagePoint ;
+    ant:characterizes <https://w3id.org/ant/cases/scallops/actant/researchers> ;
+    ant:invarianceCriterion "resource-allocation-routing" ;
+    ant:perPractice <https://w3id.org/ant/practices/network-funding> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/scallops/network> .
+
+<https://w3id.org/ant/cases/scallops/char/researchers-as-spokesperson> a ant:Characterization ;
+    dcterms:description "The researchers speak for scallops, fishermen, and the bay in scientific publications — emerging through the mobilization moment." ;
+    ant:assignsRole ant:Spokesperson ;
+    ant:characterizes <https://w3id.org/ant/cases/scallops/actant/researchers> ;
+    ant:invarianceCriterion "citational-credit" ;
+    ant:perPractice <https://w3id.org/ant/practices/scientific-publication> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/scallops/network> .
+

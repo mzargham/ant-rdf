@@ -1,0 +1,19 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/practices/experimental-oceanography> a ant:Practice ;
+    rdfs:label "Experimental oceanography" ;
+    dcterms:description "The laboratory-grounded research practice of designing experiments to understand marine species and their habitats; the practice that grounds the researchers' frame in the scallops case." .
+
+<https://w3id.org/ant/practices/seasonal-fishing-labor> a ant:Practice ;
+    rdfs:label "Seasonal fishing labor" ;
+    dcterms:description "The embodied year-round practice of fishing the bay — knowing tides, timing harvests, navigating restricted zones. The frame within which fishermen encounter scientific apparatus as alien constraint or local opportunity." .
+
+<https://w3id.org/ant/practices/scientific-publication> a ant:Practice ;
+    rdfs:label "Scientific publication" ;
+    dcterms:description "The practice of authoring peer-reviewed papers as inscriptions that circulate scientific claims; mobilizes the network into the wider scientific community." .
+
+<https://w3id.org/ant/practices/network-funding> a ant:Practice ;
+    rdfs:label "Network funding" ;
+    dcterms:description "The administrative practice of resource allocation across the experimental network; the frame in which OPPs emerge by virtue of who controls the pipeline." .

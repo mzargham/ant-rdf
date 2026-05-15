@@ -1,0 +1,29 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/scallops/actant/colleagues> a ant:Actant ;
+    rdfs:label "Scientific colleagues" ;
+    dcterms:description "The wider scientific community whose acceptance of the experimental findings is the final mobilization condition." ;
+    ant:participatesIn <https://w3id.org/ant/cases/scallops/network> .
+
+<https://w3id.org/ant/cases/scallops/actant/fishermen> a ant:Actant ;
+    rdfs:label "Fishermen of St Brieuc Bay" ;
+    dcterms:description "The local fishing community whose long-term cooperation is essential for the technique to scale. Their forbearance to trawl protected grounds is precisely what the translation requires." ;
+    ant:participatesIn <https://w3id.org/ant/cases/scallops/network> .
+
+<https://w3id.org/ant/cases/scallops/actant/larvae-collectors> a ant:Actant ;
+    rdfs:label "Larvae collectors (towlines)" ;
+    dcterms:description "The technical artifact (towlines with anchoring substrate) borrowed from Japanese practice — the inscription / immutable mobile carrying the technique across contexts." ;
+    ant:participatesIn <https://w3id.org/ant/cases/scallops/network> .
+
+<https://w3id.org/ant/cases/scallops/actant/researchers> a ant:Actant ;
+    rdfs:label "Three researchers from Brest" ;
+    dcterms:description "The three oceanographers who problematize scallop population decline and propose the larvae-collector experiment. Latour-style spokespersons for the emerging network." ;
+    ant:participatesIn <https://w3id.org/ant/cases/scallops/network> .
+
+<https://w3id.org/ant/cases/scallops/actant/scallops> a ant:Actant ;
+    rdfs:label "Scallops (Pecten maximus)" ;
+    dcterms:description "The scallops being enrolled into the experimental science. Non-human actant whose larvae must anchor to collectors for the network to succeed." ;
+    ant:participatesIn <https://w3id.org/ant/cases/scallops/network> .
+

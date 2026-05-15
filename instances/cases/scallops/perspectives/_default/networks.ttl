@@ -1,0 +1,8 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/scallops/network> a ant:Network ;
+    rdfs:label "St Brieuc Bay scallop-farming network" ;
+    dcterms:description "The heterogeneous network Michel Callon analyzed in 'Some Elements of a Sociology of Translation' (1986). Three researchers from the Brest Oceanographic Centre attempt to enrol scallops, fishermen of St Brieuc Bay, and scientific colleagues into a programme to domesticate Pecten maximus and develop a commercial harvesting technique borrowed from Japanese practice. The translation succeeds for several seasons before fishermen trawl the protected larvae grounds and unravel the web." .
+

@@ -1,0 +1,20 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/scallops/moment/enrolment> a ant:Enrolment ;
+    rdfs:label "Enrolment: coordinated roles" ;
+    dcterms:description "Scallops successfully anchor in significant numbers (some seasons). Fishermen accept the no-trawl zones. Scientific colleagues accept the experimental results. Each actant plays its scripted role." .
+
+<https://w3id.org/ant/cases/scallops/moment/interessement> a ant:Interessement ;
+    rdfs:label "Interessement: locking in roles" ;
+    dcterms:description "The researchers cut competing alternatives — they negotiate with fishermen to refrain from trawling protected zones, and they design collectors that prevent scallop larvae from anchoring anywhere else. Each actant is interested into a single role within the network." .
+
+<https://w3id.org/ant/cases/scallops/moment/mobilization> a ant:Mobilization ;
+    rdfs:label "Mobilization: spokespersons emerge" ;
+    dcterms:description "The researchers speak for the scallops (citing anchoring counts), for the fishermen (citing community acceptance), and for the bay itself (citing the technique's promise). The network speaks with one voice — until it doesn't." .
+
+<https://w3id.org/ant/cases/scallops/moment/problematization> a ant:Problematization ;
+    rdfs:label "Problematization: declining scallop populations" ;
+    dcterms:description "The three researchers define the problem: St Brieuc Bay scallop populations are declining and unstudied. They position themselves as indispensable by proposing the larvae-collector experiment and positioning fishermen and scallops as needing to pass through their experimental apparatus." .
+

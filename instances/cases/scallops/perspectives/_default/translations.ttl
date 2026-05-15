@@ -1,0 +1,12 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/scallops/translation/main> a ant:Translation ;
+    rdfs:label "The Callon-1986 translation chain" ;
+    dcterms:description "The translation that Callon traces from problematization through mobilization. Ultimately precarious: a single winter's trawling unravels the web (Law 2008 quotation: 'all it takes is for one translation to fail and the whole web of reality unravels')." ;
+    ant:hasMoment <https://w3id.org/ant/cases/scallops/moment/enrolment>,
+        <https://w3id.org/ant/cases/scallops/moment/interessement>,
+        <https://w3id.org/ant/cases/scallops/moment/mobilization>,
+        <https://w3id.org/ant/cases/scallops/moment/problematization> .
+
