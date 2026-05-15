@@ -1,0 +1,116 @@
+# SPDX-License-Identifier: CC0-1.0
+#
+# ant-rdf — Optional PROV-O alignment module
+# Namespace: https://w3id.org/ant#
+#
+# This file declares conditional alignments between ant: terms and W3C PROV-O.
+# Consumers who want PROV-compatibility import this file alongside
+# material-semiotics-core.ttl. Consumers who want philosophical cleanliness
+# (no foreign upper-vocab commitments) can import core alone.
+#
+# DESIGN NOTE — per R2 / plan §4.3: This file does NOT subclass ant:Actant
+# under prov:Agent (or prov:Influencer). Whether an actant is treated as a
+# responsibility-bearing prov:Agent or a lighter prov:Influencer is itself
+# observer-relative and recorded via ant:Characterization (see core file).
+# Only the translation moments and their immediate kin are aligned here,
+# where the philosophical commitments are uncontroversial.
+
+@prefix ant:     <https://w3id.org/ant#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+# Module metadata
+# =============================================================================
+
+<https://w3id.org/ant/prov-align>
+    a owl:Ontology ;
+    rdfs:label "ant-rdf optional PROV-O alignment"@en ;
+    dcterms:description "Optional alignment of ant: vocabulary terms to W3C PROV-O. Consumers import this in addition to material-semiotics-core.ttl when they want prov:Activity / prov:Entity / prov:Plan / prov:Role typing on translation moments and related concepts. Per §4.3, this file deliberately does NOT subclass ant:Actant under prov:Agent or prov:Influencer — those typings are perspective-relative and assigned via ant:Characterization."@en ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    owl:versionInfo "0.1.0-draft" ;
+    owl:imports <https://w3id.org/ant> ;
+    owl:imports <http://www.w3.org/ns/prov> ;
+    rdfs:seeAlso <https://github.com/w3c/sdw/blob/gh-pages/ssn/rdf/sosa-prov-mapping.ttl> .
+
+
+# =============================================================================
+# Translation moments → prov:Activity
+# =============================================================================
+# Uncontroversial subclassing: a translation moment "occurs over a period of
+# time and acts upon or with entities" — the literal prov:Activity definition.
+# Subclassing now (with no time assertion required by PROV) makes v2 temporal
+# extension free for every existing instance.
+
+ant:Translation rdfs:subClassOf prov:Activity .
+ant:Problematization rdfs:subClassOf prov:Activity .
+ant:Interessement rdfs:subClassOf prov:Activity .
+ant:Enrolment rdfs:subClassOf prov:Activity .
+ant:Mobilization rdfs:subClassOf prov:Activity .
+ant:Practice rdfs:subClassOf prov:Activity .
+ant:Analysis rdfs:subClassOf prov:Activity .
+
+
+# =============================================================================
+# Inscription, plan
+# =============================================================================
+# Latourian inscriptions (texts, instrument readings, traces) align cleanly
+# with prov:Entity ("a physical, digital, conceptual, or other kind of thing
+# with some fixed aspects"). Programs of action align with prov:Plan ("a set
+# of actions intended to achieve goals").
+
+ant:Inscription rdfs:subClassOf prov:Entity .
+ant:ProgramOfAction rdfs:subClassOf prov:Plan .
+
+
+# =============================================================================
+# Role-typed assignments
+# =============================================================================
+# The role values used as ant:assignsRole on Characterizations are PROV roles.
+
+ant:Mediator rdfs:subClassOf prov:Role .
+ant:Intermediary rdfs:subClassOf prov:Role .
+ant:Spokesperson rdfs:subClassOf prov:Role .
+ant:ObligatoryPassagePoint rdfs:subClassOf prov:Role .
+ant:ProvAgent rdfs:subClassOf prov:Role .
+ant:ProvInfluencer rdfs:subClassOf prov:Role .
+
+
+# =============================================================================
+# Property-level alignment
+# =============================================================================
+# ant:translates and ant:enrols are subproperties of the most generic PROV
+# influence relation. This lets downstream PROV-aware tooling at least see
+# the network structure even if it doesn't understand the ANT subtypes.
+
+ant:translates rdfs:subPropertyOf prov:wasInfluencedBy .
+ant:enrols rdfs:subPropertyOf prov:wasInfluencedBy .
+ant:speaksFor rdfs:subPropertyOf prov:actedOnBehalfOf .
+ant:hasProgram rdfs:subPropertyOf prov:hadPlan .
+
+
+# =============================================================================
+# What is NOT aligned here (and why)
+# =============================================================================
+#
+# - ant:Actant ↛ prov:Agent / prov:Influencer:
+#   Per R2/§4.3 these typings are perspective-relative; they are assigned via
+#   ant:Characterization with ant:assignsRole ant:ProvAgent or ant:ProvInfluencer.
+#   A global subClassOf would smuggle one observer-frame into the ontology.
+#
+# - ant:Network ↛ any PROV class:
+#   Networks are act-4 documentation artifacts (analyst's named summaries).
+#   They are not entities-in-the-world; they are bibliographic-sense entities
+#   about the world. Map them yourself if your downstream tooling needs it.
+#
+# - ant:Perspective ↛ any PROV class:
+#   In v2 a Perspective IRI also becomes a named-graph URI. Aligning to a
+#   PROV class would over-constrain the v2 graph semantics. Left open.
+#
+# - ant:Characterization ↛ prov:Influence or qualified-influence pattern:
+#   Tempting (the shapes are similar). Deferred to v1.1 because the dual
+#   prov:Agent/prov:Influencer characterization mechanism (§4.3) is novel and
+#   not yet stable enough to anchor in PROV's qualified pattern.

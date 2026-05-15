@@ -1,0 +1,122 @@
+# SPDX-License-Identifier: CC0-1.0
+#
+# ant-rdf — SHACL shapes (Tier 2: should-conform, waivable)
+# Severity: sh:Warning
+#
+# These shapes encode ANALYTICAL HYGIENE — constraints that should not be
+# violated silently but may be overridden via ant:ConstraintWaiver with a
+# stated justification. The "should but not must" middle band.
+#
+# Per plan §4.6 / R9b: CI default is non-strict — warnings surface in the log
+# but do not break builds. Teams that want stricter gating run `ant verify --strict`.
+
+@prefix ant:     <https://w3id.org/ant#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+# Characterization — should declare practice and invariance
+# =============================================================================
+
+ant:CharacterizationPracticeShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Characterization ;
+    sh:severity sh:Warning ;
+    sh:property [
+        sh:path ant:perPractice ;
+        sh:minCount 1 ;
+        sh:message "Characterization without an explicit practice/observer obscures the observer-frame (§4.1.1). Waive with justification if intentional (e.g., 'Provisional characterization pending practice identification')." ;
+    ] .
+
+ant:CharacterizationInvarianceShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Characterization ;
+    sh:severity sh:Warning ;
+    sh:property [
+        sh:path ant:invarianceCriterion ;
+        sh:minCount 1 ;
+        sh:message "Characterization without a stated invariance hides the analytical move (transformation-vs-preservation under what). Waive with justification if invariance is not yet separable from practice." ;
+    ] .
+
+# =============================================================================
+# Actant — should carry label and description
+# =============================================================================
+
+ant:ActantLabelShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Actant ;
+    sh:severity sh:Warning ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "ant:Actant should have rdfs:label. Waive (e.g., 'Anonymized informant; description recorded in offline notes')." ;
+    ] ;
+    sh:property [
+        sh:path dcterms:description ;
+        sh:minCount 1 ;
+        sh:message "ant:Actant should have dcterms:description for downstream readability." ;
+    ] .
+
+# =============================================================================
+# Translation — should have all four Callon moments (often won't, hence waiver)
+# =============================================================================
+
+ant:TranslationCompletenessShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Translation ;
+    sh:severity sh:Warning ;
+    sh:property [
+        sh:path ant:hasMoment ;
+        sh:minCount 4 ;
+        sh:message "Translation has fewer than 4 Callon moments. If the translation failed at some point or is still in progress, record a waiver naming the moment-of-failure (e.g., 'Translation failed at interessement; no enrolment or mobilization observed')." ;
+    ] .
+
+# =============================================================================
+# Inscription — should carry a source
+# =============================================================================
+
+ant:InscriptionSourceShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Inscription ;
+    sh:severity sh:Warning ;
+    sh:property [
+        sh:path dcterms:source ;
+        sh:minCount 1 ;
+        sh:message "ant:Inscription should have dcterms:source (URL, file hash, or citation). Waive if withheld for confidentiality (e.g., 'Source URL withheld for participant confidentiality')." ;
+    ] .
+
+# =============================================================================
+# Bare role typing — discourage direct Mediator/Intermediary class assertions
+# =============================================================================
+# Per §4.1.1, Mediator/Intermediary are roles assigned via Characterization,
+# not classes of Actant. A bare `:x a ant:Mediator` (where :x is also an
+# Actant) is technically allowed but pre-perspectival; we warn and suggest
+# migrating into a Characterization.
+
+ant:BareMediatorPatternShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Mediator ;
+    sh:severity sh:Warning ;
+    sh:not [
+        sh:property [
+            sh:path [ sh:inversePath rdf:type ] ;
+            sh:hasValue ant:Actant ;
+        ] ;
+    ] ;
+    sh:message "Subject typed as both ant:Actant and ant:Mediator without a Characterization is pre-perspectival. Migrate into an ant:Characterization with explicit ant:perPractice and ant:invarianceCriterion, or waive with a note explaining why the bare typing is intentional." .
+
+ant:BareIntermediaryPatternShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Intermediary ;
+    sh:severity sh:Warning ;
+    sh:not [
+        sh:property [
+            sh:path [ sh:inversePath rdf:type ] ;
+            sh:hasValue ant:Actant ;
+        ] ;
+    ] ;
+    sh:message "Subject typed as both ant:Actant and ant:Intermediary without a Characterization is pre-perspectival. Migrate into an ant:Characterization or waive." .

@@ -1,0 +1,143 @@
+# SPDX-License-Identifier: CC0-1.0
+#
+# ant-rdf — SHACL shapes (Tier 1: load-bearing)
+# Severity: sh:Violation
+#
+# These shapes enforce STRUCTURAL INTEGRITY only. If violated, downstream
+# tooling (compilers, wiki generators, cross-reference resolvers) cannot
+# operate. Tier-1 violations are NEVER waivable — `ant verify` rejects any
+# ant:ConstraintWaiver targeting a Tier-1 shape.
+#
+# Per plan §4.6: keep deliberately minimal. Analytical openness requires
+# SHACL silence on places where ANT's commitments resist pre-decision.
+
+@prefix ant:     <https://w3id.org/ant#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+# Network — must have label and description
+# =============================================================================
+
+ant:NetworkShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Network ;
+    sh:severity sh:Violation ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "ant:Network requires rdfs:label (anonymous networks are uncitable)." ;
+    ] ;
+    sh:property [
+        sh:path dcterms:description ;
+        sh:minCount 1 ;
+        sh:message "ant:Network requires dcterms:description (briefs cannot render without it)." ;
+    ] .
+
+# =============================================================================
+# Perspective — must have label and a holder
+# =============================================================================
+
+ant:PerspectiveShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Perspective ;
+    sh:severity sh:Violation ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "ant:Perspective requires rdfs:label (the IRI also becomes the v2 named-graph URI)." ;
+    ] ;
+    sh:property [
+        sh:path ant:perspectiveHeldBy ;
+        sh:minCount 1 ;
+        sh:message "ant:Perspective requires a holder (perspective = relation between holder and seen-thing)." ;
+    ] .
+
+# =============================================================================
+# Translation — must have at least one moment
+# =============================================================================
+
+ant:TranslationShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Translation ;
+    sh:severity sh:Violation ;
+    sh:property [
+        sh:path ant:hasMoment ;
+        sh:minCount 1 ;
+        sh:message "ant:Translation must have at least one ant:hasMoment (a translation with zero moments is degenerate; nothing for translationtrace to render). Tier-2 will warn if fewer than 4 moments are present." ;
+    ] .
+
+# =============================================================================
+# Characterization — must have a target and a role
+# =============================================================================
+
+ant:CharacterizationShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Characterization ;
+    sh:severity sh:Violation ;
+    sh:property [
+        sh:path ant:characterizes ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "ant:Characterization requires exactly one ant:characterizes target." ;
+    ] ;
+    sh:property [
+        sh:path ant:assignsRole ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "ant:Characterization requires exactly one ant:assignsRole." ;
+    ] ;
+    sh:property [
+        sh:path ant:withinNetwork ;
+        sh:minCount 1 ;
+        sh:message "ant:Characterization requires ant:withinNetwork (a role assignment with no network is contextless)." ;
+    ] .
+
+# =============================================================================
+# ConstraintWaiver — must have shape, target, agent, date, and justification
+# =============================================================================
+# (Tier-1: a waiver with missing fields is itself structurally invalid.)
+
+ant:ConstraintWaiverShape
+    a sh:NodeShape ;
+    sh:targetClass ant:ConstraintWaiver ;
+    sh:severity sh:Violation ;
+    sh:property [
+        sh:path ant:waivesShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "ant:ConstraintWaiver must reference exactly one shape." ;
+    ] ;
+    sh:property [
+        sh:path ant:waivesForTarget ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "ant:ConstraintWaiver must reference exactly one target." ;
+    ] ;
+    sh:property [
+        sh:path ant:waivedBy ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "ant:ConstraintWaiver must record the agent accountable." ;
+    ] ;
+    sh:property [
+        sh:path dcterms:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+        sh:message "ant:ConstraintWaiver must record dcterms:date." ;
+    ] ;
+    sh:property [
+        sh:path ant:waiverJustification ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:nodeKind sh:Literal ;
+        sh:minLength 1 ;
+        sh:message "ant:ConstraintWaiver must carry a non-empty ant:waiverJustification." ;
+    ] .

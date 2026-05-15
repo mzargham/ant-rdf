@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: CC0-1.0
+#
+# ant-rdf — SHACL shapes (Tier 3: advisory / style)
+# Severity: sh:Info
+#
+# Surfaced only with `ant verify --lint`. Style and completeness lints.
+#
+# IMPORTANT: These shapes self-target every owl:Class / owl:ObjectProperty /
+# owl:DatatypeProperty in whatever graph is being validated — which means
+# running them against an instance graph that merges the ontology will flag
+# the ontology's own terms. `ant verify --lint` therefore validates the
+# ONTOLOGY graph specifically, not merged instance data. See verify.py.
+
+@prefix ant:     <https://w3id.org/ant#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+
+# =============================================================================
+# Every ant: ontology term should carry dcterms:source (governance-time check)
+# =============================================================================
+
+ant:OntologyClassSourceShape
+    a sh:NodeShape ;
+    sh:targetClass owl:Class ;
+    sh:severity sh:Info ;
+    sh:property [
+        sh:path dcterms:source ;
+        sh:minCount 1 ;
+        sh:message "Ontology class should carry dcterms:source pointing to the founding text (per R9)." ;
+    ] .
+
+ant:OntologyObjectPropertySourceShape
+    a sh:NodeShape ;
+    sh:targetClass owl:ObjectProperty ;
+    sh:severity sh:Info ;
+    sh:property [
+        sh:path dcterms:source ;
+        sh:minCount 1 ;
+        sh:message "Object property should carry dcterms:source pointing to the founding text." ;
+    ] .
+
+ant:OntologyDatatypePropertySourceShape
+    a sh:NodeShape ;
+    sh:targetClass owl:DatatypeProperty ;
+    sh:severity sh:Info ;
+    sh:property [
+        sh:path dcterms:source ;
+        sh:minCount 1 ;
+        sh:message "Datatype property should carry dcterms:source pointing to the founding text." ;
+    ] .

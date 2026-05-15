@@ -1,0 +1,464 @@
+# SPDX-License-Identifier: CC0-1.0
+#
+# ant-rdf — Material Semiotics / Actor-Network-Theory core vocabulary
+# Namespace: https://w3id.org/ant#
+# Version: 0.1.0-draft
+#
+# Synthesis across Callon's sociology of translation, Latour's classical ANT,
+# and Law/Mol post-ANT (material semiotics). See ONTOLOGICAL_COMMITMENTS.md
+# for the philosophical commitments (C1–C8) and adr/0000-foundational-decisions.md
+# for the foundational decisions (R1–R10).
+#
+# Every term carries dcterms:source pointing to the founding text (per R9).
+# This file is the *core* vocabulary; alignment to PROV-O is in
+# ant-prov-align.ttl (optional, imported separately per SOSA pattern).
+
+@prefix ant:     <https://w3id.org/ant#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+# =============================================================================
+# Ontology metadata
+# =============================================================================
+
+<https://w3id.org/ant>
+    a owl:Ontology ;
+    rdfs:label "Material Semiotics / Actor-Network-Theory core vocabulary"@en ;
+    dcterms:description "A synthesized vocabulary for material-semiotic / actor-network analysis, drawing on Callon's sociology of translation, Latour's classical ANT, and Law/Mol post-ANT (material semiotics). Designed as a toolkit for ethnographers and STS analysts, not as a metaphysics."@en ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    owl:versionInfo "0.1.0-draft" ;
+    rdfs:seeAlso <https://w3id.org/ant#ontological-commitments> .
+
+
+# =============================================================================
+# Spine (v1 minimum)
+# =============================================================================
+
+ant:Actant
+    a owl:Class ;
+    rdfs:label "Actant"@en ;
+    rdfs:comment "Any human or non-human entity participating in a web of relations. Methodological category for the analyst; NOT an ontological commitment about the world. The deliberately pre-categorical term refuses the human/non-human split that material semiotics dissolves (per C2)."@en ;
+    dcterms:source "Greimas (semiotics, via Latour); foundational across Callon, Latour, Law." .
+
+ant:Network
+    a owl:Class ;
+    rdfs:label "Network"@en ;
+    rdfs:comment "An analyst's named summary of a heterogeneous, traceable set of associations. NOT a container — networks ARE their traces. A Network record is an act-4 (documentation) artifact: the analyst's commitment to a particular reading of a region of the graph. Distinct from ant:Scope (act-1, what is in view) and ant:Analysis (act-3, computation). See plan §4.7."@en ;
+    dcterms:source "Shared across Callon, Latour, Law." .
+
+ant:Translation
+    a owl:Class ;
+    rdfs:label "Translation"@en ;
+    rdfs:comment "The process by which one actant enrols others into a program of action — transformation of interests, alignment of associations. Abstract superclass of the four Callon moments (Problematization, Interessement, Enrolment, Mobilization). Translation is always insecure (Callon 1986; Law 2008) — a process susceptible to failure."@en ;
+    dcterms:source "Callon, M. (1986). Some Elements of a Sociology of Translation; Serres, M. (1974) La Traduction." .
+
+ant:Problematization
+    a owl:Class ;
+    rdfs:subClassOf ant:Translation ;
+    rdfs:label "Problematization"@en ;
+    rdfs:comment "Moment 1 of translation: an actant defines a problem and positions itself as indispensable to the network's resolution of it."@en ;
+    dcterms:source "Callon, M. (1986). Some Elements of a Sociology of Translation." .
+
+ant:Interessement
+    a owl:Class ;
+    rdfs:subClassOf ant:Translation ;
+    rdfs:label "Interessement"@en ;
+    rdfs:comment "Moment 2 of translation: locking other actants into the proposed roles, cutting alternative associations."@en ;
+    dcterms:source "Callon, M. (1986). Some Elements of a Sociology of Translation." .
+
+ant:Enrolment
+    a owl:Class ;
+    rdfs:subClassOf ant:Translation ;
+    rdfs:label "Enrolment (moment)"@en ;
+    rdfs:comment "Moment 3 of translation: definition and coordination of the roles actants will play. Disambiguated from the v1.1 reified ant:EnrolmentRelation (a qualified edge carrying strength/time/contestation) — this class is the Callon process-moment, not the relational state. See R4."@en ;
+    dcterms:source "Callon, M. (1986). Some Elements of a Sociology of Translation." .
+
+ant:Mobilization
+    a owl:Class ;
+    rdfs:subClassOf ant:Translation ;
+    rdfs:label "Mobilization"@en ;
+    rdfs:comment "Moment 4 of translation: spokespersons become representative; the network speaks with one voice."@en ;
+    dcterms:source "Callon, M. (1986). Some Elements of a Sociology of Translation." .
+
+
+# =============================================================================
+# Inscription, mobility, programs (Latour)
+# =============================================================================
+
+ant:Inscription
+    a owl:Class ;
+    rdfs:label "Inscription"@en ;
+    rdfs:comment "A material trace (text, graph, instrument reading, photograph, file) that allows action at a distance and accumulation in centres of calculation. Inscriptions are perspective-agnostic by convention — they are raw materials any perspective may characterize. Candidate alignment: crm:E34_Inscription (see ant-cidoc-align.ttl)."@en ;
+    dcterms:source "Latour, B. (1990). Drawing Things Together; Latour, B. (1987). Science in Action." .
+
+ant:ImmutableMobile
+    a owl:Class ;
+    rdfs:subClassOf ant:Inscription ;
+    rdfs:label "Immutable mobile"@en ;
+    rdfs:comment "An inscription / entity that holds form constant while circulating, enabling long-distance control (Law 1986: Portuguese ships, charts, almanacs). Compare ant:FluidObject (v2; de Laet & Mol 2000) which works by mutability instead."@en ;
+    dcterms:source "Law, J. (1986). On the methods of long-distance control; Latour, B. (1990). Drawing Things Together." .
+
+ant:ProgramOfAction
+    a owl:Class ;
+    rdfs:label "Program of action"@en ;
+    rdfs:comment "A scripted course of action that an actant (typically a designed artifact) prescribes. Paired with ant:AntiProgram."@en ;
+    dcterms:source "Latour, B. (1991). Technology is society made durable." .
+
+ant:AntiProgram
+    a owl:Class ;
+    rdfs:subClassOf ant:ProgramOfAction ;
+    rdfs:label "Anti-program"@en ;
+    rdfs:comment "An opposing program of action."@en ;
+    dcterms:source "Latour, B. (1991). Technology is society made durable." .
+
+
+# =============================================================================
+# Roles (assigned via Characterization — perspective-relative)
+# =============================================================================
+#
+# Per §4.1.1 and R3: Mediator/Intermediary are not subclasses of Actant; they
+# are *roles* assigned to a target within a (network, practice, invariance)
+# context via ant:Characterization. The same actant can simultaneously be
+# Mediator-under-practice-A and Intermediary-under-practice-B without OWL
+# inconsistency.
+#
+# Per §4.3 and R2: ant:ProvAgent and ant:ProvInfluencer are also roles —
+# whether an actant is treated as a responsibility-bearing prov:Agent or a
+# lighter prov:Influencer is itself observer-relative. No global typing claim.
+
+ant:Mediator
+    a owl:Class ;
+    rdfs:label "Mediator (role)"@en ;
+    rdfs:comment "A role characterizing an interaction as TRANSFORMING what it transmits (its outputs cannot be predicted from its inputs). Observer-relative — assigned via ant:Characterization with explicit ant:perPractice and ant:invarianceCriterion. NOT a kind of actant; the same actant can also be characterized as Intermediary under another practice/invariance. See §4.1.1."@en ;
+    dcterms:source "Latour, B. (2005). Reassembling the Social." .
+
+ant:Intermediary
+    a owl:Class ;
+    rdfs:label "Intermediary (role)"@en ;
+    rdfs:comment "A role characterizing an interaction as TRANSMITTING WITHOUT TRANSFORMATION under a specified invariance. Observer-relative — assigned via ant:Characterization. NOT a kind of actant. NB: Callon 1991 uses 'intermediary' differently (a thing passed between actors); this ontology follows Latour 2005's sense."@en ;
+    dcterms:source "Latour, B. (2005). Reassembling the Social." .
+
+ant:Spokesperson
+    a owl:Class ;
+    rdfs:label "Spokesperson (role)"@en ;
+    rdfs:comment "A role: an actant that speaks for / represents others. Emerges through the mobilization moment of translation."@en ;
+    dcterms:source "Callon, M. (1986); Latour, B. (1987). Science in Action." .
+
+ant:ObligatoryPassagePoint
+    a owl:Class ;
+    rdfs:label "Obligatory passage point (emergent attribute)"@en ;
+    rdfs:comment "An emergent attribute, NOT a kind of thing (per R6). An actant comes to play this role within a network when every other actant must pass through it to realize its interests. v1 supports manual assertion via ant:Characterization; v2 will support rule-based tagging from network topology (see §4.1.2). Design does not preclude either path."@en ;
+    dcterms:source "Callon, M. (1986). Some Elements of a Sociology of Translation." .
+
+ant:ProvAgent
+    a owl:Class ;
+    rdfs:label "PROV Agent role"@en ;
+    rdfs:comment "A role characterizing the target actant *under this perspective* as a prov:Agent — i.e., as something that bears responsibility for the influence it exerts. Used as ant:assignsRole on a Characterization. Does NOT assert prov:Agent typing globally. See §4.3, R2."@en ;
+    dcterms:source "Synthesized per §4.3 dual-availability alignment; W3C PROV-O." .
+
+ant:ProvInfluencer
+    a owl:Class ;
+    rdfs:label "PROV Influencer role"@en ;
+    rdfs:comment "A role characterizing the target actant *under this perspective* as a prov:Influencer — i.e., as participating in influence relations without a responsibility-bearing claim. Used as ant:assignsRole on a Characterization. Does NOT assert prov:Influencer typing globally. Lighter alternative to ProvAgent for perspectives that refuse pre-network agency attribution."@en ;
+    dcterms:source "Synthesized per §4.3 dual-availability alignment; W3C PROV-O." .
+
+
+# =============================================================================
+# Characterization (reified n-ary relation; §4.1.1)
+# =============================================================================
+
+ant:Characterization
+    a owl:Class ;
+    rdfs:label "Characterization"@en ;
+    rdfs:comment "A reified n-ary relation that assigns a role to a target actant or interaction *within a context*: a network, an authoring practice, and (where relevant) the invariance criterion being tracked. The mechanism that lets the same actant be simultaneously characterized as Mediator under one practice and Intermediary under another without OWL inconsistency. Also used for the dual PROV-Agent / PROV-Influencer alignment (§4.3) and for ethnographer-asserted OPP assignment (§4.1.2)."@en ;
+    dcterms:source "Synthesized per plan §4.1.1, post-Law 2008." .
+
+
+# =============================================================================
+# Perspective + Practice (quad-readiness; §4.5)
+# =============================================================================
+
+ant:Perspective
+    a owl:Class ;
+    rdfs:label "Perspective"@en ;
+    rdfs:comment "A named analysis scope on a fieldsite. A perspective is the relation between a perspective-haver (an analyst or team) and what is being seen — so perspectives belong inside cases (per R9a). In v1 a first-class RDF subject; in v2 the same IRI becomes the URI of a named graph (no migration). See §4.5."@en ;
+    dcterms:source "Synthesized for quad-readiness, post-Mol & Law." .
+
+ant:Practice
+    a owl:Class ;
+    rdfs:label "Practice"@en ;
+    rdfs:comment "A patterned, situated doing that enacts a reality (Mol; Law). Practices ground perspectives — a perspective is grounded in one or more practices. Used as the value of ant:perPractice on Characterizations to make the observer-frame explicit."@en ;
+    dcterms:source "Mol, A. (2002). The Body Multiple; Law, J. (2008). Actor Network Theory and Material Semiotics." .
+
+
+# =============================================================================
+# Black-boxing, modes of ordering, durability (Latour, Law)
+# =============================================================================
+
+ant:BlackBox
+    a owl:Class ;
+    rdfs:label "Black box"@en ;
+    rdfs:comment "A network so successfully stabilized that it is treated as a single actant; its internal complexity is invisible. Latour 2005: simplification or 'black boxing' is a necessary part of agency. Linked back to the network it punctualizes via ant:isPunctualizationOf."@en ;
+    dcterms:source "Latour, B. (2005). Reassembling the Social; Law, J. (2008)." .
+
+ant:ModeOfOrdering
+    a owl:Class ;
+    rdfs:label "Mode of ordering"@en ;
+    rdfs:comment "A mini-discourse that patterns relations within an organization or assemblage (Law 1994: Enterprise, Bureaucracy, Vocation, Vision). Distinct from Mol's enactment-multiplicity but adjacent. Likely modeled as a SKOS concept scheme in v1.1."@en ;
+    dcterms:source "Law, J. (1994). Organizing Modernity." .
+
+ant:Durability
+    a owl:Class ;
+    rdfs:label "Durability"@en ;
+    rdfs:comment "An abstract category for *how* a network configuration holds. Three subclasses per Law 2008: MaterialDurability, StrategicDurability, DiscursiveStability."@en ;
+    dcterms:source "Law, J. (2008). Actor Network Theory and Material Semiotics." .
+
+ant:MaterialDurability
+    a owl:Class ;
+    rdfs:subClassOf ant:Durability ;
+    rdfs:label "Material durability"@en ;
+    rdfs:comment "Stability arising from durable material delegation — prison walls, knotted bedsheets, sleeping policemen. Bentham's panopticon. 'Stability does not inhere in materials themselves' (Law 2008) — it is the *configuration* of the web that produces durability."@en ;
+    dcterms:source "Law, J. (2008). Actor Network Theory and Material Semiotics." .
+
+ant:StrategicDurability
+    a owl:Class ;
+    rdfs:subClassOf ant:Durability ;
+    rdfs:label "Strategic durability"@en ;
+    rdfs:comment "Stability arising from deliberate teleological configuration — the Portuguese maritime experimentation, navigation as royal policy. May extend to non-human teleologies (currents, winds reliably following annual patterns)."@en ;
+    dcterms:source "Law, J. (2008). Actor Network Theory and Material Semiotics; Law, J. (1986)." .
+
+ant:DiscursiveStability
+    a owl:Class ;
+    rdfs:subClassOf ant:Durability ;
+    rdfs:label "Discursive stability"@en ;
+    rdfs:comment "Stability arising from multi-discursive ordering (Law 1994: managers operating across Enterprise, Bureaucracy, Vocation, Vision; the laboratory needed several modes because each set conditions of possibility for some realities and not others)."@en ;
+    dcterms:source "Law, J. (1994). Organizing Modernity; Law, J. (2008)." .
+
+
+# =============================================================================
+# Four-acts artifacts (§4.7)
+# =============================================================================
+#
+# The acts of (1) scope-selection, (2) querying, (3) analysis, (4) documentation
+# remain separable. Each produces a distinct, citable artifact.
+
+ant:Scope
+    a owl:Class ;
+    rdfs:label "Scope"@en ;
+    rdfs:comment "Act-1 artifact: a declarative selection of what is in analytical view — cases, perspectives, filters. Distinct from ant:Network (an act-4 artifact). A scope can be queried with many different SPARQL patterns; each produces a different view; none of them are *the* network in the scope. See §4.7."@en ;
+    dcterms:source "Synthesized per plan §4.7." .
+
+ant:Analysis
+    a owl:Class ;
+    rdfs:label "Analysis"@en ;
+    rdfs:comment "Act-3 artifact: a reified record of a computation/derivation performed against a scope — method, query/rule, results, provenance. v1 ships the data shape; the computational engine is v2 (rule-based tagging, centrality computation, etc.). See §4.7."@en ;
+    dcterms:source "Synthesized per plan §4.7." .
+
+ant:AnalysisReport
+    a owl:Class ;
+    rdfs:label "Analysis report"@en ;
+    rdfs:comment "Act-4 artifact: documentation citing a scope + (optional) analysis + narrative reading. Compilers render these as Markdown briefs."@en ;
+    dcterms:source "Synthesized per plan §4.7." .
+
+
+# =============================================================================
+# Governance — waivers (§4.6)
+# =============================================================================
+
+ant:ConstraintWaiver
+    a owl:Class ;
+    rdfs:label "Constraint waiver"@en ;
+    rdfs:comment "An append-only acknowledgement of a Tier-2 SHACL warning, with required justification and waiver-author. Never applies to Tier-1 Violations (which represent structural integrity). Lets analysts honestly override 'should-conform' constraints without silent violation. See §4.6."@en ;
+    dcterms:source "Synthesized per plan §4.6, mirroring RIME's reconciliation discipline." .
+
+
+# =============================================================================
+# Object properties (spine + characterization + perspective + waiver)
+# =============================================================================
+
+ant:enrols
+    a owl:ObjectProperty ;
+    rdfs:label "enrols"@en ;
+    rdfs:comment "An actant enrols another into a program of action / aligns its interests with the network."@en ;
+    rdfs:domain ant:Actant ;
+    rdfs:range ant:Actant ;
+    dcterms:source "Callon, M. (1986); Latour, B. (1987)." .
+
+ant:translates
+    a owl:ObjectProperty ;
+    rdfs:label "translates"@en ;
+    rdfs:comment "An actant translates another — both 'makes equivalent' (traduction) and 'shifts' (trahison). Loosely, the most generic ANT-relation."@en ;
+    rdfs:domain ant:Actant ;
+    rdfs:range ant:Actant ;
+    dcterms:source "Serres, M. (1974); Callon, M. (1986); Law, J. (2008)." .
+
+ant:passesThrough
+    a owl:ObjectProperty ;
+    rdfs:label "passes through"@en ;
+    rdfs:comment "An actant passes through an obligatory passage point (the OPP role within a network)."@en ;
+    rdfs:domain ant:Actant ;
+    dcterms:source "Callon, M. (1986)." .
+
+ant:speaksFor
+    a owl:ObjectProperty ;
+    rdfs:label "speaks for"@en ;
+    rdfs:comment "A spokesperson actant speaks for / represents another actant or set of actants."@en ;
+    rdfs:domain ant:Actant ;
+    rdfs:range ant:Actant ;
+    dcterms:source "Callon, M. (1986); Latour, B. (1987)." .
+
+ant:inscribes
+    a owl:ObjectProperty ;
+    rdfs:label "inscribes"@en ;
+    rdfs:comment "An actant inscribes (produces, generates) an inscription."@en ;
+    rdfs:domain ant:Actant ;
+    rdfs:range ant:Inscription ;
+    dcterms:source "Latour, B. (1990). Drawing Things Together." .
+
+ant:participatesIn
+    a owl:ObjectProperty ;
+    rdfs:label "participates in"@en ;
+    rdfs:comment "An actant participates in an analyst-named network (act-4 documentation membership). Note: networks are summaries, not containers — membership is a documented commitment by the analyst, not an ontological fact about the actant."@en ;
+    rdfs:domain ant:Actant ;
+    rdfs:range ant:Network ;
+    dcterms:source "Synthesized per §4.7." .
+
+ant:hasMoment
+    a owl:ObjectProperty ;
+    rdfs:label "has moment"@en ;
+    rdfs:comment "A Translation has one of the four Callon moments as a step within it."@en ;
+    rdfs:domain ant:Translation ;
+    rdfs:range ant:Translation ;
+    dcterms:source "Callon, M. (1986)." .
+
+ant:hasProgram
+    a owl:ObjectProperty ;
+    rdfs:label "has program"@en ;
+    rdfs:comment "An actant has / carries a program of action."@en ;
+    rdfs:domain ant:Actant ;
+    rdfs:range ant:ProgramOfAction ;
+    dcterms:source "Latour, B. (1991)." .
+
+ant:opposes
+    a owl:ObjectProperty ;
+    rdfs:label "opposes"@en ;
+    rdfs:comment "One program of action opposes another (program / anti-program relation)."@en ;
+    rdfs:domain ant:ProgramOfAction ;
+    rdfs:range ant:ProgramOfAction ;
+    dcterms:source "Latour, B. (1991)." .
+
+ant:isPunctualizationOf
+    a owl:ObjectProperty ;
+    rdfs:label "is punctualization of"@en ;
+    rdfs:comment "A BlackBox is a punctualization of a Network — the network has been so stabilized it is treated as a single actant."@en ;
+    rdfs:domain ant:BlackBox ;
+    rdfs:range ant:Network ;
+    dcterms:source "Latour, B. (2005); Law, J. (2008)." .
+
+# Characterization properties
+
+ant:characterizes
+    a owl:ObjectProperty ;
+    rdfs:label "characterizes"@en ;
+    rdfs:comment "The target an ant:Characterization is about (typically an Actant or Translation)."@en ;
+    rdfs:domain ant:Characterization ;
+    dcterms:source "Synthesized per plan §4.1.1." .
+
+ant:withinNetwork
+    a owl:ObjectProperty ;
+    rdfs:label "within network"@en ;
+    rdfs:comment "The network within which a Characterization is asserted."@en ;
+    rdfs:domain ant:Characterization ;
+    rdfs:range ant:Network ;
+    dcterms:source "Synthesized per plan §4.1.1." .
+
+ant:perPractice
+    a owl:ObjectProperty ;
+    rdfs:label "per practice"@en ;
+    rdfs:comment "The practice (observer-frame) under which a Characterization is asserted. Makes the analyst's apparatus accountable and inspectable (Law 2008's 'ontological politics' move)."@en ;
+    rdfs:domain ant:Characterization ;
+    rdfs:range ant:Practice ;
+    dcterms:source "Synthesized per plan §4.1.1; Law, J. (2008); Mol, A. (2002)." .
+
+ant:invarianceCriterion
+    a owl:DatatypeProperty ;
+    rdfs:label "invariance criterion"@en ;
+    rdfs:comment "What is being tracked as preserved (Intermediary) or transformed (Mediator) under this Characterization. v1: free-text string. v1.1: candidate reification to ant:Invariance class."@en ;
+    rdfs:domain ant:Characterization ;
+    rdfs:range xsd:string ;
+    dcterms:source "Synthesized per plan §4.1.1." .
+
+ant:assignsRole
+    a owl:ObjectProperty ;
+    rdfs:label "assigns role"@en ;
+    rdfs:comment "The role being assigned by this Characterization — typically one of ant:Mediator, ant:Intermediary, ant:Spokesperson, ant:ObligatoryPassagePoint, ant:ProvAgent, ant:ProvInfluencer."@en ;
+    rdfs:domain ant:Characterization ;
+    dcterms:source "Synthesized per plan §4.1.1." .
+
+# Perspective properties
+
+ant:perspectiveHeldBy
+    a owl:ObjectProperty ;
+    rdfs:label "perspective held by"@en ;
+    rdfs:comment "The analyst / team holding this perspective. Recommended range: prov:Agent (kept open here so foaf:Person and other agent types work)."@en ;
+    rdfs:domain ant:Perspective ;
+    dcterms:source "Synthesized per plan §4.5." .
+
+ant:perspectiveGroundedIn
+    a owl:ObjectProperty ;
+    rdfs:label "perspective grounded in"@en ;
+    rdfs:comment "The practice(s) that ground this perspective."@en ;
+    rdfs:domain ant:Perspective ;
+    rdfs:range ant:Practice ;
+    dcterms:source "Synthesized per plan §4.5." .
+
+ant:perspectiveTracksInvariance
+    a owl:DatatypeProperty ;
+    rdfs:label "perspective tracks invariance"@en ;
+    rdfs:comment "An invariance this perspective cares about (free-text string in v1)."@en ;
+    rdfs:domain ant:Perspective ;
+    rdfs:range xsd:string ;
+    dcterms:source "Synthesized per plan §4.5." .
+
+# Waiver properties
+
+ant:waivesShape
+    a owl:ObjectProperty ;
+    rdfs:label "waives shape"@en ;
+    rdfs:comment "The SHACL shape IRI being waived. Must reference a Tier-2 (sh:Warning) shape; ant verify rejects waivers targeting Tier-1 shapes."@en ;
+    rdfs:domain ant:ConstraintWaiver ;
+    dcterms:source "Synthesized per plan §4.6." .
+
+ant:waivesForTarget
+    a owl:ObjectProperty ;
+    rdfs:label "waives for target"@en ;
+    rdfs:comment "The IRI of the focus node the waiver applies to."@en ;
+    rdfs:domain ant:ConstraintWaiver ;
+    dcterms:source "Synthesized per plan §4.6." .
+
+ant:waivedBy
+    a owl:ObjectProperty ;
+    rdfs:label "waived by"@en ;
+    rdfs:comment "The agent (analyst, team) accountable for this waiver. No co-sign required (per R9b)."@en ;
+    rdfs:domain ant:ConstraintWaiver ;
+    dcterms:source "Synthesized per plan §4.6." .
+
+ant:waiverJustification
+    a owl:DatatypeProperty ;
+    rdfs:label "waiver justification"@en ;
+    rdfs:comment "Required free-text justification for the waiver. Empty justification fails Tier-1 on the waiver record itself."@en ;
+    rdfs:domain ant:ConstraintWaiver ;
+    rdfs:range xsd:string ;
+    dcterms:source "Synthesized per plan §4.6." .
+
+ant:waiverExpires
+    a owl:DatatypeProperty ;
+    rdfs:label "waiver expires"@en ;
+    rdfs:comment "Optional ISO-date after which the waiver lapses and the warning resurfaces. Most waivers do NOT expire — the default is no expiry (per R9b)."@en ;
+    rdfs:domain ant:ConstraintWaiver ;
+    rdfs:range xsd:date ;
+    dcterms:source "Synthesized per plan §4.6." .
