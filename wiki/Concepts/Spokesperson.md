@@ -14,3 +14,8 @@ A role: an actant that speaks for / represents others. Emerges through the mobil
 
 Callon, M. (1986); Latour, B. (1987). Science in Action.
 
+## Characterizations that assign this role
+
+- [Hotel manager](../Actants/hotel-keys--manager.md) *(in network, per hotel-administration)*
+- [Three researchers from Brest](../Actants/scallops--researchers.md) *(in network, per scientific-publication)*
+

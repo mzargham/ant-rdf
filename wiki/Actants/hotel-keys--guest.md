@@ -1,6 +1,6 @@
 # Actant: Hotel guest
 
-[← Home](../Home.md)
+[← Home](../Home.md) · [Case: hotel-keys](../Cases/hotel-keys.md)
 
 <!-- https://w3id.org/ant/cases/hotel-keys/actant/guest -->
 

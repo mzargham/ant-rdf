@@ -14,3 +14,8 @@ An emergent attribute, NOT a kind of thing (per R6). An actant comes to play thi
 
 Callon, M. (1986). Some Elements of a Sociology of Translation.
 
+## Characterizations that assign this role
+
+- [Weighted brass fob](../Actants/hotel-keys--fob.md) *(in network, per hotel-administration)*
+- [Three researchers from Brest](../Actants/scallops--researchers.md) *(in network, per network-funding)*
+

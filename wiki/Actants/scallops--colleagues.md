@@ -1,6 +1,6 @@
 # Actant: Scientific colleagues
 
-[← Home](../Home.md)
+[← Home](../Home.md) · [Case: scallops](../Cases/scallops.md)
 
 <!-- https://w3id.org/ant/cases/scallops/actant/colleagues -->
 

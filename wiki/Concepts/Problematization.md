@@ -14,3 +14,8 @@ Moment 1 of translation: an actant defines a problem and positions itself as ind
 
 Callon, M. (1986). Some Elements of a Sociology of Translation.
 
+## Examples (records typed with this term)
+
+- [Problematization: guests leave with keys](../Cases/hotel-keys.md)
+- [Problematization: declining scallop populations](../Cases/scallops.md)
+

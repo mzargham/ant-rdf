@@ -14,3 +14,8 @@ Moment 3 of translation: definition and coordination of the roles actants will p
 
 Callon, M. (1986). Some Elements of a Sociology of Translation.
 
+## Examples (records typed with this term)
+
+- [Enrolment: guests start returning keys](../Cases/hotel-keys.md)
+- [Enrolment: coordinated roles](../Cases/scallops.md)
+

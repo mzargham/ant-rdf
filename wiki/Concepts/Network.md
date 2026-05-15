@@ -14,3 +14,8 @@ An analyst's named summary of a heterogeneous, traceable set of associations. NO
 
 Shared across Callon, Latour, Law.
 
+## Examples (records typed with this term)
+
+- [The hotel-keys assemblage](../Cases/hotel-keys.md)
+- [St Brieuc Bay scallop-farming network](../Cases/scallops.md)
+

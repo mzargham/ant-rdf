@@ -14,3 +14,8 @@ Moment 4 of translation: spokespersons become representative; the network speaks
 
 Callon, M. (1986). Some Elements of a Sociology of Translation.
 
+## Examples (records typed with this term)
+
+- [Mobilization: the fob speaks for the manager](../Cases/hotel-keys.md)
+- [Mobilization: spokespersons emerge](../Cases/scallops.md)
+

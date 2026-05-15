@@ -14,3 +14,12 @@ A patterned, situated doing that enacts a reality (Mol; Law). Practices ground p
 
 Mol, A. (2002). The Body Multiple; Law, J. (2008). Actor Network Theory and Material Semiotics.
 
+## Examples (records typed with this term)
+
+- [Experimental oceanography](#experimental-oceanography)
+- [Hotel administration](#hotel-administration)
+- [Network funding](#network-funding)
+- [Room occupancy](#room-occupancy)
+- [Scientific publication](#scientific-publication)
+- [Seasonal fishing labor](#seasonal-fishing-labor)
+

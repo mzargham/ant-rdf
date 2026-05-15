@@ -1,6 +1,6 @@
 # Actant: Fishermen of St Brieuc Bay
 
-[← Home](../Home.md)
+[← Home](../Home.md) · [Case: scallops](../Cases/scallops.md)
 
 <!-- https://w3id.org/ant/cases/scallops/actant/fishermen -->
 

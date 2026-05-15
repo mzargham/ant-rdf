@@ -14,3 +14,8 @@ A role characterizing an interaction as TRANSMITTING WITHOUT TRANSFORMATION unde
 
 Latour, B. (2005). Reassembling the Social.
 
+## Characterizations that assign this role
+
+- [Weighted brass fob](../Actants/hotel-keys--fob.md) *(in network, per room-occupancy)*
+- [Larvae collectors (towlines)](../Actants/scallops--larvae-collectors.md) *(in network, per experimental-oceanography)*
+

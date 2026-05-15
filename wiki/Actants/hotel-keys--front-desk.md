@@ -1,6 +1,6 @@
 # Actant: Front-desk staff
 
-[← Home](../Home.md)
+[← Home](../Home.md) · [Case: hotel-keys](../Cases/hotel-keys.md)
 
 <!-- https://w3id.org/ant/cases/hotel-keys/actant/front-desk -->
 

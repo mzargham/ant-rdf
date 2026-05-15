@@ -14,3 +14,8 @@ A named analysis scope on a fieldsite. A perspective is the relation between a p
 
 Synthesized for quad-readiness, post-Mol & Law.
 
+## Examples (records typed with this term)
+
+- [Auto-created perspective stub: _default](../Perspectives/hotel-keys--_default.md)
+- [Auto-created perspective stub: _default](../Perspectives/scallops--_default.md)
+

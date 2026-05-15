@@ -14,3 +14,8 @@ A role characterizing an interaction as TRANSFORMING what it transmits (its outp
 
 Latour, B. (2005). Reassembling the Social.
 
+## Characterizations that assign this role
+
+- [Weighted brass fob](../Actants/hotel-keys--fob.md) *(in network, per hotel-administration)*
+- [Larvae collectors (towlines)](../Actants/scallops--larvae-collectors.md) *(in network, per seasonal-fishing-labor)*
+

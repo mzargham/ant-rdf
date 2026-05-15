@@ -14,3 +14,14 @@ A reified n-ary relation that assigns a role to a target actant or interaction *
 
 Synthesized per plan §4.1.1, post-Law 2008.
 
+## Examples (records typed with this term)
+
+- [fob-as-intermediary](../Cases/hotel-keys.md)
+- [fob-as-mediator](../Cases/hotel-keys.md)
+- [fob-as-opp](../Cases/hotel-keys.md)
+- [manager-as-spokesperson](../Cases/hotel-keys.md)
+- [collectors-as-intermediary](../Cases/scallops.md)
+- [collectors-as-mediator](../Cases/scallops.md)
+- [researchers-as-opp](../Cases/scallops.md)
+- [researchers-as-spokesperson](../Cases/scallops.md)
+

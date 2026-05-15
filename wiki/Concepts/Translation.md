@@ -14,3 +14,8 @@ The process by which one actant enrols others into a program of action — trans
 
 Callon, M. (1986). Some Elements of a Sociology of Translation; Serres, M. (1974) La Traduction.
 
+## Examples (records typed with this term)
+
+- [The hotel-keys translation chain](../Translations/hotel-keys--main.md)
+- [The Callon-1986 translation chain](../Translations/scallops--main.md)
+

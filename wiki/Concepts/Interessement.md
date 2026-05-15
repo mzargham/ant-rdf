@@ -14,3 +14,8 @@ Moment 2 of translation: locking other actants into the proposed roles, cutting 
 
 Callon, M. (1986). Some Elements of a Sociology of Translation.
 
+## Examples (records typed with this term)
+
+- [Interessement: try a sign, then try a fob](../Cases/hotel-keys.md)
+- [Interessement: locking in roles](../Cases/scallops.md)
+
