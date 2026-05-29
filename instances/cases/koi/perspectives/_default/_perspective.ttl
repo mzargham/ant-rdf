@@ -1,0 +1,9 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/koi/perspectives/_default> a ant:Perspective ;
+    rdfs:label "Auto-created perspective stub: _default" ;
+    dcterms:description "Auto-created stub for perspective '_default' in case 'koi'. Run `ant new-record perspective` to record the actual holder, grounding practices, and tracked invariances." ;
+    ant:perspectiveHeldBy <https://w3id.org/ant/agent/_unspecified> .
+

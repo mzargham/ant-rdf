@@ -1,0 +1,10 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/koi/perspectives/architectural> a ant:Perspective ;
+    rdfs:label "Architectural (chief engineer)" ;
+    dcterms:description "The chief-engineer's frame on KOI/RID: reading the assemblage as a constitutive network — realized substrate (referenceable objects, cryptographic identity, capability advertisement, edge negotiation) plus instructed overlays — under the discipline of scoped authority, per-relationship governance, and adopt-don't-mint. Grounded in protocol-design practice." ;
+    ant:perspectiveGroundedIn <https://w3id.org/ant/practices/protocol-design> ;
+    ant:perspectiveHeldBy <https://w3id.org/ant/agent/mzargham> .
+

@@ -17,5 +17,7 @@ Callon, M. (1986). Some Elements of a Sociology of Translation.
 ## Examples (records typed with this term)
 
 - [Problematization: guests leave with keys](Case-hotel-keys)
+- [Problematization (architectural): vendor intermediation and siloing](Case-koi)
+- [Problematization (ethnographic): consent, IRB, and the participation bottleneck](Case-koi)
 - [Problematization: declining scallop populations](Case-scallops)
 

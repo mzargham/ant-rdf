@@ -17,5 +17,6 @@ Callon, M. (1986). Some Elements of a Sociology of Translation.
 ## Characterizations that assign this role
 
 - [Weighted brass fob](Actant-hotel-keys--fob) *(in network, per hotel-administration)*
+- [University ethics committees](Actant-koi--ethics-committees) *(in ethnographic, per participatory-digital-ethnography)*
 - [Three researchers from Brest](Actant-scallops--researchers) *(in network, per network-funding)*
 

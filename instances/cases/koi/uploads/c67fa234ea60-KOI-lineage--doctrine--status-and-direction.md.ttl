@@ -1,0 +1,9 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/koi/uploads/c67fa234ea60-KOI-lineage--doctrine--status-and-direction.md> a ant:Inscription ;
+    rdfs:label "KOI lineage, doctrine, status and direction.md" ;
+    dcterms:description "Raw upload registered via `ant ingest upload`. Original path at ingestion time: /Users/z/Downloads/KOI lineage, doctrine, status and direction.md. Perspective-agnostic — characterize via `ant new-record characterization` to attach a role within a specific (network, practice) frame." ;
+    dcterms:source "sha256:c67fa234ea60bf270d47f1da7d91de5edd90d391e641669e867672661cb8ec34" .
+

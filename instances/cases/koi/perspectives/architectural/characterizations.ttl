@@ -1,0 +1,43 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://w3id.org/ant/cases/koi/char/beneficiary-org-members-as-intermediary-architectural> a ant:Characterization ;
+    dcterms:description "Read through protocol design, members of beneficiary organizations are an Intermediary: protocol endpoints whose resources and relationships the infrastructure organizes." ;
+    ant:assignsRole ant:Intermediary ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/beneficiary-org-members> ;
+    ant:invarianceCriterion "protocol-endpoint" ;
+    ant:perPractice <https://w3id.org/ant/practices/protocol-design> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/char/chief-engineer-as-spokesperson> a ant:Characterization ;
+    dcterms:description "Read through protocol design, the chief engineer speaks publicly for the KOI paradigm as written in the doctrine — pushing for understanding, appreciation, and adoption of the paradigm rather than any technical substrate or particular instantiation. The spokesperson role emerges through the mobilization moment." ;
+    ant:assignsRole ant:Spokesperson ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/chief-engineer> ;
+    ant:invarianceCriterion "paradigm-doctrine-fidelity" ;
+    ant:perPractice <https://w3id.org/ant/practices/protocol-design> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/char/forget-general-as-intermediary> a ant:Characterization ;
+    dcterms:description "Read through protocol design, a routine forget invocation is an Intermediary: it mutates the data — which the system is designed to permit — but does not change the rules or systems that afford that power, so it does not confuse the operative and constitutive layers. The forget signal is carried through faithfully; what is held invariant is the constitutive layer itself." ;
+    ant:assignsRole ant:Intermediary ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/forget-general> ;
+    ant:invarianceCriterion "constitutive-layer-held-invariant" ;
+    ant:perPractice <https://w3id.org/ant/practices/protocol-design> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/char/integration-teams-as-mediator-architectural> a ant:Characterization ;
+    dcterms:description "Read through protocol design, integration teams are a Mediator: adapting and deploying KOI at a specific field site transforms the protocol in the act of making it run." ;
+    ant:assignsRole ant:Mediator ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/integration-teams> ;
+    ant:invarianceCriterion "site-adaptation-of-protocol" ;
+    ant:perPractice <https://w3id.org/ant/practices/protocol-design> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/char/research-collaborators-as-mediator-architectural> a ant:Characterization ;
+    dcterms:description "Read through protocol design, the research collaborators are a Mediator: they do not preserve an invariance but are material to the formulation of the doctrine itself, as evidenced by its intellectual lineage. They transform what the paradigm is." ;
+    ant:assignsRole ant:Mediator ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/research-collaborators> ;
+    ant:invarianceCriterion "doctrine-formulation" ;
+    ant:perPractice <https://w3id.org/ant/practices/protocol-design> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/architectural> .
+

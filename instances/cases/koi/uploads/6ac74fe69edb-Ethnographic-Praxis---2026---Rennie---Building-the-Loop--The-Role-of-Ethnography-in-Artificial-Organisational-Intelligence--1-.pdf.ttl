@@ -1,0 +1,9 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/koi/uploads/6ac74fe69edb-Ethnographic-Praxis---2026---Rennie---Building-the-Loop--The-Role-of-Ethnography-in-Artificial-Organisational-Intelligence--1-.pdf> a ant:Inscription ;
+    rdfs:label "Ethnographic Praxis - 2026 - Rennie - Building the Loop  The Role of Ethnography in Artificial Organisational Intelligence (1).pdf" ;
+    dcterms:description "Raw upload registered via `ant ingest upload`. Original path at ingestion time: /Users/z/Downloads/Ethnographic Praxis - 2026 - Rennie - Building the Loop  The Role of Ethnography in Artificial Organisational Intelligence (1).pdf. Perspective-agnostic — characterize via `ant new-record characterization` to attach a role within a specific (network, practice) frame." ;
+    dcterms:source "sha256:6ac74fe69edb48d52895eebe4b5803237e258287d204f3464a90c8dbadec50eb" .
+

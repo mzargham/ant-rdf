@@ -20,8 +20,13 @@ Synthesized per plan §4.1.1, post-Law 2008.
 - [fob-as-mediator](Case-hotel-keys)
 - [fob-as-opp](Case-hotel-keys)
 - [manager-as-spokesperson](Case-hotel-keys)
-- [collectors-as-intermediary](Case-scallops)
-- [collectors-as-mediator](Case-scallops)
-- [researchers-as-opp](Case-scallops)
-- [researchers-as-spokesperson](Case-scallops)
+- [beneficiary-org-members-as-intermediary-architectural](Case-koi)
+- [beneficiary-org-members-as-mediator-ethnographic](Case-koi)
+- [chief-engineer-as-spokesperson](Case-koi)
+- [ethics-committees-as-opp](Case-koi)
+- [ethnographers-as-mediator](Case-koi)
+- [ethnographers-as-spokesperson](Case-koi)
+- [forget-general-as-intermediary](Case-koi)
+- [forget-metagov-as-mediator](Case-koi)
+- … and 9 more
 

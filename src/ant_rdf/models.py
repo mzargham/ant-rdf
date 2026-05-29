@@ -139,6 +139,16 @@ class Perspective(AntModel):
     tracks_invariance: list[str] = Field(default_factory=list)
 
 
+class Practice(AntModel):
+    """A patterned, situated doing that enacts a reality (Mol; Law).
+
+    Practices ground perspectives and are the value of ant:perPractice on
+    Characterizations, making the observer-frame explicit (§4.1.1). Practices
+    are perspective-agnostic shared vocabulary: they live under
+    instances/shared/, not under a case/perspective.
+    """
+
+
 class Characterization(BaseModel):
     """Reified n-ary role assignment with (network, practice, invariance) context.
 

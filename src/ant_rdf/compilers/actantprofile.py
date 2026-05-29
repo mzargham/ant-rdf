@@ -69,10 +69,10 @@ def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
                 local_name(str(net)) if net else "?",
                 local_name(str(prac)) if prac else "_(unspecified)_",
                 str(inv) if inv else "_(unspecified)_",
-                description_of(g, c)[:80] if description_of(g, c) else "",
+                description_of(g, c),
             ])
         lines.append(md_table(
-            ["Role", "Within network", "Per practice", "Invariance", "Note"], rows,
+            ["Role", "Within network", "Per practice", "Invariance", "Description"], rows,
         ))
     else:
         lines.append("_No characterizations targeting this actant._")

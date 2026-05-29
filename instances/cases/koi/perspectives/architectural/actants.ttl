@@ -1,0 +1,54 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/koi/actant/beneficiary-org-members> a ant:Actant ;
+    rdfs:label "Members of beneficiary organizations" ;
+    dcterms:description "The people inside beneficiary organizations whose resources and relationships the infrastructure organizes (doctrine Appendix F.5)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/actant/beneficiary-orgs> a ant:Actant ;
+    rdfs:label "Beneficiary organizations" ;
+    dcterms:description "Organizations KOI is built to serve (doctrine Appendix F.4)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/actant/chief-engineer> a ant:Actant ;
+    rdfs:label "Chief engineer" ;
+    dcterms:description "The role accountable for the coherence of the protocol as a whole; speaks for its design integrity (doctrine)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/actant/data-set> a ant:Actant ;
+    rdfs:label "The KOI data set (club good)" ;
+    dcterms:description "The shared knowledge graph the infrastructure accumulates and maintains: a club good whose integrity and completeness all participants depend on collectively." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/actant/forget-general> a ant:Actant ;
+    rdfs:label "Forget invocation (in-program)" ;
+    dcterms:description "Routine exercise of the forget FUN signal: the affordance doing what the program-of-action scripts, with bounded and expected impact on the data set." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/actant/implementation-team> a ant:Actant ;
+    rdfs:label "Implementation team" ;
+    dcterms:description "The team that translates the doctrine into running protocol code (doctrine Appendix F.2)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/actant/integration-teams> a ant:Actant ;
+    rdfs:label "Integration teams" ;
+    dcterms:description "The teams that adapt and deploy KOI at specific field sites — the use-case implementers (doctrine Appendix F.3)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/actant/koi-infrastructure> a ant:Actant ;
+    rdfs:label "KOI infrastructure" ;
+    dcterms:description "The Knowledge Organization Infrastructure itself: a protocol for scoped-authority knowledge organization across subnets and coordinator nodes, performing the six functions of identification over Resource Identifiers, with neither a single source of truth nor a walled garden." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/actant/research-collaborators> a ant:Actant ;
+    rdfs:label "Research collaborators" ;
+    dcterms:description "The researchers who supply the requirements and conceptual framing the protocol is built to satisfy (doctrine Appendix F.1)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/architectural> .
+
+<https://w3id.org/ant/cases/koi/actant/rid> a ant:Actant ;
+    rdfs:label "Resource Identifier (RID)" ;
+    dcterms:description "The stable handle the infrastructure assigns so a resource can be referenced, related, updated, and forgotten across subnets without a single source of truth." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/architectural> .
+

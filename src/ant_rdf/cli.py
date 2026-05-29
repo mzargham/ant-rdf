@@ -182,6 +182,34 @@ def new_translation(
     )
 
 
+@new_record_app.command("moment")
+def new_moment(
+    kind: str = typer.Option(
+        ..., "--kind",
+        help="One of: problematization, interessement, enrolment, mobilization.",
+    ),
+    iri: str = typer.Option(..., "--iri"),
+    label: str = typer.Option(..., "--label"),
+    description: str = typer.Option(..., "--description"),
+    case: str = typer.Option(..., "--case"),
+    perspective: str = typer.Option("_default", "--perspective"),
+    out: str | None = typer.Option(None, "--out"),
+) -> None:
+    """Create one of the four Callon moments (subclasses of ant:Translation).
+
+    A moment is later linked from an ant:Translation via --has-moment.
+    """
+    from ant_rdf.new_record import create_moment
+
+    try:
+        create_moment(
+            kind, iri, label, description, case,
+            perspective=perspective, out=out,
+        )
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+
+
 @new_record_app.command("perspective")
 def new_perspective(
     iri: str = typer.Option(..., "--iri"),
@@ -221,6 +249,19 @@ def new_characterization(
         per_practice=per_practice, invariance=invariance, assigns_role=assigns_role,
         case=case, perspective=perspective, description=description,
     )
+
+
+@new_record_app.command("practice")
+def new_practice(
+    iri: str = typer.Option(..., "--iri"),
+    label: str = typer.Option(..., "--label"),
+    description: str = typer.Option(..., "--description"),
+    out: str | None = typer.Option(None, "--out"),
+) -> None:
+    """Create an ant:Practice record (shared vocabulary; grounds perspectives and ant:perPractice)."""
+    from ant_rdf.new_record import create_practice
+
+    create_practice(iri=iri, label=label, description=description, out=out)
 
 
 @new_record_app.command("interactive")

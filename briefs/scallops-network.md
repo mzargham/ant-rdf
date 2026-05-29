@@ -8,16 +8,16 @@ The heterogeneous network Michel Callon analyzed in 'Some Elements of a Sociolog
 
 ## Participating actants
 
-| Actant | Description (truncated) | Local name |
+| Actant | Description | Local name |
 | --- | --- | --- |
 | Scientific colleagues | The wider scientific community whose acceptance of the experimental findings is the final mobilization condition. | colleagues |
-| Fishermen of St Brieuc Bay | The local fishing community whose long-term cooperation is essential for the technique to scale. Their forbearance to tr | fishermen |
-| Larvae collectors (towlines) | The technical artifact (towlines with anchoring substrate) borrowed from Japanese practice — the inscription / immutable | larvae-collectors |
-| Three researchers from Brest | The three oceanographers who problematize scallop population decline and propose the larvae-collector experiment. Latour | researchers |
-| Scallops (Pecten maximus) | The scallops being enrolled into the experimental science. Non-human actant whose larvae must anchor to collectors for t | scallops |
+| Fishermen of St Brieuc Bay | The local fishing community whose long-term cooperation is essential for the technique to scale. Their forbearance to trawl protected grounds is precisely what the translation requires. | fishermen |
+| Larvae collectors (towlines) | The technical artifact (towlines with anchoring substrate) borrowed from Japanese practice — the inscription / immutable mobile carrying the technique across contexts. | larvae-collectors |
+| Three researchers from Brest | The three oceanographers who problematize scallop population decline and propose the larvae-collector experiment. Latour-style spokespersons for the emerging network. | researchers |
+| Scallops (Pecten maximus) | The scallops being enrolled into the experimental science. Non-human actant whose larvae must anchor to collectors for the network to succeed. | scallops |
 
 
-## Translations in the loaded scope
+## Translations
 
 ### The Callon-1986 translation chain
 
@@ -25,22 +25,22 @@ The heterogeneous network Michel Callon analyzed in 'Some Elements of a Sociolog
 
 The translation that Callon traces from problematization through mobilization. Ultimately precarious: a single winter's trawling unravels the web (Law 2008 quotation: 'all it takes is for one translation to fail and the whole web of reality unravels').
 
-| Moment | Label | Description (truncated) |
+| Moment | Label | Description |
 | --- | --- | --- |
-| Enrolment | Enrolment: coordinated roles | Scallops successfully anchor in significant numbers (some seasons). Fishermen accept the no-trawl zo |
-| Interessement | Interessement: locking in roles | The researchers cut competing alternatives — they negotiate with fishermen to refrain from trawling |
-| Mobilization | Mobilization: spokespersons emerge | The researchers speak for the scallops (citing anchoring counts), for the fishermen (citing communit |
-| Problematization | Problematization: declining scallop populations | The three researchers define the problem: St Brieuc Bay scallop populations are declining and unstud |
+| Enrolment | Enrolment: coordinated roles | Scallops successfully anchor in significant numbers (some seasons). Fishermen accept the no-trawl zones. Scientific colleagues accept the experimental results. Each actant plays its scripted role. |
+| Interessement | Interessement: locking in roles | The researchers cut competing alternatives — they negotiate with fishermen to refrain from trawling protected zones, and they design collectors that prevent scallop larvae from anchoring anywhere else. Each actant is interested into a single role within the network. |
+| Mobilization | Mobilization: spokespersons emerge | The researchers speak for the scallops (citing anchoring counts), for the fishermen (citing community acceptance), and for the bay itself (citing the technique's promise). The network speaks with one voice — until it doesn't. |
+| Problematization | Problematization: declining scallop populations | The three researchers define the problem: St Brieuc Bay scallop populations are declining and unstudied. They position themselves as indispensable by proposing the larvae-collector experiment and positioning fishermen and scallops as needing to pass through their experimental apparatus. |
 
 
 ## Characterizations within this network
 
-| Target | Role | Per practice | Invariance |
-| --- | --- | --- | --- |
-| Larvae collectors (towlines) | Intermediary | experimental-oceanography | anchoring-substrate-as-designed |
-| Larvae collectors (towlines) | Mediator | seasonal-fishing-labor | rhythms-of-bay-work |
-| Three researchers from Brest | ObligatoryPassagePoint | network-funding | resource-allocation-routing |
-| Three researchers from Brest | Spokesperson | scientific-publication | citational-credit |
+| Target | Role | Per practice | Invariance | Description |
+| --- | --- | --- | --- | --- |
+| Larvae collectors (towlines) | Intermediary | experimental-oceanography | anchoring-substrate-as-designed | From the experimental-oceanography practice, the larvae collectors are immutable mobiles — they transmit the Japanese anchoring technique without transformation. |
+| Larvae collectors (towlines) | Mediator | seasonal-fishing-labor | rhythms-of-bay-work | From the fishermen's seasonal-labor practice, the same collectors transform what they transmit — they reframe stretches of bay as off-limits, restructuring the rhythm of fishing work. Demonstrates §4.1.1: the same actant simultaneously Intermediary and Mediator under different observer-frames. |
+| Three researchers from Brest | ObligatoryPassagePoint | network-funding | resource-allocation-routing | Within the funding/credit network, every actant must pass through the researchers (who control the experimental design and the publication-rights). Manual OPP assignment per §4.1.2 — v2 will also support rule-based assignment from topology. |
+| Three researchers from Brest | Spokesperson | scientific-publication | citational-credit | The researchers speak for scallops, fishermen, and the bay in scientific publications — emerging through the mobilization moment. |
 
 
 ---

@@ -1,0 +1,54 @@
+# Network Brief: KOI as constitutive infrastructure
+
+<!-- compiled from https://w3id.org/ant/cases/koi/network/architectural -->
+
+## Description
+
+The assemblage as the doctrine frames it: scoped-authority knowledge organization (ASoT/MOSA), subnets and coordinator nodes, the six functions of identification, RIDs and FUN signals (new/update/forget), and per-relationship discipline. Held together by protocol design; explicitly anti-SSoT and anti-walled-garden. Silent on the human governance acts that the ethnographic frame foregrounds. Durability (Law 2008): the paradigm must be distinguished from its instances, and is made durable by the existence, persistence, and use of those instances — which must carry meaningful variance alongside visible similarity, making KOI a pattern language to be understood as such. Because the experience, practice, and feel of KOI-paradigm systems supersedes any implementation's particulars, the configuration holds discursively and strategically; but material durability plays a very large, possibly the largest, part — once that materiality is understood not as any single artifact but as the plural instantiations themselves. Contested / unraveling: the principal threat is the draw of homogenization as a desired outcome. The paradigm values requisite variety, but variety is under constant threat from standardization and optimization toward mono-objectives, so defending variation — especially in computational systems — requires persistent, active advocacy. Decommissioning is not itself an unraveling: the doctrine holds a living-systems / lifecycle model in which any individual instantiation comes into being out of need and eventually evolves or is decommissioned rather than persisting artificially; a well-timed, graceful decommissioning and replacement by a new fit-for-function system is on-program, not off-program.
+
+## Participating actants
+
+| Actant | Description | Local name |
+| --- | --- | --- |
+| Members of beneficiary organizations | The people inside beneficiary organizations whose resources and relationships the infrastructure organizes (doctrine Appendix F.5). | beneficiary-org-members |
+| Beneficiary organizations | Organizations KOI is built to serve (doctrine Appendix F.4). | beneficiary-orgs |
+| Chief engineer | The role accountable for the coherence of the protocol as a whole; speaks for its design integrity (doctrine). | chief-engineer |
+| The KOI data set (club good) | The shared knowledge graph the infrastructure accumulates and maintains: a club good whose integrity and completeness all participants depend on collectively. | data-set |
+| Forget invocation (in-program) | Routine exercise of the forget FUN signal: the affordance doing what the program-of-action scripts, with bounded and expected impact on the data set. | forget-general |
+| Implementation team | The team that translates the doctrine into running protocol code (doctrine Appendix F.2). | implementation-team |
+| Integration teams | The teams that adapt and deploy KOI at specific field sites — the use-case implementers (doctrine Appendix F.3). | integration-teams |
+| KOI infrastructure | The Knowledge Organization Infrastructure itself: a protocol for scoped-authority knowledge organization across subnets and coordinator nodes, performing the six functions of identification over Resource Identifiers, with neither a single source of truth nor a walled garden. | koi-infrastructure |
+| Research collaborators | The researchers who supply the requirements and conceptual framing the protocol is built to satisfy (doctrine Appendix F.1). | research-collaborators |
+| Resource Identifier (RID) | The stable handle the infrastructure assigns so a resource can be referenced, related, updated, and forgotten across subnets without a single source of truth. | rid |
+
+
+## Translations
+
+### Translation (architectural): de-intermediating vendor-controlled infrastructure
+
+<!-- https://w3id.org/ant/cases/koi/translation/architectural -->
+
+The translation by which beneficiary organizations and implementers are enrolled into self-infrastructuring against vendor lock-in: problematized by vendor control of data and its governance, interested through use-case-specific intolerance of lock-in and data-egress concerns, unevenly enrolled (the failed KOI-pond relocation of dependency, the provisional Ask-Metagov tooling, and strong uptake on the chief engineer's team), and mobilized at the level of the paradigm — heterogeneous horizontal scaling — rather than any single instantiation.
+
+| Moment | Label | Description |
+| --- | --- | --- |
+| Enrolment | Enrolment (architectural): failed, provisional, and successful self-infrastructuring | Enrolment into the self-infrastructuring script has been uneven. In the Metagov case it was delayed, and the first attempts were not really self-infrastructuring: participants relocated their idea of who should serve them rather than taking up provisioning themselves. The expectation of invisible, 'it just works,' don't-ask-how IT that comes with third-party vendor tools did not go away — they wanted the technical team to occupy that role so they could feel undependent on vendors (the 'KOI pond' chatbot case). That first pass decayed from lack of participation in maintenance and curation and was decommissioned. Later iterations, specifically the 'Ask Metagov' tooling, were designed with a much clearer division of who contributes what and where, and appear to be a more successful self-infrastructuring — but the tooling is new and non-team members have not yet exercised its affordances. Uptake has been highest on the chief engineer's own highly technical team, which participates heavily in provisioning, maintaining, and using its digital infrastructure — including recording, transcription, and search — and in the tools for 'defanging' vendors: applying the KOI doctrine to vendor-tool use has enabled successful migrations that would otherwise have been very hard, demonstrating freedom from lock-in. |
+| Interessement | Interessement (architectural): self-infrastructuring against vendor lock-in | What makes vendored tools untenable differs by use case. In the Metagov use case it emanated from a desire to self-infrastructure Metagov's sensemaking, decision-making, identity-formation, and digital 'constitutive' platforms; Metagov was particularly opposed to the vendor control and data-hoovering endemic to web platforms. For the chief engineer the commitment is less about escaping vendors entirely and more about avoiding vendor lock-in and attending to data egress. The commitment is to the KOI doctrine rather than to any specific implementation: the doctrine manifests across multiple sites — Metagov, the chief engineer's firm, and even the construction of this repository. |
+| Mobilization | Mobilization (architectural): mobilizing the paradigm, not the substrate | Mobilization here operates at two scales. Each individual materialization — a deployment, community, use case, protocol, platform, field-site, or aspiration — can get its own mobilization; for example, Kelsie Nabben's 'AI as a constituted system: accountability lessons from an LLM experiment' (Data for Policy Proceedings 2024, Cambridge University Press, 25 Nov 2024) mobilized the chief engineer's team's earlier implementation, at the time an uncommon homegrown RAG-plus-rules system that has since evolved into something much richer. But the chief engineer is pushing for public understanding, appreciation, and adoption of the paradigm as written in the doctrine — heterogeneous horizontal scaling — rather than any technical substrate or particular network instantiation. The paradigm is mobilized differently from any instantiation; the best example to date is the 'Data Mesh Architecture: Interoperability, Co-Operation, and Co-Regulation' paper (Sisson, Nabben, Ben-Meir, Zargham; 2024), which voices the doctrine of decomposing monolithic platforms into networks of interoperable, co-regulating data products that scale middle-out rather than top-down. |
+| Problematization | Problematization (architectural): vendor intermediation and siloing | Technical team members entered through parallel tracks concerned with the lack of interoperability between tools, with vendors controlling not only the data but the governance of that data and its modes of interaction, and with the siloing this caused. Digital infrastructure was organized around the external, fragmented needs of tool vendors rather than the beneficiary organization and its constituents (implementers and users). Vendor intermediation is the offense and the anti-program; KOI is positioned as the de-intermediating, interoperable alternative that returns governance of data to the beneficiary organization. |
+
+
+## Characterizations within this network
+
+| Target | Role | Per practice | Invariance | Description |
+| --- | --- | --- | --- | --- |
+| Members of beneficiary organizations | Intermediary | protocol-design | protocol-endpoint | Read through protocol design, members of beneficiary organizations are an Intermediary: protocol endpoints whose resources and relationships the infrastructure organizes. |
+| Chief engineer | Spokesperson | protocol-design | paradigm-doctrine-fidelity | Read through protocol design, the chief engineer speaks publicly for the KOI paradigm as written in the doctrine — pushing for understanding, appreciation, and adoption of the paradigm rather than any technical substrate or particular instantiation. The spokesperson role emerges through the mobilization moment. |
+| Forget invocation (in-program) | Intermediary | protocol-design | constitutive-layer-held-invariant | Read through protocol design, a routine forget invocation is an Intermediary: it mutates the data — which the system is designed to permit — but does not change the rules or systems that afford that power, so it does not confuse the operative and constitutive layers. The forget signal is carried through faithfully; what is held invariant is the constitutive layer itself. |
+| Integration teams | Mediator | protocol-design | site-adaptation-of-protocol | Read through protocol design, integration teams are a Mediator: adapting and deploying KOI at a specific field site transforms the protocol in the act of making it run. |
+| Research collaborators | Mediator | protocol-design | doctrine-formulation | Read through protocol design, the research collaborators are a Mediator: they do not preserve an invariance but are material to the formulation of the doctrine itself, as evidenced by its intellectual lineage. They transform what the paradigm is. |
+
+
+---
+
+<!-- generated by ant-rdf; see https://w3id.org/ant/cases/koi/network/architectural -->

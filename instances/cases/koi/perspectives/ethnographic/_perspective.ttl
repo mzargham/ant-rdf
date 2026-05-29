@@ -1,0 +1,10 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/koi/perspectives/ethnographic> a ant:Perspective ;
+    rdfs:label "Ethnographic (Rennie)" ;
+    dcterms:description "Ellie Rennie's frame on the KOI field sites: reading the same infrastructure through participatory digital ethnography — Telescope, KOI Sync, consent flows, and the human interventions and problematizations by which ethnographers and participants are enrolled into (and resist) the loop. Grounded in participatory digital ethnography practice." ;
+    ant:perspectiveGroundedIn <https://w3id.org/ant/practices/participatory-digital-ethnography> ;
+    ant:perspectiveHeldBy <https://w3id.org/ant/agent/erennie> .
+

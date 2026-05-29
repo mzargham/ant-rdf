@@ -1,0 +1,44 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/koi/actant/beneficiary-org-members> a ant:Actant ;
+    rdfs:label "Members of beneficiary organizations" ;
+    dcterms:description "The people inside beneficiary organizations whose resources and relationships the infrastructure organizes (doctrine Appendix F.5)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/actant/community-participants> a ant:Actant ;
+    rdfs:label "Community participants" ;
+    dcterms:description "The people in field sites who enact, resist, and re-shape the loop in their everyday practice (EPIC 2026)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/actant/data-set> a ant:Actant ;
+    rdfs:label "The KOI data set (club good)" ;
+    dcterms:description "The shared knowledge graph the infrastructure accumulates and maintains: a club good whose integrity and completeness all participants depend on collectively." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/actant/ethics-committees> a ant:Actant ;
+    rdfs:label "University ethics committees" ;
+    dcterms:description "University human-research ethics committees that gate what the ethnographic research may do (EPIC 2026)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/actant/ethnographers> a ant:Actant ;
+    rdfs:label "Ethnographers" ;
+    dcterms:description "The ethnographers (Rennie, Nabben, and colleagues) whose participatory praxis observes and reshapes what KOI becomes in the field (EPIC 2026)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/actant/forget-metagov> a ant:Actant ;
+    rdfs:label "The Metagov contributor's forget invocation (subversive)" ;
+    dcterms:description "A specific invocation of forget experienced by the team as subversive; the contributor appears to have understood it as speaking up for the right-to-be-forgotten. Having established a large footprint, their forgetting punched a hole in the data set, degrading it for other participants — an outsized impact on the club good relative to in-program use." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/actant/integration-teams> a ant:Actant ;
+    rdfs:label "Integration teams" ;
+    dcterms:description "The teams that adapt and deploy KOI at specific field sites — the use-case implementers (doctrine Appendix F.3)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/actant/research-collaborators> a ant:Actant ;
+    rdfs:label "Research collaborators" ;
+    dcterms:description "The researchers who supply the requirements and conceptual framing the protocol is built to satisfy (doctrine Appendix F.1)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/koi/network/ethnographic> .
+

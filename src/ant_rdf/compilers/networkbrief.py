@@ -58,21 +58,21 @@ def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
     lines += ["## Participating actants", ""]
     if actants:
         rows = [
-            [label_of(g, a), description_of(g, a)[:120], local_name(str(a))]
+            [label_of(g, a), description_of(g, a), local_name(str(a))]
             for a in actants
         ]
-        lines.append(md_table(["Actant", "Description (truncated)", "Local name"], rows))
+        lines.append(md_table(["Actant", "Description", "Local name"], rows))
     else:
         lines.append("_No participating actants recorded for this network._")
     lines.append("")
 
-    # Translations whose moments are mentioned alongside this case's actants
-    # (heuristic v1: list every ant:Translation in the loaded graph; per-case
-    # filtering arrives with Scope-aware compilation in v1.1).
+    # Translations in the loaded scope. When the brief is compiled with
+    # --perspective, the loader admits only that perspective's TTL (plus
+    # _default/shared), so this is exactly the perspective's own translation.
     translations = sorted(
         s for s in g.subjects(RDF.type, ANT.Translation) if isinstance(s, URIRef)
     )
-    lines += ["## Translations in the loaded scope", ""]
+    lines += ["## Translations", ""]
     if translations:
         for t in translations:
             t_label = label_of(g, t)
@@ -98,8 +98,8 @@ def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
                         ),
                         "Translation",
                     )
-                    rows.append([moment_type, label_of(g, m), description_of(g, m)[:100]])
-                lines.append(md_table(["Moment", "Label", "Description (truncated)"], rows))
+                    rows.append([moment_type, label_of(g, m), description_of(g, m)])
+                lines.append(md_table(["Moment", "Label", "Description"], rows))
             else:
                 lines.append("_(no moments — Tier-1 SHACL would flag this)_")
             lines.append("")
@@ -124,9 +124,10 @@ def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
                 local_name(str(role)) if role else "?",
                 local_name(str(practice)) if practice else "_(unspecified)_",
                 str(invariance) if invariance else "_(unspecified)_",
+                description_of(g, c),
             ])
         lines.append(md_table(
-            ["Target", "Role", "Per practice", "Invariance"], rows,
+            ["Target", "Role", "Per practice", "Invariance", "Description"], rows,
         ))
     else:
         lines.append("_No characterizations recorded within this network._")
