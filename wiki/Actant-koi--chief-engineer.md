@@ -14,8 +14,8 @@ The role accountable for the coherence of the protocol as a whole; speaks for it
 
 This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [§4.1.1 observer-relativity](Concept-Characterization), not contradiction.
 
-| Role | Within network | Per practice | Invariance | Note |
+| Role | Within network | Per practice | Invariance | Description |
 | --- | --- | --- | --- | --- |
-| [Spokesperson](Concept-Spokesperson) | [KOI as constitutive infrastructure](Case-koi) | protocol-design | paradigm-doctrine-fidelity | Read through protocol design, the chief engineer speaks publicly for the KOI paradigm as written in the doctrine — pushing for understanding… |
+| [Spokesperson](Concept-Spokesperson) | [KOI as constitutive infrastructure](Case-koi) | protocol-design | paradigm-doctrine-fidelity | Read through protocol design, the chief engineer speaks publicly for the KOI paradigm as written in the doctrine — pushing for understanding, appreciation, and adoption of the paradigm rather than any technical substrate or particular instantiation. The spokesperson role emerges through the mobilization moment. |
 
 

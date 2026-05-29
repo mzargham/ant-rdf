@@ -14,7 +14,7 @@ The hotel's manager who originally posts the sign requesting key returns. Proble
 
 This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [§4.1.1 observer-relativity](Concept-Characterization), not contradiction.
 
-| Role | Within network | Per practice | Invariance | Note |
+| Role | Within network | Per practice | Invariance | Description |
 | --- | --- | --- | --- | --- |
 | [Spokesperson](Concept-Spokesperson) | [The hotel-keys assemblage](Case-hotel-keys) | hotel-administration | key-return-policy | The manager speaks for the hotel's interest in key returns, originally via the sign and later via the delegate that is the fob. |
 

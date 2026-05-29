@@ -14,9 +14,9 @@ The technical artifact (towlines with anchoring substrate) borrowed from Japanes
 
 This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [§4.1.1 observer-relativity](Concept-Characterization), not contradiction.
 
-| Role | Within network | Per practice | Invariance | Note |
+| Role | Within network | Per practice | Invariance | Description |
 | --- | --- | --- | --- | --- |
-| [Intermediary](Concept-Intermediary) | [St Brieuc Bay scallop-farming network](Case-scallops) | experimental-oceanography | anchoring-substrate-as-designed | From the experimental-oceanography practice, the larvae collectors are immutable mobiles — they transmit the Japanese anchoring technique wi… |
-| [Mediator](Concept-Mediator) | [St Brieuc Bay scallop-farming network](Case-scallops) | seasonal-fishing-labor | rhythms-of-bay-work | From the fishermen's seasonal-labor practice, the same collectors transform what they transmit — they reframe stretches of bay as off-limits… |
+| [Intermediary](Concept-Intermediary) | [St Brieuc Bay scallop-farming network](Case-scallops) | experimental-oceanography | anchoring-substrate-as-designed | From the experimental-oceanography practice, the larvae collectors are immutable mobiles — they transmit the Japanese anchoring technique without transformation. |
+| [Mediator](Concept-Mediator) | [St Brieuc Bay scallop-farming network](Case-scallops) | seasonal-fishing-labor | rhythms-of-bay-work | From the fishermen's seasonal-labor practice, the same collectors transform what they transmit — they reframe stretches of bay as off-limits, restructuring the rhythm of fishing work. Demonstrates §4.1.1: the same actant simultaneously Intermediary and Mediator under different observer-frames. |
 
 

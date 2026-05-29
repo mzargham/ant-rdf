@@ -693,10 +693,10 @@ def _render_case(g: Graph, slug: str, case: dict) -> str:
                 net_cell,
                 local_name(str(practice)) if practice else "_(unspecified)_",
                 str(invariance) if invariance else "_(unspecified)_",
-                (desc[:120] + "…") if len(desc) > 120 else desc,
+                desc,
             ])
         lines.append(_md_table(
-            ["Target", "Role", "Network", "Practice", "Invariance", "Note"], rows,
+            ["Target", "Role", "Network", "Practice", "Invariance", "Description"], rows,
         ))
         lines.append("")
 
@@ -872,10 +872,10 @@ def _render_actant(g: Graph, actant: URIRef) -> str:
                 net_cell,
                 local_name(str(prac)) if prac else "_(unspecified)_",
                 str(inv) if inv else "_(unspecified)_",
-                (d[:140] + "…") if len(d) > 140 else d,
+                d,
             ])
         lines.append(_md_table(
-            ["Role", "Within network", "Per practice", "Invariance", "Note"], rows,
+            ["Role", "Within network", "Per practice", "Invariance", "Description"], rows,
         ))
         lines.append("")
 

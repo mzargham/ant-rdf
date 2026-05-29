@@ -28,12 +28,12 @@ _See the full trace: [The hotel-keys translation chain](Translation-hotel-keys--
 
 Each row records an analyst's claim *within a context*: the (target, network, practice, invariance) tuple grounds the role assignment. The same actant may appear with different roles across rows — that's not contradiction, it's [§4.1.1 observer-relativity](Concept-Characterization).
 
-| Target | Role | Network | Practice | Invariance | Note |
+| Target | Role | Network | Practice | Invariance | Description |
 | --- | --- | --- | --- | --- | --- |
-| [Weighted brass fob](Actant-hotel-keys--fob) | [Intermediary](Concept-Intermediary) | [The hotel-keys assemblage](Case-hotel-keys) | room-occupancy | weight-as-weight | From the guest's room-occupancy practice, the fob just transmits its physical mass without further transformation — unco… |
-| [Weighted brass fob](Actant-hotel-keys--fob) | [Mediator](Concept-Mediator) | [The hotel-keys assemblage](Case-hotel-keys) | hotel-administration | behavioural-compliance-outcome | From the hotel-administration practice, the fob transforms what it transmits — the manager's polite request becomes phys… |
-| [Weighted brass fob](Actant-hotel-keys--fob) | [ObligatoryPassagePoint](Concept-ObligatoryPassagePoint) | [The hotel-keys assemblage](Case-hotel-keys) | hotel-administration | key-circulation | Within the hotel-administration practice, every guest's key-disposition decision now passes through the fob — they canno… |
-| [Hotel manager](Actant-hotel-keys--manager) | [Spokesperson](Concept-Spokesperson) | [The hotel-keys assemblage](Case-hotel-keys) | hotel-administration | key-return-policy | The manager speaks for the hotel's interest in key returns, originally via the sign and later via the delegate that is t… |
+| [Weighted brass fob](Actant-hotel-keys--fob) | [Intermediary](Concept-Intermediary) | [The hotel-keys assemblage](Case-hotel-keys) | room-occupancy | weight-as-weight | From the guest's room-occupancy practice, the fob just transmits its physical mass without further transformation — uncomfortable, but not productive of meaning. Demonstrates §4.1.1 observer-relativity in the Latour 1991 case. |
+| [Weighted brass fob](Actant-hotel-keys--fob) | [Mediator](Concept-Mediator) | [The hotel-keys assemblage](Case-hotel-keys) | hotel-administration | behavioural-compliance-outcome | From the hotel-administration practice, the fob transforms what it transmits — the manager's polite request becomes physical compliance. Outputs (returned keys) cannot be predicted from inputs (a metal weight). |
+| [Weighted brass fob](Actant-hotel-keys--fob) | [ObligatoryPassagePoint](Concept-ObligatoryPassagePoint) | [The hotel-keys assemblage](Case-hotel-keys) | hotel-administration | key-circulation | Within the hotel-administration practice, every guest's key-disposition decision now passes through the fob — they cannot ignore the weight. Manual OPP assignment per §4.1.2; v2 rule-based tagging could derive this from network topology. |
+| [Hotel manager](Actant-hotel-keys--manager) | [Spokesperson](Concept-Spokesperson) | [The hotel-keys assemblage](Case-hotel-keys) | hotel-administration | key-return-policy | The manager speaks for the hotel's interest in key returns, originally via the sign and later via the delegate that is the fob. |
 
 
 ## Actants in this case
