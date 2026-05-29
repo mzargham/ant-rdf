@@ -16,6 +16,6 @@ This actant has been characterized in the role(s) below, under specified practic
 
 | Role | Within network | Per practice | Invariance | Note |
 | --- | --- | --- | --- | --- |
-| [Mediator](Concept-Mediator) | [KOI as constitutive infrastructure](Case-koi) | protocol-design | in-program-forget-execution | Read through protocol design, a routine forget invocation transforms the graph's memory exactly as the program-of-action scripts; its effect… |
+| [Intermediary](Concept-Intermediary) | [KOI as constitutive infrastructure](Case-koi) | protocol-design | constitutive-layer-held-invariant | Read through protocol design, a routine forget invocation is an Intermediary: it mutates the data — which the system is designed to permit —… |
 
 

@@ -16,6 +16,7 @@ This actant has been characterized in the role(s) below, under specified practic
 
 | Role | Within network | Per practice | Invariance | Note |
 | --- | --- | --- | --- | --- |
+| [Mediator](Concept-Mediator) | [Building the loop in the field](Case-koi) | participatory-digital-ethnography | analysis-fed-back-into-the-field | Read through participatory digital ethnography, the ethnographer author team is also a Mediator: their output does not merely represent the … |
 | [Spokesperson](Concept-Spokesperson) | [Building the loop in the field](Case-koi) | participatory-digital-ethnography | field-representation-in-publication | Read through participatory digital ethnography, the ethnographer author team speaks for the loop, the method, and the field site in the 'Bui… |
 
 

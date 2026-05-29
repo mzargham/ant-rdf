@@ -24,9 +24,9 @@ Synthesized per plan §4.1.1, post-Law 2008.
 - [beneficiary-org-members-as-mediator-ethnographic](Case-koi)
 - [chief-engineer-as-spokesperson](Case-koi)
 - [ethics-committees-as-opp](Case-koi)
+- [ethnographers-as-mediator](Case-koi)
 - [ethnographers-as-spokesperson](Case-koi)
-- [forget-general-as-mediator](Case-koi)
+- [forget-general-as-intermediary](Case-koi)
 - [forget-metagov-as-mediator](Case-koi)
-- [forget-metagov-as-spokesperson](Case-koi)
-- … and 8 more
+- … and 9 more
 
