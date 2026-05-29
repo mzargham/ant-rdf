@@ -81,6 +81,7 @@ For each raw material file:
 
 - **Never bypass dry-run.** Always show the review document before committing. The dry-run is the seam where the ethnographer validates content per C7.
 - **Never auto-extract from prose.** If the ethnographer's notes don't have the frontmatter, help them add it — don't try to NER-extract actants from free text in v1.
+- **Role fit uncertain? Definition-first, don't preconclude.** When a candidate `assigns_role` value in the frontmatter is in doubt (or you're tempted to pick the role yourself), run the definition-first routine from [ant-mgmt](ant-mgmt.md) §7 ("When a role fit is uncertain"): quote the canonical definition, show worked examples, apply the test, and hand the deciding question to the ethnographer rather than resolving it in the YAML.
 - **Uploads are perspective-agnostic.** Don't ask "what perspective does this PDF belong to?" — the PDF itself doesn't have a perspective; *characterizations of it* do.
 - **Provenance per upload.** Every `ant:Inscription` from `ant ingest upload` carries its sha256 hash in `dcterms:source`. Don't strip that.
 

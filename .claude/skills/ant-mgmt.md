@@ -115,6 +115,19 @@ This is where the observer-relativity (§4.1.1) gets recorded.
 
 **Critical observer-relativity prompt.** If the ethnographer says something like "X is a mediator", probe gently: "From which practice? What invariance are you tracking that it transforms?" Multiple Characterizations on the same actant under different practices are exactly the point.
 
+#### When a role fit is uncertain — definition-first, don't preconclude
+
+Whenever a role assignment is in doubt — the ethnographer says "I'm not sure this is a Spokesperson", or two roles seem to compete, or *you* are tempted to pick one — do **not** lead with your own verdict. Run this four-step routine instead. It exists so an ethnographer who hasn't done the prompt-engineering ("ask for the definition first, then examples, then analysis, and don't preconclude") gets that rigor by default.
+
+1. **Name the uncertainty out loud** and reframe the question as definitional, not factual: "The question here is less about what happened and more about what the role *means* — let me pull the definition before we decide."
+2. **Quote the canonical definition.** Read it from the ontology (`ontology/material-semiotics-core.ttl`, the class's `rdfs:comment` + its `dcterms:source`) or the mirror at `wiki/Concept-<Term>.md`. Quote it verbatim and name the founding text. Identify the **load-bearing word** in the definition (e.g. Spokesperson turns on *represents*; Mediator turns on *transforms*).
+3. **Show 1–2 worked examples already in the graph.** The wiki concept page lists every Characterization that assigns the role; or grep the case `characterizations.ttl` files. Show *why* each example satisfies the definition — that's the test the candidate must pass.
+4. **Apply the test without choosing for them.** Lay out what supports and what cuts against each candidate role, point by point against the definition's load-bearing word. Then isolate the **single field question that decides it** and hand that decision to the ethnographer (C7). Only run `ant new-record characterization` after they answer.
+
+Worked instance of this routine: distinguishing Spokesperson (*represents* a constituency, emerges through mobilization) from Mediator (*transforms* — consequential and singular ≠ representational). "Consequential and singular" is the Mediator criterion, not the Spokesperson one; the deciding question is whether the actant spoke *on behalf of* an assembled constituency or acted on its own initiative. That is an ethnographer's call, not yours.
+
+The same routine applies, more lightly, even when the ethnographer asserts a role confidently — surface the definition so the assertion is checked against it rather than rubber-stamped.
+
 ### 8. Durability (Law 2008)
 
 - "Where is this configuration holding? Is it material (delegated into physical form), strategic (deliberate teleological design), or discursive (multi-discursive ordering)?"

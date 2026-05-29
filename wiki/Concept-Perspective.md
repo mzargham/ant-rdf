@@ -17,5 +17,8 @@ Synthesized for quad-readiness, post-Mol & Law.
 ## Examples (records typed with this term)
 
 - [Auto-created perspective stub: _default](Perspective-hotel-keys--_default)
+- [Auto-created perspective stub: _default](Perspective-koi--_default)
+- [Architectural (chief engineer)](Perspective-koi--architectural)
+- [Ethnographic (Rennie)](Perspective-koi--ethnographic)
 - [Auto-created perspective stub: _default](Perspective-scallops--_default)
 

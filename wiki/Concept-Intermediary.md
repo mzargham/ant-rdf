@@ -17,5 +17,7 @@ Latour, B. (2005). Reassembling the Social.
 ## Characterizations that assign this role
 
 - [Weighted brass fob](Actant-hotel-keys--fob) *(in network, per room-occupancy)*
+- [Members of beneficiary organizations](Actant-koi--beneficiary-org-members) *(in architectural, per protocol-design)*
+- [Integration teams](Actant-koi--integration-teams) *(in ethnographic, per participatory-digital-ethnography)*
 - [Larvae collectors (towlines)](Actant-scallops--larvae-collectors) *(in network, per experimental-oceanography)*
 

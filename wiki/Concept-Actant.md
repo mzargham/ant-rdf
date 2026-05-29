@@ -23,9 +23,10 @@ Greimas (semiotics, via Latour); foundational across Callon, Latour, Law.
 - [Room key](Actant-hotel-keys--key)
 - [Hotel manager](Actant-hotel-keys--manager)
 - [Polite request sign](Actant-hotel-keys--sign)
-- [Scientific colleagues](Actant-scallops--colleagues)
-- [Fishermen of St Brieuc Bay](Actant-scallops--fishermen)
-- [Larvae collectors (towlines)](Actant-scallops--larvae-collectors)
-- [Three researchers from Brest](Actant-scallops--researchers)
-- [Scallops (Pecten maximus)](Actant-scallops--scallops)
+- [Members of beneficiary organizations](Actant-koi--beneficiary-org-members)
+- [Beneficiary organizations](Actant-koi--beneficiary-orgs)
+- [Chief engineer](Actant-koi--chief-engineer)
+- [Community participants](Actant-koi--community-participants)
+- [The KOI data set (club good)](Actant-koi--data-set)
+- … and 14 more
 

@@ -17,5 +17,7 @@ Callon, M. (1986). Some Elements of a Sociology of Translation; Serres, M. (1974
 ## Examples (records typed with this term)
 
 - [The hotel-keys translation chain](Translation-hotel-keys--main)
+- [Translation (architectural): de-intermediating vendor-controlled infrastructure](Translation-koi--architectural)
+- [Translation (ethnographic): building the loop in the field](Translation-koi--ethnographic)
 - [The Callon-1986 translation chain](Translation-scallops--main)
 

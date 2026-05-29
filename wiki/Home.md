@@ -25,6 +25,8 @@ Hyperlinked traversal of the canonical RDF in `instances/`. Every actant, transl
 
 - **[hotel-keys](Case-hotel-keys)** — The hotel-keys assemblage
   > The network of hotel manager, guests, front-desk staff, key, weighted fob, and request sign analyzed by Latour (1991) in 'Technology is society made durable'. The fob translates the moral injunction 'please return your key' into a physical …
+- **[koi](Case-koi)** — KOI as constitutive infrastructure
+  > The assemblage as the doctrine frames it: scoped-authority knowledge organization (ASoT/MOSA), subnets and coordinator nodes, the six functions of identification, RIDs and FUN signals (new/update/forget), and per-relationship discipline. He…
 - **[scallops](Case-scallops)** — St Brieuc Bay scallop-farming network
   > The heterogeneous network Michel Callon analyzed in 'Some Elements of a Sociology of Translation' (1986). Three researchers from the Brest Oceanographic Centre attempt to enrol scallops, fishermen of St Brieuc Bay, and scientific colleagues…
 
@@ -40,6 +42,23 @@ Hyperlinked traversal of the canonical RDF in `instances/`. Every actant, transl
 - [Hotel manager](Actant-hotel-keys--manager)
 - [Polite request sign](Actant-hotel-keys--sign)
 
+### koi
+
+- [Members of beneficiary organizations](Actant-koi--beneficiary-org-members)
+- [Beneficiary organizations](Actant-koi--beneficiary-orgs)
+- [Chief engineer](Actant-koi--chief-engineer)
+- [Community participants](Actant-koi--community-participants)
+- [The KOI data set (club good)](Actant-koi--data-set)
+- [University ethics committees](Actant-koi--ethics-committees)
+- [Ethnographers](Actant-koi--ethnographers)
+- [Forget invocation (in-program)](Actant-koi--forget-general)
+- [The Metagov contributor's forget invocation (subversive)](Actant-koi--forget-metagov)
+- [Implementation team](Actant-koi--implementation-team)
+- [Integration teams](Actant-koi--integration-teams)
+- [KOI infrastructure](Actant-koi--koi-infrastructure)
+- [Research collaborators](Actant-koi--research-collaborators)
+- [Resource Identifier (RID)](Actant-koi--rid)
+
 ### scallops
 
 - [Scientific colleagues](Actant-scallops--colleagues)
@@ -51,11 +70,16 @@ Hyperlinked traversal of the canonical RDF in `instances/`. Every actant, transl
 ## Translations
 
 - [The hotel-keys translation chain](Translation-hotel-keys--main) _(case: [hotel-keys](Case-hotel-keys))_
+- [Translation (architectural): de-intermediating vendor-controlled infrastructure](Translation-koi--architectural) _(case: [koi](Case-koi))_
+- [Translation (ethnographic): building the loop in the field](Translation-koi--ethnographic) _(case: [koi](Case-koi))_
 - [The Callon-1986 translation chain](Translation-scallops--main) _(case: [scallops](Case-scallops))_
 
 ## Perspectives
 
 - [hotel-keys::_default](Perspective-hotel-keys--_default)
+- [koi::_default](Perspective-koi--_default)
+- [koi::architectural](Perspective-koi--architectural)
+- [koi::ethnographic](Perspective-koi--ethnographic)
 - [scallops::_default](Perspective-scallops--_default)
 
 ## Concepts (the ontology as a glossary)

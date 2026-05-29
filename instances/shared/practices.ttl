@@ -2,26 +2,39 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
+<https://w3id.org/ant/practices/data-stewardship> a ant:Practice ;
+    rdfs:label "Data stewardship" ;
+    dcterms:description "Care for a shared data set as a club good: maintaining its integrity, completeness, and usefulness for all participants. Reads the impact of an act by what it does to the commons others depend on, not by whether it followed the program. Backs the observer-frame in which a forget invocation with an outsized footprint is a Mediator that degrades the club good." .
+
 <https://w3id.org/ant/practices/experimental-oceanography> a ant:Practice ;
     rdfs:label "Experimental oceanography" ;
     dcterms:description "The laboratory-grounded research practice of designing experiments to understand marine species and their habitats; the practice that grounds the researchers' frame in the scallops case." .
-
-<https://w3id.org/ant/practices/seasonal-fishing-labor> a ant:Practice ;
-    rdfs:label "Seasonal fishing labor" ;
-    dcterms:description "The embodied year-round practice of fishing the bay — knowing tides, timing harvests, navigating restricted zones. The frame within which fishermen encounter scientific apparatus as alien constraint or local opportunity." .
-
-<https://w3id.org/ant/practices/scientific-publication> a ant:Practice ;
-    rdfs:label "Scientific publication" ;
-    dcterms:description "The practice of authoring peer-reviewed papers as inscriptions that circulate scientific claims; mobilizes the network into the wider scientific community." .
-
-<https://w3id.org/ant/practices/network-funding> a ant:Practice ;
-    rdfs:label "Network funding" ;
-    dcterms:description "The administrative practice of resource allocation across the experimental network; the frame in which OPPs emerge by virtue of who controls the pipeline." .
 
 <https://w3id.org/ant/practices/hotel-administration> a ant:Practice ;
     rdfs:label "Hotel administration" ;
     dcterms:description "The managerial practice of running a hotel — keeping rooms turning over, staff coordinated, and material flows (keys, linens, registers) reliable. The frame within which the fob is a productive delegate." .
 
+<https://w3id.org/ant/practices/network-funding> a ant:Practice ;
+    rdfs:label "Network funding" ;
+    dcterms:description "The administrative practice of resource allocation across the experimental network; the frame in which OPPs emerge by virtue of who controls the pipeline." .
+
+<https://w3id.org/ant/practices/participatory-digital-ethnography> a ant:Practice ;
+    rdfs:label "Participatory digital ethnography" ;
+    dcterms:description "The reflexive, participatory practice of studying socio-technical coordination by configuring the instruments that record, filter, and signal what counts as data — observing, interpreting, and inscribing within the feedback loops of the systems studied ('building the loop'; Rennie, Nabben et al.). The frame within which infrastructure is read for what it transforms about organisational knowledge." .
+
+<https://w3id.org/ant/practices/protocol-design> a ant:Practice ;
+    rdfs:label "Protocol design" ;
+    dcterms:description "The systems-engineering practice of specifying coordination machinery — protocol objects, identifiers, state machines, capability negotiation — as commitments authoritative at the functional layer while remaining agnostic at the physical layer (CFLP discipline). The frame within which the chief engineer reads KOI as realized substrate plus instructed direction." .
+
 <https://w3id.org/ant/practices/room-occupancy> a ant:Practice ;
     rdfs:label "Room occupancy" ;
     dcterms:description "The guest's situated practice of using a hotel room — sleeping, working, going out. The frame within which the fob's weight registers as inconvenience, not as meaning." .
+
+<https://w3id.org/ant/practices/scientific-publication> a ant:Practice ;
+    rdfs:label "Scientific publication" ;
+    dcterms:description "The practice of authoring peer-reviewed papers as inscriptions that circulate scientific claims; mobilizes the network into the wider scientific community." .
+
+<https://w3id.org/ant/practices/seasonal-fishing-labor> a ant:Practice ;
+    rdfs:label "Seasonal fishing labor" ;
+    dcterms:description "The embodied year-round practice of fishing the bay — knowing tides, timing harvests, navigating restricted zones. The frame within which fishermen encounter scientific apparatus as alien constraint or local opportunity." .
+

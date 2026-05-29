@@ -16,9 +16,12 @@ Mol, A. (2002). The Body Multiple; Law, J. (2008). Actor Network Theory and Mate
 
 ## Examples (records typed with this term)
 
+- [Data stewardship](#data-stewardship)
 - [Experimental oceanography](#experimental-oceanography)
 - [Hotel administration](#hotel-administration)
 - [Network funding](#network-funding)
+- [Participatory digital ethnography](#participatory-digital-ethnography)
+- [Protocol design](#protocol-design)
 - [Room occupancy](#room-occupancy)
 - [Scientific publication](#scientific-publication)
 - [Seasonal fishing labor](#seasonal-fishing-labor)

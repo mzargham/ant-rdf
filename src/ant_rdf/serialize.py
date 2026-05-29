@@ -36,6 +36,7 @@ from ant_rdf.models import (
     Mobilization,
     Network,
     Perspective,
+    Practice,
     Problematization,
     ProgramOfAction,
     Scope,
@@ -189,6 +190,12 @@ def _add_perspective(g: Graph, obj: Perspective) -> URIRef:
     return s
 
 
+def _add_practice(g: Graph, obj: Practice) -> URIRef:
+    s = _iri(obj.iri)
+    _add_base(g, s, obj, _ant("Practice"))
+    return s
+
+
 def _add_problematization(g: Graph, obj: Problematization) -> URIRef:
     s = _iri(obj.iri)
     _add_base(g, s, obj, _ant("Problematization"))
@@ -240,6 +247,7 @@ _DISPATCH: dict[type, Callable[[Graph, Any], URIRef]] = {
     Mobilization: _add_mobilization,
     Network: _add_network,
     Perspective: _add_perspective,
+    Practice: _add_practice,
     Problematization: _add_problematization,
     ProgramOfAction: _add_program_of_action,
     Scope: _add_scope,

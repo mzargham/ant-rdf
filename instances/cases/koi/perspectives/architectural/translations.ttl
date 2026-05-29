@@ -1,0 +1,12 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/koi/translation/architectural> a ant:Translation ;
+    rdfs:label "Translation (architectural): de-intermediating vendor-controlled infrastructure" ;
+    dcterms:description "The translation by which beneficiary organizations and implementers are enrolled into self-infrastructuring against vendor lock-in: problematized by vendor control of data and its governance, interested through use-case-specific intolerance of lock-in and data-egress concerns, unevenly enrolled (the failed KOI-pond relocation of dependency, the provisional Ask-Metagov tooling, and strong uptake on the chief engineer's team), and mobilized at the level of the paradigm — heterogeneous horizontal scaling — rather than any single instantiation." ;
+    ant:hasMoment <https://w3id.org/ant/cases/koi/moment/architectural-enrolment>,
+        <https://w3id.org/ant/cases/koi/moment/architectural-interessement>,
+        <https://w3id.org/ant/cases/koi/moment/architectural-mobilization>,
+        <https://w3id.org/ant/cases/koi/moment/architectural-problematization> .
+

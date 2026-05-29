@@ -1,0 +1,20 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/koi/moment/ethnographic-enrolment> a ant:Enrolment ;
+    rdfs:label "Enrolment (ethnographic): vehement uptake, and enrolment-into-subversion" ;
+    dcterms:description "In both the Metagov and SourceCred cases, participants took up the Telescope consent and emoji-based participatory processes vehemently — a strong enrolment of the community into the co-researcher role. The documented special case (the Metagov contributor's subversive 'forget' invocation) is located here as an enrolment-into-resistance: the contributor enrolled precisely in order to use the tools' affordances to undermine the configuration, per the earlier characterization of that act." .
+
+<https://w3id.org/ant/cases/koi/moment/ethnographic-interessement> a ant:Interessement ;
+    rdfs:label "Interessement (ethnographic): the IRB gate and distributed consented collection" ;
+    dcterms:description "The IRB process shaped the situation by forcing the question of how to scale a legitimate consent-capture mechanism to a large, pseudonymous online forum; had the PI been unable to satisfy the IRB, the research could not have proceeded — making the IRB an obligatory passage point. Once that hurdle was cleared, Telescope's consent affordance enabled data collection that would otherwise have been limited by the ethnographer's attention, because multiple people can collect and the community itself participates in collection via emoji mechanisms. This cuts off the alternative of attention-limited, solo, observation-only ethnography." .
+
+<https://w3id.org/ant/cases/koi/moment/ethnographic-mobilization> a ant:Mobilization ;
+    rdfs:label "Mobilization (ethnographic): Building the Loop speaks for a demonstrated KOI" ;
+    dcterms:description "The 'Building the Loop' paper (Rennie, Nabben, Zargham, Potts, Coco, Miller, Green; EPIC 2026) mobilizes a particular, demonstrated instantiation of KOI: it lets the author team speak in one voice for the loop, the participatory method, and the field site, carrying that voice into the academy as an immutable mobile. It is a mobilization of a specific materialization, not of the KOI paradigm as documented in the architecture materials." .
+
+<https://w3id.org/ant/cases/koi/moment/ethnographic-problematization> a ant:Problematization ;
+    rdfs:label "Problematization (ethnographic): consent, IRB, and the participation bottleneck" ;
+    dcterms:description "The ethnography working group recognized how hard ethnographic research in online forums is. As PI, Ellie Rennie encountered the consent requirement and IRB satisfaction as the binding problem in these environments. Telescope's participatory mode overcame a latent, unspoken limitation of ethnography — the bottleneck on participation — and made that overcoming visible. The loop is positioned as the obligatory passage point for doing consented, participatory ethnography in online forums." .
+

@@ -23,13 +23,14 @@ from typing import Any
 from rdflib import Dataset
 from rdflib.namespace import RDF
 
-from ant_rdf.graph import CASES_DIR, new_dataset
+from ant_rdf.graph import CASES_DIR, SHARED_DIR, new_dataset
 from ant_rdf.models import (
     Actant,
     AntModel,
     Characterization,
     Network,
     Perspective,
+    Practice,
     Problematization,
     Translation,
 )
@@ -183,6 +184,25 @@ def create_perspective(
     ds = new_dataset()
     add(ds, obj)
     write_turtle(ds, target)
+    return target
+
+
+def create_practice(
+    iri: str,
+    label: str,
+    description: str,
+    out: str | None = None,
+) -> Path:
+    """Create an ant:Practice record.
+
+    Practices are perspective-agnostic shared vocabulary; they live under
+    instances/shared/ (default: practices.ttl), not under a case/perspective.
+    They back the ant:perPractice (Characterization) and
+    ant:perspectiveGroundedIn (Perspective) cross-references.
+    """
+    obj = Practice(iri=iri, label=label, description=description)
+    target = Path(out) if out else SHARED_DIR / "practices.ttl"
+    _merge_into(target, obj)
     return target
 
 

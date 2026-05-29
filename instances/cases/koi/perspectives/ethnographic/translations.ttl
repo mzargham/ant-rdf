@@ -1,0 +1,12 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/koi/translation/ethnographic> a ant:Translation ;
+    rdfs:label "Translation (ethnographic): building the loop in the field" ;
+    dcterms:description "The translation by which online-forum communities and ethnographers are enrolled into participatory, consented research via the loop: problematized by the difficulty of consented ethnography in large pseudonymous forums, passing through the IRB as obligatory passage point, taken up vehemently in the Metagov and SourceCred cases (with a documented subversive exception), and mobilized publicly through the 'Building the Loop' paper as a demonstrated instantiation." ;
+    ant:hasMoment <https://w3id.org/ant/cases/koi/moment/ethnographic-enrolment>,
+        <https://w3id.org/ant/cases/koi/moment/ethnographic-interessement>,
+        <https://w3id.org/ant/cases/koi/moment/ethnographic-mobilization>,
+        <https://w3id.org/ant/cases/koi/moment/ethnographic-problematization> .
+

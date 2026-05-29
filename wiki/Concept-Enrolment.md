@@ -17,5 +17,7 @@ Callon, M. (1986). Some Elements of a Sociology of Translation.
 ## Examples (records typed with this term)
 
 - [Enrolment: guests start returning keys](Case-hotel-keys)
+- [Enrolment (architectural): failed, provisional, and successful self-infrastructuring](Case-koi)
+- [Enrolment (ethnographic): vehement uptake, and enrolment-into-subversion](Case-koi)
 - [Enrolment: coordinated roles](Case-scallops)
 

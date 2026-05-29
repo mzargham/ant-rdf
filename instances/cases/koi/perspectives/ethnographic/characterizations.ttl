@@ -1,0 +1,67 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://w3id.org/ant/cases/koi/char/beneficiary-org-members-as-mediator-ethnographic> a ant:Characterization ;
+    dcterms:description "Read through participatory digital ethnography, members of beneficiary organizations are a Mediator: their situated practice is what actually enacts — or fails to enact — the loop." ;
+    ant:assignsRole ant:Mediator ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/beneficiary-org-members> ;
+    ant:invarianceCriterion "situated-enactment-of-the-loop" ;
+    ant:perPractice <https://w3id.org/ant/practices/participatory-digital-ethnography> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/char/ethics-committees-as-opp> a ant:Characterization ;
+    dcterms:description "The IRB / university ethics committee is the gate the research must pass through: a legitimate, scalable consent-capture mechanism for a large pseudonymous forum had to satisfy it, and without that satisfaction the project could not proceed. Assigned as an emergent OPP attribute per R6, not as a direct typing." ;
+    ant:assignsRole ant:ObligatoryPassagePoint ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/ethics-committees> ;
+    ant:invarianceCriterion "consent-legitimacy-at-scale" ;
+    ant:perPractice <https://w3id.org/ant/practices/participatory-digital-ethnography> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/char/ethnographers-as-mediator> a ant:Characterization ;
+    dcterms:description "Read through participatory digital ethnography, the ethnographer author team is also a Mediator: their output does not merely represent the field but feeds back continuously onto the field site and the actors within it. The analysis returned to the community becomes part of its own history and reshapes what the loop is — the 'building the loop' transformation, distinct from the spokesperson role of representing the field in publication." ;
+    ant:assignsRole ant:Mediator ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/ethnographers> ;
+    ant:invarianceCriterion "analysis-fed-back-into-the-field" ;
+    ant:perPractice <https://w3id.org/ant/practices/participatory-digital-ethnography> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/char/ethnographers-as-spokesperson> a ant:Characterization ;
+    dcterms:description "Read through participatory digital ethnography, the ethnographer author team speaks for the loop, the method, and the field site in the 'Building the Loop' paper — representing the assembled network in the academy. Emerges through the mobilization moment." ;
+    ant:assignsRole ant:Spokesperson ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/ethnographers> ;
+    ant:invarianceCriterion "field-representation-in-publication" ;
+    ant:perPractice <https://w3id.org/ant/practices/participatory-digital-ethnography> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/char/forget-metagov-as-mediator> a ant:Characterization ;
+    dcterms:description "Read through data stewardship and from the observers' frame, the same invocation is a Mediator whose output is wildly disproportionate to its input: by forgetting a large footprint it punched a hole in the shared data set, degrading the club good for everyone. This is what distinguishes it from in-program forget — same role label, different invariance." ;
+    ant:assignsRole ant:Mediator ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/forget-metagov> ;
+    ant:invarianceCriterion "club-good-degradation-outsized-footprint" ;
+    ant:perPractice <https://w3id.org/ant/practices/data-stewardship> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/char/forget-metagov-as-spokesperson> a ant:Characterization ;
+    dcterms:description "Read through participatory digital ethnography and from the contributor's own frame, the subversive invocation speaks on behalf of the right-to-be-forgotten — a representational act, not mere execution." ;
+    ant:assignsRole ant:Spokesperson ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/forget-metagov> ;
+    ant:invarianceCriterion "right-to-be-forgotten-advocacy" ;
+    ant:perPractice <https://w3id.org/ant/practices/participatory-digital-ethnography> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/char/integration-teams-as-intermediary-ethnographic> a ant:Characterization ;
+    dcterms:description "Read through participatory digital ethnography, integration teams are an Intermediary: from the ethnographer's frame they faithfully carry KOI's logic into the field without transforming it — the interesting asymmetry being that they often experience themselves as mediating." ;
+    ant:assignsRole ant:Intermediary ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/integration-teams> ;
+    ant:invarianceCriterion "faithful-carrier-of-koi-logic" ;
+    ant:perPractice <https://w3id.org/ant/practices/participatory-digital-ethnography> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/ethnographic> .
+
+<https://w3id.org/ant/cases/koi/char/research-collaborators-as-mediator-ethnographic> a ant:Characterization ;
+    dcterms:description "Read through participatory digital ethnography, the research collaborators are a Mediator: as co-authors their framing constitutes the object of study rather than transmitting it unchanged." ;
+    ant:assignsRole ant:Mediator ;
+    ant:characterizes <https://w3id.org/ant/cases/koi/actant/research-collaborators> ;
+    ant:invarianceCriterion "framing-the-object-of-study" ;
+    ant:perPractice <https://w3id.org/ant/practices/participatory-digital-ethnography> ;
+    ant:withinNetwork <https://w3id.org/ant/cases/koi/network/ethnographic> .
+

@@ -1,0 +1,55 @@
+# Network Brief: Building the loop in the field
+
+<!-- compiled from https://w3id.org/ant/cases/koi/network/ethnographic -->
+
+## Description
+
+The same infrastructure as encountered in field sites: ethnographers and community participants enacting, resisting, and re-shaping the loop (artificial organisational intelligence). The forget incident is a moment where an affordance was turned to advocacy and degraded a shared club good. Held together by participatory digital ethnography; foregrounds intent, consequence, and contestation that the architecture cannot see. Durability (Law 2008): the primary durability is the ethnography itself occurring — the community participating and the researcher responding, the collection as a living relation. Telescope and Obsidian add material durability by making the data less ephemeral and more usable: a genuine upgrade to persistent, shareable records where paper field notes, private local files, or what is only in the ethnographer's head would fade and be lost. The configuration also holds discursively through the participatory method and its writing-up. Most distinctively, 'building the loop' means the ethnography is not apart from the studied but feeds back into and becomes part of it: feeding the analysis back to the community and discussing it makes the study part of that community's own history — embodied within it rather than apart from it — so the reflection (or refraction) the study showed them can become part of the community's future self. This yields a strategic durability of relationship: established, different, and ongoing. Contested / unraveling: the central failure mode is the loop not actually closing. One friction point is community knowledge of the loop itself — whether people even respond to the DM — which can stall the whole system. Another is the loop's heavy reliance on an analysis-and-synthesis stage that draws on sources and thinking beyond the field site: the loop is not complete in itself but depends on many activities and stages coming together. Tools like this repository can make loop-closure easier and more accessible, but can never entirely close it — there will always need to be people with the time, attention, and willingness to do the interpretive labor of formulating and communicating perspectives. The loop is not automatable, even if it can be infrastructured and facilitated by tools. The unraveling, then, is loop-closure failure: having all the parts yet not achieving closure, or some aspect breaking such that it ceases to be a continuous feedback loop. That continuous loop closure is what is meant to differentiate this from conventional ethnography.
+
+## Participating actants
+
+| Actant | Description | Local name |
+| --- | --- | --- |
+| Members of beneficiary organizations | The people inside beneficiary organizations whose resources and relationships the infrastructure organizes (doctrine Appendix F.5). | beneficiary-org-members |
+| Community participants | The people in field sites who enact, resist, and re-shape the loop in their everyday practice (EPIC 2026). | community-participants |
+| The KOI data set (club good) | The shared knowledge graph the infrastructure accumulates and maintains: a club good whose integrity and completeness all participants depend on collectively. | data-set |
+| University ethics committees | University human-research ethics committees that gate what the ethnographic research may do (EPIC 2026). | ethics-committees |
+| Ethnographers | The ethnographers (Rennie, Nabben, and colleagues) whose participatory praxis observes and reshapes what KOI becomes in the field (EPIC 2026). | ethnographers |
+| The Metagov contributor's forget invocation (subversive) | A specific invocation of forget experienced by the team as subversive; the contributor appears to have understood it as speaking up for the right-to-be-forgotten. Having established a large footprint, their forgetting punched a hole in the data set, degrading it for other participants — an outsized impact on the club good relative to in-program use. | forget-metagov |
+| Integration teams | The teams that adapt and deploy KOI at specific field sites — the use-case implementers (doctrine Appendix F.3). | integration-teams |
+| Research collaborators | The researchers who supply the requirements and conceptual framing the protocol is built to satisfy (doctrine Appendix F.1). | research-collaborators |
+
+
+## Translations
+
+### Translation (ethnographic): building the loop in the field
+
+<!-- https://w3id.org/ant/cases/koi/translation/ethnographic -->
+
+The translation by which online-forum communities and ethnographers are enrolled into participatory, consented research via the loop: problematized by the difficulty of consented ethnography in large pseudonymous forums, passing through the IRB as obligatory passage point, taken up vehemently in the Metagov and SourceCred cases (with a documented subversive exception), and mobilized publicly through the 'Building the Loop' paper as a demonstrated instantiation.
+
+| Moment | Label | Description |
+| --- | --- | --- |
+| Enrolment | Enrolment (ethnographic): vehement uptake, and enrolment-into-subversion | In both the Metagov and SourceCred cases, participants took up the Telescope consent and emoji-based participatory processes vehemently — a strong enrolment of the community into the co-researcher role. The documented special case (the Metagov contributor's subversive 'forget' invocation) is located here as an enrolment-into-resistance: the contributor enrolled precisely in order to use the tools' affordances to undermine the configuration, per the earlier characterization of that act. |
+| Interessement | Interessement (ethnographic): the IRB gate and distributed consented collection | The IRB process shaped the situation by forcing the question of how to scale a legitimate consent-capture mechanism to a large, pseudonymous online forum; had the PI been unable to satisfy the IRB, the research could not have proceeded — making the IRB an obligatory passage point. Once that hurdle was cleared, Telescope's consent affordance enabled data collection that would otherwise have been limited by the ethnographer's attention, because multiple people can collect and the community itself participates in collection via emoji mechanisms. This cuts off the alternative of attention-limited, solo, observation-only ethnography. |
+| Mobilization | Mobilization (ethnographic): Building the Loop speaks for a demonstrated KOI | The 'Building the Loop' paper (Rennie, Nabben, Zargham, Potts, Coco, Miller, Green; EPIC 2026) mobilizes a particular, demonstrated instantiation of KOI: it lets the author team speak in one voice for the loop, the participatory method, and the field site, carrying that voice into the academy as an immutable mobile. It is a mobilization of a specific materialization, not of the KOI paradigm as documented in the architecture materials. |
+| Problematization | Problematization (ethnographic): consent, IRB, and the participation bottleneck | The ethnography working group recognized how hard ethnographic research in online forums is. As PI, Ellie Rennie encountered the consent requirement and IRB satisfaction as the binding problem in these environments. Telescope's participatory mode overcame a latent, unspoken limitation of ethnography — the bottleneck on participation — and made that overcoming visible. The loop is positioned as the obligatory passage point for doing consented, participatory ethnography in online forums. |
+
+
+## Characterizations within this network
+
+| Target | Role | Per practice | Invariance | Description |
+| --- | --- | --- | --- | --- |
+| Members of beneficiary organizations | Mediator | participatory-digital-ethnography | situated-enactment-of-the-loop | Read through participatory digital ethnography, members of beneficiary organizations are a Mediator: their situated practice is what actually enacts — or fails to enact — the loop. |
+| University ethics committees | ObligatoryPassagePoint | participatory-digital-ethnography | consent-legitimacy-at-scale | The IRB / university ethics committee is the gate the research must pass through: a legitimate, scalable consent-capture mechanism for a large pseudonymous forum had to satisfy it, and without that satisfaction the project could not proceed. Assigned as an emergent OPP attribute per R6, not as a direct typing. |
+| Ethnographers | Mediator | participatory-digital-ethnography | analysis-fed-back-into-the-field | Read through participatory digital ethnography, the ethnographer author team is also a Mediator: their output does not merely represent the field but feeds back continuously onto the field site and the actors within it. The analysis returned to the community becomes part of its own history and reshapes what the loop is — the 'building the loop' transformation, distinct from the spokesperson role of representing the field in publication. |
+| Ethnographers | Spokesperson | participatory-digital-ethnography | field-representation-in-publication | Read through participatory digital ethnography, the ethnographer author team speaks for the loop, the method, and the field site in the 'Building the Loop' paper — representing the assembled network in the academy. Emerges through the mobilization moment. |
+| The Metagov contributor's forget invocation (subversive) | Mediator | data-stewardship | club-good-degradation-outsized-footprint | Read through data stewardship and from the observers' frame, the same invocation is a Mediator whose output is wildly disproportionate to its input: by forgetting a large footprint it punched a hole in the shared data set, degrading the club good for everyone. This is what distinguishes it from in-program forget — same role label, different invariance. |
+| The Metagov contributor's forget invocation (subversive) | Spokesperson | participatory-digital-ethnography | right-to-be-forgotten-advocacy | Read through participatory digital ethnography and from the contributor's own frame, the subversive invocation speaks on behalf of the right-to-be-forgotten — a representational act, not mere execution. |
+| Integration teams | Intermediary | participatory-digital-ethnography | faithful-carrier-of-koi-logic | Read through participatory digital ethnography, integration teams are an Intermediary: from the ethnographer's frame they faithfully carry KOI's logic into the field without transforming it — the interesting asymmetry being that they often experience themselves as mediating. |
+| Research collaborators | Mediator | participatory-digital-ethnography | framing-the-object-of-study | Read through participatory digital ethnography, the research collaborators are a Mediator: as co-authors their framing constitutes the object of study rather than transmitting it unchanged. |
+
+
+---
+
+<!-- generated by ant-rdf; see https://w3id.org/ant/cases/koi/network/ethnographic -->

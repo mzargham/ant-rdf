@@ -14,3 +14,8 @@ A material trace (text, graph, instrument reading, photograph, file) that allows
 
 Latour, B. (1990). Drawing Things Together; Latour, B. (1987). Science in Action.
 
+## Examples (records typed with this term)
+
+- [Ethnographic Praxis - 2026 - Rennie - Building the Loop  The Role of Ethnography in Artificial Organisational Intelligence (1).pdf](Case-koi)
+- [KOI lineage, doctrine, status and direction.md](Case-koi)
+

@@ -17,5 +17,7 @@ Shared across Callon, Latour, Law.
 ## Examples (records typed with this term)
 
 - [The hotel-keys assemblage](Case-hotel-keys)
+- [KOI as constitutive infrastructure](Case-koi)
+- [Building the loop in the field](Case-koi)
 - [St Brieuc Bay scallop-farming network](Case-scallops)
 
