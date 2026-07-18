@@ -47,6 +47,11 @@
     dcterms:description "A plain-text markdown file holding notes; kept deliberately plain (after leaving Logseq) so it stays fast and searchable with git grep." ;
     ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
 
+<https://w3id.org/ant/cases/pi-learning/actant/media-file> a ant:Actant ;
+    rdfs:label "Downloaded media file" ;
+    dcterms:description "A downloaded media item (a video or podcast) stored locally and consumed for its content. Collapsed from the former separate video-file and podcast-file actants: file format does not make a difference in this network — the role (a durable offline item consumed for content) is the same. Consumption mode (screen-bound vs ambient audio) is noted but not individuated." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
 <https://w3id.org/ant/cases/pi-learning/actant/paper-notes> a ant:Actant ;
     rdfs:label "Paper notes" ;
     dcterms:description "Handwritten notes in paper notebooks for hobbies and academic interests. Part of the problem: they do not digitize well and resist search." ;
@@ -55,11 +60,6 @@
 <https://w3id.org/ant/cases/pi-learning/actant/peer> a ant:Actant ;
     rdfs:label "Nerd friend / peer" ;
     dcterms:description "A fellow nerd the learner teaches or discusses interests with. Receives condensed rationales for rejected tools/paths; but more importantly, teaching reinforces the learner's knowledge and exposes gaps (unanswerable questions, observed failure modes), which loops back into new thread-pulling." ;
-    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
-
-<https://w3id.org/ant/cases/pi-learning/actant/podcast-file> a ant:Actant ;
-    rdfs:label "Podcast file" ;
-    dcterms:description "A downloaded podcast episode stored locally on a machine." ;
     ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
 
 <https://w3id.org/ant/cases/pi-learning/actant/podcast-playlist> a ant:Actant ;
@@ -75,11 +75,6 @@
 <https://w3id.org/ant/cases/pi-learning/actant/service> a ant:Actant ;
     rdfs:label "Service" ;
     dcterms:description "A bespoke or third-party online service used to hold or process learning material; reachable from either computer even when local files are not." ;
-    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
-
-<https://w3id.org/ant/cases/pi-learning/actant/video-file> a ant:Actant ;
-    rdfs:label "Video file" ;
-    dcterms:description "A downloaded video stored locally on a machine, watchable offline." ;
     ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
 
 <https://w3id.org/ant/cases/pi-learning/actant/video-link> a ant:Actant ;

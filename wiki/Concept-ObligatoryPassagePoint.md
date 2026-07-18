@@ -18,5 +18,6 @@ Callon, M. (1986). Some Elements of a Sociology of Translation.
 
 - [Weighted brass fob](Actant-hotel-keys--fob) *(in network, per hotel-administration)*
 - [University ethics committees](Actant-koi--ethics-committees) *(in ethnographic, per participatory-digital-ethnography)*
+- [The learner (me)](Actant-pi-learning--learner) *(in network, per self-directed-learning)*
 - [Three researchers from Brest](Actant-scallops--researchers) *(in network, per network-funding)*
 

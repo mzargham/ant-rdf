@@ -25,4 +25,5 @@ Mol, A. (2002). The Body Multiple; Law, J. (2008). Actor Network Theory and Mate
 - [Room occupancy](#room-occupancy)
 - [Scientific publication](#scientific-publication)
 - [Seasonal fishing labor](#seasonal-fishing-labor)
+- [Self-directed continual learning](#self-directed-learning)
 

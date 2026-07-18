@@ -27,6 +27,8 @@ Hyperlinked traversal of the canonical RDF in `instances/`. Every actant, transl
   > The network of hotel manager, guests, front-desk staff, key, weighted fob, and request sign analyzed by Latour (1991) in 'Technology is society made durable'. The fob translates the moral injunction 'please return your key' into a physical …
 - **[koi](Case-koi)** — KOI as constitutive infrastructure
   > The assemblage as the doctrine frames it: scoped-authority knowledge organization (ASoT/MOSA), subnets and coordinator nodes, the six functions of identification, RIDs and FUN signals (new/update/forget), and per-relationship discipline. He…
+- **[pi-learning](Case-pi-learning)** — Continual learning across computers, services, and notebooks
+  > A distributed personal-learning setup spanning multiple computers, some bespoke services, and paper notebooks, covering both hobby and academic interests. The habit currently holding it together is a daily ISO-dated markdown file (e.g. 2026…
 - **[scallops](Case-scallops)** — St Brieuc Bay scallop-farming network
   > The heterogeneous network Michel Callon analyzed in 'Some Elements of a Sociology of Translation' (1986). Three researchers from the Brest Oceanographic Centre attempt to enrol scallops, fishermen of St Brieuc Bay, and scientific colleagues…
 
@@ -59,6 +61,26 @@ Hyperlinked traversal of the canonical RDF in `instances/`. Every actant, transl
 - [Research collaborators](Actant-koi--research-collaborators)
 - [Resource Identifier (RID)](Actant-koi--rid)
 
+### pi-learning
+
+- [Browser tabs](Actant-pi-learning--browser-tabs)
+- [Codebase](Actant-pi-learning--codebase)
+- [Computer](Actant-pi-learning--computer)
+- [Course (Coursera, Udacity, etc.)](Actant-pi-learning--course)
+- [Daily dated markdown-note habit](Actant-pi-learning--daily-note-habit)
+- [Git](Actant-pi-learning--git)
+- [Interest](Actant-pi-learning--interest)
+- [The learner (me)](Actant-pi-learning--learner)
+- [Markdown file](Actant-pi-learning--markdown-file)
+- [Downloaded media file](Actant-pi-learning--media-file)
+- [Paper notes](Actant-pi-learning--paper-notes)
+- [Nerd friend / peer](Actant-pi-learning--peer)
+- [Podcast playlist](Actant-pi-learning--podcast-playlist)
+- [Publication (paper, book, blog post)](Actant-pi-learning--publication)
+- [Service](Actant-pi-learning--service)
+- [Video link](Actant-pi-learning--video-link)
+- [Video playlist](Actant-pi-learning--video-playlist)
+
 ### scallops
 
 - [Scientific colleagues](Actant-scallops--colleagues)
@@ -72,6 +94,7 @@ Hyperlinked traversal of the canonical RDF in `instances/`. Every actant, transl
 - [The hotel-keys translation chain](Translation-hotel-keys--main) _(case: [hotel-keys](Case-hotel-keys))_
 - [Translation (architectural): de-intermediating vendor-controlled infrastructure](Translation-koi--architectural) _(case: [koi](Case-koi))_
 - [Translation (ethnographic): building the loop in the field](Translation-koi--ethnographic) _(case: [koi](Case-koi))_
+- [Pulling a thread: from discovery to (attempted) retention](Translation-pi-learning--main) _(case: [pi-learning](Case-pi-learning))_
 - [The Callon-1986 translation chain](Translation-scallops--main) _(case: [scallops](Case-scallops))_
 
 ## Perspectives
@@ -80,6 +103,7 @@ Hyperlinked traversal of the canonical RDF in `instances/`. Every actant, transl
 - [koi::_default](Perspective-koi--_default)
 - [koi::architectural](Perspective-koi--architectural)
 - [koi::ethnographic](Perspective-koi--ethnographic)
+- [pi-learning::_default](Perspective-pi-learning--_default)
 - [scallops::_default](Perspective-scallops--_default)
 
 ## Concepts (the ontology as a glossary)

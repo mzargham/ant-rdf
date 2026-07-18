@@ -19,5 +19,6 @@ Callon, M. (1986). Some Elements of a Sociology of Translation.
 - [Mobilization: the fob speaks for the manager](Case-hotel-keys)
 - [Mobilization (architectural): mobilizing the paradigm, not the substrate](Case-koi)
 - [Mobilization (ethnographic): Building the Loop speaks for a demonstrated KOI](Case-koi)
+- [Mobilization: the system speaks for past-you (and to others)](Case-pi-learning)
 - [Mobilization: spokespersons emerge](Case-scallops)
 

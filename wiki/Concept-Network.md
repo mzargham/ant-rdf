@@ -19,5 +19,6 @@ Shared across Callon, Latour, Law.
 - [The hotel-keys assemblage](Case-hotel-keys)
 - [KOI as constitutive infrastructure](Case-koi)
 - [Building the loop in the field](Case-koi)
+- [Continual learning across computers, services, and notebooks](Case-pi-learning)
 - [St Brieuc Bay scallop-farming network](Case-scallops)
 

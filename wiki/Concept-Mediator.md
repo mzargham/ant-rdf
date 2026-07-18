@@ -23,5 +23,6 @@ Latour, B. (2005). Reassembling the Social.
 - [Integration teams](Actant-koi--integration-teams) *(in architectural, per protocol-design)*
 - [Research collaborators](Actant-koi--research-collaborators) *(in architectural, per protocol-design)*
 - [Research collaborators](Actant-koi--research-collaborators) *(in ethnographic, per participatory-digital-ethnography)*
+- [The learner (me)](Actant-pi-learning--learner) *(in network, per self-directed-learning)*
 - [Larvae collectors (towlines)](Actant-scallops--larvae-collectors) *(in network, per seasonal-fishing-labor)*
 
