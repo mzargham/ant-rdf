@@ -20,5 +20,6 @@ Callon, M. (1986); Latour, B. (1987). Science in Action.
 - [Chief engineer](Actant-koi--chief-engineer) *(in architectural, per protocol-design)*
 - [Ethnographers](Actant-koi--ethnographers) *(in ethnographic, per participatory-digital-ethnography)*
 - [The Metagov contributor's forget invocation (subversive)](Actant-koi--forget-metagov) *(in ethnographic, per participatory-digital-ethnography)*
+- [The learner (me)](Actant-pi-learning--learner) *(in network, per self-directed-learning)*
 - [Three researchers from Brest](Actant-scallops--researchers) *(in network, per scientific-publication)*
 

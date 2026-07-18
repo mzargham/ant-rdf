@@ -28,5 +28,5 @@ Greimas (semiotics, via Latour); foundational across Callon, Latour, Law.
 - [Chief engineer](Actant-koi--chief-engineer)
 - [Community participants](Actant-koi--community-participants)
 - [The KOI data set (club good)](Actant-koi--data-set)
-- … and 14 more
+- … and 31 more
 

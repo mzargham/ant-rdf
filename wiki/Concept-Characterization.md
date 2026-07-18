@@ -28,5 +28,5 @@ Synthesized per plan §4.1.1, post-Law 2008.
 - [ethnographers-as-spokesperson](Case-koi)
 - [forget-general-as-intermediary](Case-koi)
 - [forget-metagov-as-mediator](Case-koi)
-- … and 9 more
+- … and 13 more
 

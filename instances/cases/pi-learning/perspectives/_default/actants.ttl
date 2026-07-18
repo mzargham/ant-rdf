@@ -1,0 +1,89 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/browser-tabs> a ant:Actant ;
+    rdfs:label "Browser tabs" ;
+    dcterms:description "Open browser tabs used as a low-friction hold for interests, deliberately chosen over markdown. They accumulate into the hundreds and spread across multiple computers. Periodic attempts to prune them paradoxically reactivate dormant interests, spawning more tabs than were closed — a net increase — so they resist reduction to a manageable set." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/codebase> a ant:Actant ;
+    rdfs:label "Codebase" ;
+    dcterms:description "A body of code (a repo or project) being learned from, built on, or maintained." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/computer> a ant:Actant ;
+    rdfs:label "Computer" ;
+    dcterms:description "One of several machines. Some files or repos live on only one machine and can be out of sync; services, by contrast, are reachable from any of them." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/course> a ant:Actant ;
+    rdfs:label "Course (Coursera, Udacity, etc.)" ;
+    dcterms:description "A structured online course; typically a fixed, finite sequence the learner is trying to complete." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/daily-note-habit> a ant:Actant ;
+    rdfs:label "Daily dated markdown-note habit" ;
+    dcterms:description "The practice of keeping a daily ISO-dated markdown file (e.g. 2026-07-18.md) logging what was learned, thought about, or worked on that day. Currently the habit holding the system together, though it strains when switching computers." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/git> a ant:Actant ;
+    rdfs:label "Git" ;
+    dcterms:description "Version control holding the markdown notes and codebases; affords git grep retrieval, but repositories can fall out of sync across machines." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/interest> a ant:Actant ;
+    rdfs:label "Interest" ;
+    dcterms:description "A topic or thread of curiosity, hobby or academic, that heats up into active habit and cools down into dormancy until some serendipitous rediscovery reactivates it." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/learner> a ant:Actant ;
+    rdfs:label "The learner (me)" ;
+    dcterms:description "The person doing the learning: captures notes, retrieves them, and reactivates interests across all these media and machines." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/markdown-file> a ant:Actant ;
+    rdfs:label "Markdown file" ;
+    dcterms:description "A plain-text markdown file holding notes; kept deliberately plain (after leaving Logseq) so it stays fast and searchable with git grep." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/media-file> a ant:Actant ;
+    rdfs:label "Downloaded media file" ;
+    dcterms:description "A downloaded media item (a video or podcast) stored locally and consumed for its content. Collapsed from the former separate video-file and podcast-file actants: file format does not make a difference in this network — the role (a durable offline item consumed for content) is the same. Consumption mode (screen-bound vs ambient audio) is noted but not individuated." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/paper-notes> a ant:Actant ;
+    rdfs:label "Paper notes" ;
+    dcterms:description "Handwritten notes in paper notebooks for hobbies and academic interests. Part of the problem: they do not digitize well and resist search." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/peer> a ant:Actant ;
+    rdfs:label "Nerd friend / peer" ;
+    dcterms:description "A fellow nerd the learner teaches or discusses interests with. Receives condensed rationales for rejected tools/paths; but more importantly, teaching reinforces the learner's knowledge and exposes gaps (unanswerable questions, observed failure modes), which loops back into new thread-pulling." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/podcast-playlist> a ant:Actant ;
+    rdfs:label "Podcast playlist" ;
+    dcterms:description "A queue or feed of podcast episodes to listen through; often open-ended and continually refreshed with new episodes." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/publication> a ant:Actant ;
+    rdfs:label "Publication (paper, book, blog post)" ;
+    dcterms:description "A paper, book, or blog post to read; may be a fixed item (a specific paper or book) or an ongoing source (a blog that keeps posting)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/service> a ant:Actant ;
+    rdfs:label "Service" ;
+    dcterms:description "A bespoke or third-party online service used to hold or process learning material; reachable from either computer even when local files are not." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/video-link> a ant:Actant ;
+    rdfs:label "Video link" ;
+    dcterms:description "A URL pointing to a video (e.g. YouTube), saved as a pointer to something to watch or return to later." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+
+<https://w3id.org/ant/cases/pi-learning/actant/video-playlist> a ant:Actant ;
+    rdfs:label "Video playlist" ;
+    dcterms:description "A collection of videos to work through; may be fixed (a finite set) or open-ended (a channel that keeps publishing new content)." ;
+    ant:participatesIn <https://w3id.org/ant/cases/pi-learning/network> .
+

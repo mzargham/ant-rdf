@@ -1,0 +1,20 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/pi-learning/moment/enrolment> a ant:Enrolment ;
+    rdfs:label "Enrolment: some threads become notes, most stay tabs" ;
+    dcterms:description "Recursive exploration continues; some tabs are closed, others kept open as live placeholders. Only the subset judged worth writing down is enrolled into durable markdown notes — including 'why I rejected this' evaluations. Periodic pruning paradoxically reactivates dormant interests and spawns more tabs than it closes, so the tabs resist enrolment into any smaller, manageable set." .
+
+<https://w3id.org/ant/cases/pi-learning/moment/interessement> a ant:Interessement ;
+    rdfs:label "Interessement: hold the thread as open browser tabs" ;
+    dcterms:description "The learner locks the interest in at low friction by opening promising items as browser tabs, deliberately chosen over writing to markdown (which costs more friction and is not warranted for everything). Tabs keep the interest active and rediscoverable; being cheap to open, they accumulate into the hundreds across multiple computers." .
+
+<https://w3id.org/ant/cases/pi-learning/moment/mobilization> a ant:Mobilization ;
+    rdfs:label "Mobilization: the system speaks for past-you (and to others)" ;
+    dcterms:description "Retention and rediscovery. Open tabs let the learner resume a thread; durable markdown notes speak for past-you later — a git grep recovers a thought, and condensed rejection-rationales are handed to a nerd friend with an analogous need. Teaching a peer reinforces the knowledge and exposes gaps, looping back into new thread-pulling. Precarious: tabs are fragile and interests cool until serendipitous rediscovery reactivates them." .
+
+<https://w3id.org/ant/cases/pi-learning/moment/problematization> a ant:Problematization ;
+    rdfs:label "Problematization: a new thread declares itself worth pulling" ;
+    dcterms:description "A new field or idea surfaces — often via a minimally-described blog link — and, given the learner's academic habit of deep-dive thread-pulling, declares itself worth exploring. Discovery is recursive: each promising item spawns further promising items." .
+

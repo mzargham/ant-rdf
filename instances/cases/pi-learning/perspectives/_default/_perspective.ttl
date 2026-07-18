@@ -1,0 +1,10 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/pi-learning/perspectives/_default> a ant:Perspective ;
+    rdfs:label "Self-directed learning (Paul Ivanov / pi)" ;
+    dcterms:description "The learner's own frame on the system, grounded in the practice of self-directed continual learning." ;
+    ant:perspectiveGroundedIn <https://w3id.org/ant/practices/self-directed-learning> ;
+    ant:perspectiveHeldBy <https://w3id.org/ant/agent/pi> .
+

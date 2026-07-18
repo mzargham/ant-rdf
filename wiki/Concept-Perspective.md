@@ -20,5 +20,6 @@ Synthesized for quad-readiness, post-Mol & Law.
 - [Auto-created perspective stub: _default](Perspective-koi--_default)
 - [Architectural (chief engineer)](Perspective-koi--architectural)
 - [Ethnographic (Rennie)](Perspective-koi--ethnographic)
+- [Self-directed learning (Paul Ivanov / pi)](Perspective-pi-learning--_default)
 - [Auto-created perspective stub: _default](Perspective-scallops--_default)
 

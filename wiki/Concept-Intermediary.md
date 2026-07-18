@@ -20,5 +20,6 @@ Latour, B. (2005). Reassembling the Social.
 - [Members of beneficiary organizations](Actant-koi--beneficiary-org-members) *(in architectural, per protocol-design)*
 - [Forget invocation (in-program)](Actant-koi--forget-general) *(in architectural, per protocol-design)*
 - [Integration teams](Actant-koi--integration-teams) *(in ethnographic, per participatory-digital-ethnography)*
+- [Browser tabs](Actant-pi-learning--browser-tabs) *(in network, per self-directed-learning)*
 - [Larvae collectors (towlines)](Actant-scallops--larvae-collectors) *(in network, per experimental-oceanography)*
 
