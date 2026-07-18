@@ -1,0 +1,8 @@
+@prefix ant: <https://w3id.org/ant#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/ant/cases/pi-learning/network> a ant:Network ;
+    rdfs:label "Continual learning across computers, services, and notebooks" ;
+    dcterms:description "A distributed personal-learning setup spanning multiple computers, some bespoke services, and paper notebooks, covering both hobby and academic interests. The habit currently holding it together is a daily ISO-dated markdown file (e.g. 2026-07-18.md) in which the author records what they learned, thought about, or worked on that day — carried over from Logseq (abandoned once it became too slow as the number of files grew) but kept as plain markdown so it can be retrieved later with 'git grep'. The author always keeps the current day's file open and looks back a day or two when feeling lost about recent work. The characteristic failure mode: interests and threads drop out of active habit and cool down — sometimes indefinitely — until a serendipitous rediscovery reactivates them and pulls them back into the current set of habits. Attempts to prevent this by building or adopting interfaces (e.g. kanban boards) tend to fail the same way: the system itself falls into disuse and is forgotten. No weekly review has been made to stick." .
+

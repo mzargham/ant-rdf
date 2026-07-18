@@ -38,3 +38,7 @@
     rdfs:label "Seasonal fishing labor" ;
     dcterms:description "The embodied year-round practice of fishing the bay — knowing tides, timing harvests, navigating restricted zones. The frame within which fishermen encounter scientific apparatus as alien constraint or local opportunity." .
 
+<https://w3id.org/ant/practices/self-directed-learning> a ant:Practice ;
+    rdfs:label "Self-directed continual learning" ;
+    dcterms:description "The practice of discovering, holding, capturing, and rediscovering interests across heterogeneous media (files, services, tabs, notebooks) and multiple machines — Paul Ivanov's own frame on his learning system." .
+
