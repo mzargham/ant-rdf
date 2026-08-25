@@ -31,6 +31,7 @@ from ant_rdf.models import (
     Characterization,
     ConstraintWaiver,
     Enrolment,
+    FluidObject,
     ImmutableMobile,
     Inscription,
     Interessement,
@@ -82,6 +83,20 @@ def _add_actant(g: Graph, obj: Actant) -> URIRef:
     _add_base(g, s, obj, _ant("Actant"))
     for net_iri in sorted(obj.participates_in):
         g.add((s, _ant("participatesIn"), _iri(net_iri)))
+    for other in sorted(obj.corresponds_to):
+        g.add((s, _ant("correspondsTo"), _iri(other)))
+    for persp in sorted(obj.internalizes):
+        g.add((s, _ant("internalizes"), _iri(persp)))
+    for insc in sorted(obj.inscribes):
+        g.add((s, _ant("inscribes"), _iri(insc)))
+    for insc in sorted(obj.draws_on):
+        g.add((s, _ant("drawsOn"), _iri(insc)))
+    for insc in sorted(obj.manifests_as):
+        g.add((s, _ant("manifestsAs"), _iri(insc)))
+    for prog in sorted(obj.has_program):
+        g.add((s, _ant("hasProgram"), _iri(prog)))
+    for other in sorted(obj.enrols):
+        g.add((s, _ant("enrols"), _iri(other)))
     return s
 
 
@@ -145,6 +160,14 @@ def _add_enrolment(g: Graph, obj: Enrolment) -> URIRef:
 def _add_immutable_mobile(g: Graph, obj: ImmutableMobile) -> URIRef:
     s = _iri(obj.iri)
     _add_base(g, s, obj, _ant("ImmutableMobile"))
+    if obj.source:
+        g.add((s, DCTERMS.source, _lit(obj.source)))
+    return s
+
+
+def _add_fluid_object(g: Graph, obj: FluidObject) -> URIRef:
+    s = _iri(obj.iri)
+    _add_base(g, s, obj, _ant("FluidObject"))
     if obj.source:
         g.add((s, DCTERMS.source, _lit(obj.source)))
     return s
@@ -228,6 +251,16 @@ def _add_translation(g: Graph, obj: Translation) -> URIRef:
     _add_base(g, s, obj, _ant("Translation"))
     for moment_iri in sorted(obj.has_moment):
         g.add((s, _ant("hasMoment"), _iri(moment_iri)))
+    for other in sorted(obj.reads_same_program_as):
+        g.add((s, _ant("readsSameProgramAs"), _iri(other)))
+    for opp in sorted(obj.traces_to_passage):
+        g.add((s, _ant("tracesToPassage"), _iri(opp)))
+    if obj.has_durability:
+        g.add((s, _ant("hasDurability"), _iri(obj.has_durability)))
+    if obj.has_status:
+        g.add((s, _ant("hasStatus"), _iri(obj.has_status)))
+    if obj.authored_under:
+        g.add((s, _ant("authoredUnder"), _iri(obj.authored_under)))
     return s
 
 
@@ -242,6 +275,7 @@ _DISPATCH: dict[type, Callable[[Graph, Any], URIRef]] = {
     Characterization: _add_characterization,
     ConstraintWaiver: _add_constraint_waiver,
     Enrolment: _add_enrolment,
+    FluidObject: _add_fluid_object,
     ImmutableMobile: _add_immutable_mobile,
     Inscription: _add_inscription,
     Interessement: _add_interessement,

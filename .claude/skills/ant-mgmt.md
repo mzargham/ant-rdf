@@ -45,6 +45,8 @@ For a **new case**, walk these in order. Ask one question, wait for the answer, 
 
 ### 3. Actants (one per actant — iterate)
 
+- In a multi-perspective case, an actant read by more than one frame has **one** frame-neutral identity: author it once with `--perspective _shared` (it lands in `instances/cases/<slug>/shared/`, visible to every frame) and keep everything perspectival in Characterizations (ADR-0003). If a shared actant's label or description drifts between frames, Tier-1 fails — fix the data, never the shape.
+
 For each actant the ethnographer names:
 
 - "What would you call them in a label?"
@@ -81,14 +83,29 @@ For each actant the ethnographer names:
 uv run ant new-record translation --case <slug> \
     --iri https://w3id.org/ant/cases/<slug>/translation/main \
     --label "..." --description "..." \
-    --has-moment <moment-1-iri> --has-moment <moment-2-iri> ...
+    --has-moment <moment-1-iri> --has-moment <moment-2-iri> ... \
+    --authored-under https://w3id.org/ant/cases/<slug>/perspectives/<perspective>
 ```
 
-### 6. Inscriptions and immutable mobiles (if any)
+- **Always pass `--authored-under`** with the perspective the translation is authored under (ADR-0004). It is provenance, not a field claim — it records the frame the record already sits in — and without it Tier-2 warns that the translation cannot be frame-attributed from the graph.
+- Ask: "Has the new behavioral regularity taken root, is it still strained, or did it come apart?" → `--status stabilized | precarious | unravelled`. **Omit `--status` when the ethnographer cannot yet say** — a translation with no status is "forming / not yet assessed", a deliberate state, not missing data (ADR-0002).
+- Ask: "How is it held in place — delegated into material form, deliberate strategic design, or multi-discursive ordering?" → `--durability material | strategic | discursive` (Law 2008).
+- Anchoring (Tier-2, waivable): a translation should trace to the obligatory passage point it must clear (`--traces-to-passage <actant-iri>`), or, in a multi-perspective case, name the other frame's reading of the same program (`--reads-same-program-as <translation-iri>`). If neither applies, the warning is the right outcome until the ethnographer says otherwise; do not invent a passage.
+
+### 6. Inscriptions, immutable mobiles, fluid objects (if any)
 
 - "Are there texts, instruments, traces, or things that circulate between actors and hold the network together?"
-- If yes, create as `ant:Inscription` (use the `create_actant` helper but with `ant:Inscription` class — currently requires direct CLI call; v1.1 will add `ant new-record inscription`).
-- Mark immutable mobiles explicitly if they hold form constant while circulating (Law 1986 Portuguese ships).
+- Pick the class by **how the thing persists** (ADR-0005): holds form constant while circulating (a published paper, a pinned commit, Law's Portuguese ships) → `--class immutable`; persists by controlled mutability while keeping identity (a living repository, a working document) → `--class fluid`; neither clearly → plain `ant:Inscription`.
+
+```bash
+uv run ant new-record inscription --case <slug> --perspective _shared \
+    --iri https://w3id.org/ant/cases/<slug>/inscription/<inscription-slug> \
+    --label "..." --description "..." --class fluid --source "<URL or citation>"
+```
+
+- Inscription *nodes* are perspective-agnostic, so `--perspective _shared` (the case's frame-neutral home, ADR-0003) is usually right; the frame-specific *edges* go on the reading's actants: `--inscribes` (this actant produced it) vs `--draws-on` (this actant uses / builds on it) on `new-record actant` / `edit-record actant`.
+- If the ethnographer says the same thing is *also* an actor in the network (a living repository that governs and acts), record the coexistence with `edit-record actant --manifests-as <inscription-iri>` (C9, ADR-0007). Never infer it; ask.
+- Files the ethnographer has in hand go through `ant ingest upload` instead (file-hash provenance).
 
 ### 7. Characterizations (where C5–C7 land)
 
@@ -131,7 +148,7 @@ The same routine applies, more lightly, even when the ethnographer asserts a rol
 ### 8. Durability (Law 2008)
 
 - "Where is this configuration holding? Is it material (delegated into physical form), strategic (deliberate teleological design), or discursive (multi-discursive ordering)?"
-- v1 records this in the description field; v2 will add explicit Durability instances tied to networks.
+- Record it on the translation: `edit-record translation --durability material | strategic | discursive` (ADR-0002); the network description can carry the narrative.
 
 ### 9. What's contested or unraveling
 

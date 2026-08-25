@@ -39,6 +39,37 @@ ant:NetworkShape
     ] .
 
 # =============================================================================
+# Actant — exactly one frame-neutral identity (cross-frame drift guard; ADR-0003)
+# =============================================================================
+#
+# A shared actant may be declared in more than one place (once per perspective,
+# or once in the case's shared home). Its identity triples (rdfs:label,
+# dcterms:description) MUST be frame-neutral and byte-identical everywhere it
+# is declared — R3 applied to storage: the actant is frame-invariant; the
+# observer-relative reading lives in ant:Characterization. rdflib dedupes
+# byte-identical triples in the union, so sh:maxCount 1 passes when identity
+# agrees and FAILS the moment any declaration drifts, turning a silent
+# description-bleed into a hard error.
+
+ant:ActantShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Actant ;
+    sh:severity sh:Violation ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "ant:Actant must have exactly one rdfs:label; >1 means a shared actant's label drifted across frames (must be byte-identical — ADR-0003)." ;
+    ] ;
+    sh:property [
+        sh:path dcterms:description ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "ant:Actant must have exactly one dcterms:description; >1 means a shared actant's description drifted across frames (must be byte-identical — ADR-0003)." ;
+    ] .
+
+# =============================================================================
 # Perspective — must have label and a holder
 # =============================================================================
 

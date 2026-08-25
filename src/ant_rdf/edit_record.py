@@ -42,12 +42,20 @@ _EDIT_SPEC: dict[str, dict[str, tuple[URIRef, str, bool]]] = {
         "label": (RDFS.label, LIT, False),
         "description": (DCTERMS.description, LIT, False),
         "participates_in": (ANT.participatesIn, IRI, True),
+        "corresponds_to": (ANT.correspondsTo, IRI, True),
+        "internalizes": (ANT.internalizes, IRI, True),
+        "inscribes": (ANT.inscribes, IRI, True),
+        "draws_on": (ANT.drawsOn, IRI, True),
+        "manifests_as": (ANT.manifestsAs, IRI, True),
+        "has_program": (ANT.hasProgram, IRI, True),
+        "enrols": (ANT.enrols, IRI, True),
     },
     "inscription": {
         "label": (RDFS.label, LIT, False),
         "description": (DCTERMS.description, LIT, False),
         "source": (DCTERMS.source, LIT, False),
-        # class = the inscription's rdf:type (ant:Inscription / ImmutableMobile).
+        # class = the inscription's rdf:type (ant:Inscription / ImmutableMobile /
+        # FluidObject).
         # Set-replace: exactly one type triple, mirroring new-record.
         "class": (RDF.type, IRI, False),
     },
@@ -69,6 +77,11 @@ _EDIT_SPEC: dict[str, dict[str, tuple[URIRef, str, bool]]] = {
         "label": (RDFS.label, LIT, False),
         "description": (DCTERMS.description, LIT, False),
         "has_moment": (ANT.hasMoment, IRI, True),
+        "reads_same_program_as": (ANT.readsSameProgramAs, IRI, True),
+        "traces_to_passage": (ANT.tracesToPassage, IRI, True),
+        "has_durability": (ANT.hasDurability, IRI, False),
+        "has_status": (ANT.hasStatus, IRI, False),
+        "authored_under": (ANT.authoredUnder, IRI, False),
     },
     "moment": {
         "label": (RDFS.label, LIT, False),

@@ -49,6 +49,22 @@ ant:CharacterizationInvarianceShape
     ] .
 
 # =============================================================================
+# Translation — should carry graph-derivable frame provenance (ADR-0004)
+# =============================================================================
+
+ant:TranslationFrameShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Translation ;
+    sh:severity sh:Warning ;
+    sh:property [
+        sh:path ant:authoredUnder ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message "Translation without exactly one ant:authoredUnder cannot be frame-attributed from the graph (its frame would fall back to file routing). Set --authored-under to the authoring perspective (ADR-0004); waive with justification if intentional." ;
+    ] .
+
+# =============================================================================
 # Actant — should carry label and description
 # =============================================================================
 
@@ -91,7 +107,9 @@ ant:TranslationCompletenessShape
 
 ant:InscriptionSourceShape
     a sh:NodeShape ;
-    sh:targetClass ant:Inscription ;
+    # Direct typing only at verify time (advanced=False), so the subclasses
+    # are listed explicitly rather than inherited.
+    sh:targetClass ant:Inscription, ant:ImmutableMobile, ant:FluidObject ;
     sh:severity sh:Warning ;
     sh:property [
         sh:path dcterms:source ;
@@ -131,3 +149,44 @@ ant:BareIntermediaryPatternShape
         ] ;
     ] ;
     sh:message "Subject typed as both ant:Actant and ant:Intermediary without a Characterization is pre-perspectival. Migrate into an ant:Characterization or waive." .
+
+# =============================================================================
+# Graph connectivity — records should anchor into the network they describe
+# =============================================================================
+#
+# Extension is free but must stay topologically wired: a record these shapes
+# warn on is a floating island nothing else in the graph draws. Triage in
+# order (the AICC nonconformance triage in the ant-mgmt skill): intent
+# mismatch (revise the record) -> missing data (author the connecting claim,
+# or first the missing actant) -> ill-formed (remove-record) -> waive with an
+# ethnographer-supplied justification. Never jump straight to the waiver.
+#
+# Direct typing only (run_verify uses advanced=False), so the Callon moment
+# subclasses (Problematization / Interessement / Enrolment / Mobilization)
+# do NOT inherit the ant:Translation targeting.
+
+ant:TranslationAnchoredShape
+    a sh:NodeShape ;
+    sh:targetClass ant:Translation ;
+    sh:severity sh:Warning ;
+    dcterms:source "Callon, M. (1986)." ;
+    # readsSameProgramAs is symmetric: an incoming edge anchors just as well
+    # as an outgoing one (no inference runs, so both directions are listed).
+    sh:or (
+        [ sh:property [ sh:path ant:tracesToPassage ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path ant:readsSameProgramAs ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path [ sh:inversePath ant:readsSameProgramAs ] ; sh:minCount 1 ] ]
+    ) ;
+    sh:message "Translation anchors to nothing the graph draws: no ant:tracesToPassage (a passage it must clear) and no ant:readsSameProgramAs (a cross-frame reading of the same program). Run the AICC triage: revise the record if the intent is different (edit-record translation), author the connecting claim (--traces-to-passage / --reads-same-program-as), discard if ill-formed (remove-record), or waive with justification." .
+
+ant:ProgramCarriedShape
+    a sh:NodeShape ;
+    sh:targetClass ant:ProgramOfAction ;
+    sh:severity sh:Warning ;
+    dcterms:source "Latour, B. (1991)." ;
+    sh:property [
+        sh:path [ sh:inversePath ant:hasProgram ] ;
+        sh:minCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message "A program of action is never standalone — no actant carries it (no incoming ant:hasProgram), so it hangs only off whatever it opposes. Name the carrier (edit-record actant <carrier> --has-program <program>), create the missing carrier actant first if none exists, discard the program if ill-formed, or waive with justification." ;
+    ] .

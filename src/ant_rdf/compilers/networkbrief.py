@@ -17,6 +17,7 @@ from rdflib.namespace import RDF
 from ant_rdf import ANT
 from ant_rdf.compilers._common import (
     description_of,
+    invariance_display,
     label_of,
     local_name,
     many_iris,
@@ -70,11 +71,23 @@ def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
         lines.append("_No participating actants recorded for this network._")
     lines.append("")
 
-    # Translations in the loaded scope. When the brief is compiled with
-    # --perspective, the loader admits only that perspective's TTL (plus
-    # _default/shared), so this is exactly the perspective's own translation.
+    # Translations for this frame. The frame is read from the graph via
+    # ant:authoredUnder (whose local name is the perspective slug, which by
+    # repo convention equals this network's slug); a translation explicitly
+    # authored under a *different* frame is excluded, so a whole-case compile
+    # (no --perspective) no longer lists every frame's translation under one
+    # network. Un-attributed translations are kept (backward-compatible).
+    # Under --perspective the loader already admits only this frame's TTL.
+    frame_slug = local_name(str(subject))
+
+    def _in_frame(s: URIRef) -> bool:
+        au = next(iter(g.objects(s, ANT.authoredUnder)), None)
+        return au is None or local_name(str(au)) == frame_slug
+
     translations = sorted(
-        s for s in g.subjects(RDF.type, ANT.Translation) if isinstance(s, URIRef)
+        s
+        for s in g.subjects(RDF.type, ANT.Translation)
+        if isinstance(s, URIRef) and _in_frame(s)
     )
     lines += ["## Translations", ""]
     if translations:
@@ -123,11 +136,12 @@ def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
             role = next(iter(g.objects(c, ANT.assignsRole)), None)
             practice = next(iter(g.objects(c, ANT.perPractice)), None)
             invariance = next(iter(g.objects(c, ANT.invarianceCriterion)), None)
+            role_name = local_name(str(role)) if role else "?"
             rows.append([
                 label_of(g, target) if target else "?",
-                local_name(str(role)) if role else "?",
+                role_name,
                 local_name(str(practice)) if practice else "_(unspecified)_",
-                str(invariance) if invariance else "_(unspecified)_",
+                invariance_display(role_name, str(invariance)) if invariance else "_(unspecified)_",
                 description_of(g, c),
             ])
         lines.append(md_table(

@@ -16,6 +16,6 @@ This actant has been characterized in the role(s) below, under specified practic
 
 | Role | Within network | Per practice | Invariance | Description |
 | --- | --- | --- | --- | --- |
-| [Intermediary](Concept-Intermediary) | [Continual learning across computers, services, and notebooks](Case-pi-learning) | self-directed-learning | interest-content-preserved-for-later (the tab holds the interest; tab-count is deliberately not tracked) | Read from the self-directed-learning practice, browser tabs are an Intermediary: each tab transmits the content of an interest without transformation, holding it for later rediscovery. The overwhelming accumulation of tabs is real, but it is not the invariance being tracked here — the learner tracks whether the interest is preserved, not the number of tabs open. |
+| [Intermediary](Concept-Intermediary) | [Continual learning across computers, services, and notebooks](Case-pi-learning) | self-directed-learning | passes through: interest-content-preserved-for-later (the tab holds the interest; tab-count is deliberately not tracked) | Read from the self-directed-learning practice, browser tabs are an Intermediary: each tab transmits the content of an interest without transformation, holding it for later rediscovery. The overwhelming accumulation of tabs is real, but it is not the invariance being tracked here — the learner tracks whether the interest is preserved, not the number of tabs open. |
 
 

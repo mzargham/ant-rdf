@@ -31,28 +31,16 @@ A distributed personal-learning setup spanning multiple computers, some bespoke 
 
 ## Translations
 
-### Pulling a thread: from discovery to (attempted) retention
-
-<!-- https://w3id.org/ant/cases/pi-learning/translation/main -->
-
-The process by which a newly discovered interest is held, explored, selectively written down, and later rediscovered or taught — and by which it repeatedly cools out of active habit. Reads through all four Callon moments, with the strain concentrated at mobilization (reliable rediscovery).
-
-| Moment | Label | Description |
-| --- | --- | --- |
-| Enrolment | Enrolment: some threads become notes, most stay tabs | Recursive exploration continues; some tabs are closed, others kept open as live placeholders. Only the subset judged worth writing down is enrolled into durable markdown notes — including 'why I rejected this' evaluations. Periodic pruning paradoxically reactivates dormant interests and spawns more tabs than it closes, so the tabs resist enrolment into any smaller, manageable set. |
-| Interessement | Interessement: hold the thread as open browser tabs | The learner locks the interest in at low friction by opening promising items as browser tabs, deliberately chosen over writing to markdown (which costs more friction and is not warranted for everything). Tabs keep the interest active and rediscoverable; being cheap to open, they accumulate into the hundreds across multiple computers. |
-| Mobilization | Mobilization: the system speaks for past-you (and to others) | Retention and rediscovery. Open tabs let the learner resume a thread; durable markdown notes speak for past-you later — a git grep recovers a thought, and condensed rejection-rationales are handed to a nerd friend with an analogous need. Teaching a peer reinforces the knowledge and exposes gaps, looping back into new thread-pulling. Precarious: tabs are fragile and interests cool until serendipitous rediscovery reactivates them. |
-| Problematization | Problematization: a new thread declares itself worth pulling | A new field or idea surfaces — often via a minimally-described blog link — and, given the learner's academic habit of deep-dive thread-pulling, declares itself worth exploring. Discovery is recursive: each promising item spawns further promising items. |
-
+_No translations recorded in the loaded scope._
 
 ## Characterizations within this network
 
 | Target | Role | Per practice | Invariance | Description |
 | --- | --- | --- | --- | --- |
-| The learner (me) | Mediator | self-directed-learning | understanding-transformed-through-consumption | Read from the self-directed-learning practice, the learner is a Mediator: resources (videos, podcasts, publications, courses) exist on their own and merely carry their content, but the act of consuming them transforms the learner — the outputs (new understanding, notes, questions) are not predictable from the inputs. |
+| The learner (me) | Mediator | self-directed-learning | regulates to preserve: understanding-transformed-through-consumption | Read from the self-directed-learning practice, the learner is a Mediator: resources (videos, podcasts, publications, courses) exist on their own and merely carry their content, but the act of consuming them transforms the learner — the outputs (new understanding, notes, questions) are not predictable from the inputs. |
 | The learner (me) | ObligatoryPassagePoint | self-directed-learning | attention-routing (interest, capture, retrieval, and teaching all currently pass through the learner, not through durable infrastructure) | Read from the self-directed-learning practice, the learner is the Obligatory Passage Point: in the system as it currently runs, essentially every interest, capture, rediscovery, and act of teaching routes through him rather than through durable non-human infrastructure. Because the learner is not himself a durable store — attention is finite and migrates to whatever is new — concentrating the OPP on a non-durable human actant is a principal source of the network's fragility: interests cool the moment attention moves on. The aspirational remedy is to delegate durability to git or a deliberate shelving ritual so that infrastructure becomes a passage point interests can rest in. |
 | The learner (me) | Spokesperson | self-directed-learning | the-interests-I-can-represent-when-teaching | Read from the self-directed-learning practice, the learner speaks for and represents his accumulated interests when teaching a nerd friend — the Spokesperson role emerging through the mobilization moment. Teaching represents the knowledge to another and, in doing so, surfaces its gaps. |
-| Browser tabs | Intermediary | self-directed-learning | interest-content-preserved-for-later (the tab holds the interest; tab-count is deliberately not tracked) | Read from the self-directed-learning practice, browser tabs are an Intermediary: each tab transmits the content of an interest without transformation, holding it for later rediscovery. The overwhelming accumulation of tabs is real, but it is not the invariance being tracked here — the learner tracks whether the interest is preserved, not the number of tabs open. |
+| Browser tabs | Intermediary | self-directed-learning | passes through: interest-content-preserved-for-later (the tab holds the interest; tab-count is deliberately not tracked) | Read from the self-directed-learning practice, browser tabs are an Intermediary: each tab transmits the content of an interest without transformation, holding it for later rediscovery. The overwhelming accumulation of tabs is real, but it is not the invariance being tracked here — the learner tracks whether the interest is preserved, not the number of tabs open. |
 
 
 ---

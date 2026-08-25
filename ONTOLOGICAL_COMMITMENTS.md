@@ -1,6 +1,6 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# Ontological commitments (C1–C8)
+# Ontological commitments (C1–C9)
 
 The vocabulary in this repo is built on eight explicit commitments — synthesized from Callon's sociology of translation, Latour's classical ANT, and Law/Mol post-ANT material semiotics. These are the philosophical premises a contributor is opting into when they author records, write SHACL shapes, or extend the ontology. They are also what `ant verify` and the wiki render are *implicitly* documenting in every artifact they produce.
 
@@ -129,11 +129,28 @@ Ethnographers ingest material through multiple channels: live conversational cat
 
 ---
 
+## C9 — Inscriptions can be actants (the trace register and the actor register are non-disjoint)
+
+An inscription (a material trace) and an actant (a thing that acts) are not disjoint categories: the same worldly entity can be both, read in two parallel registers. This generalizes the C2 symmetry move (humans and non-humans enter on the same terms) and C3 relationality (objects, subjects, machines are all actors) to a second axis — the trace-versus-actor axis.
+
+The shift that lets an inscription act is **immutable → fluid**. A frozen document (an `ant:ImmutableMobile`) merely circulates, holding its form; a living git repository (an `ant:FluidObject`) acts, because it keeps changing under governed control. In a docs-as-code paradigm repositories supplant frozen documents as the knowledge-carrying artifact precisely because their livingness confers agency — conditioned on the verification machinery (C7) that makes a living artifact trustworthy. So a repository is at once an inscription (a named material trace that circulates) and an actant (a live node that acts).
+
+*Source:* Law, J. (2008), generalized symmetry (objects, subjects, machines are actors); Latour, B. (1987, *Science in Action*; 2005, *Reassembling the Social*), inscriptions act at a distance; de Laet, M. & Mol, A. (2000), the living fluid object has agency.
+
+*What this means in practice:*
+
+- The two classes carry no `owl:disjointWith`; a node may be typed both, and the same entity may be named in both registers. The `ant-gvrn` skill refuses to add the disjointness.
+- The coexistence is never inferred or forced; it is asserted, optionally, with `ant:manifestsAs` (an actant is manifested as an inscription) — see [ADR-0007](adr/0007-inscriptions-can-be-actants-manifests-as.md).
+- The relation is directional in authoring (actant → inscription) but recoverable both ways by querying the subjects of `ant:manifestsAs`.
+- It is the immutable→fluid shift, not the fact of being code, that makes a trace an actor: prefer `ant:FluidObject` for the inscription side when the thing persists by mutation.
+
+---
+
 ## How to push back on these commitments
 
 Each commitment is held with humility (per C1). If you disagree with one:
 
-1. Open an issue tagged `commitment`. Name the commitment (C1–C8).
+1. Open an issue tagged `commitment`. Name the commitment (C1–C9).
 2. Cite the founding text passage you think we've misread, or the analytical move you think is foreclosed.
 3. Propose how the vocabulary, CLI, or compilers should change.
 

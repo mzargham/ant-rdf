@@ -5,6 +5,7 @@
 <https://w3id.org/ant/cases/pi-learning/translation/main> a ant:Translation ;
     rdfs:label "Pulling a thread: from discovery to (attempted) retention" ;
     dcterms:description "The process by which a newly discovered interest is held, explored, selectively written down, and later rediscovered or taught — and by which it repeatedly cools out of active habit. Reads through all four Callon moments, with the strain concentrated at mobilization (reliable rediscovery)." ;
+    ant:authoredUnder <https://w3id.org/ant/cases/pi-learning/perspectives/_default> ;
     ant:hasMoment <https://w3id.org/ant/cases/pi-learning/moment/enrolment>,
         <https://w3id.org/ant/cases/pi-learning/moment/interessement>,
         <https://w3id.org/ant/cases/pi-learning/moment/mobilization>,
