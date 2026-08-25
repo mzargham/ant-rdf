@@ -243,9 +243,9 @@ def ingest_upload(
     safe_name = re.sub(r"[^A-Za-z0-9._-]", "-", src.name)
     iri = f"https://w3id.org/ant/cases/{case}/uploads/{short}-{safe_name}"
 
+    from ant_rdf.graph import new_dataset
     from ant_rdf.models import Inscription
     from ant_rdf.serialize import add, write_turtle
-    from ant_rdf.graph import new_dataset
 
     obj = Inscription(
         iri=iri,

@@ -13,6 +13,7 @@ from rdflib.namespace import RDF
 
 from ant_rdf import ANT
 from ant_rdf.compilers._common import (
+    case_slug_of,
     description_of,
     label_of,
     md_table,
@@ -27,7 +28,7 @@ def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
     for s in g.subjects():
         if not isinstance(s, URIRef):
             continue
-        slug = _case_slug(str(s))
+        slug = case_slug_of(str(s))
         if not slug:
             continue
         bucket = cases.setdefault(slug, {
@@ -53,7 +54,8 @@ def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
     lines = [
         "# Case Catalog",
         "",
-        f"All ant:Network records across {len(cases)} case(s) in the loaded graph.",
+        f"{len(cases)} case(s) in the loaded graph, one row each; the "
+        "networks are named with their descriptions below.",
         "",
     ]
 
@@ -61,20 +63,21 @@ def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
         lines.append("_(no cases recorded)_")
         return "\n".join(lines) + "\n"
 
+    # One row per case (aggregate counts). Per-network detail lives in the
+    # sections below and in the per-network briefs.
     rows = []
     for slug in sorted(cases):
         c = cases[slug]
-        for net in sorted(c["networks"]):
-            rows.append([
-                slug,
-                label_of(g, net),
-                str(len(c["actants"])),
-                str(len(c["translations"])),
-                str(len(c["perspectives"])),
-                str(len(c["characterizations"])),
-            ])
+        rows.append([
+            slug,
+            str(len(c["networks"])),
+            str(len(c["actants"])),
+            str(len(c["translations"])),
+            str(len(c["perspectives"])),
+            str(len(c["characterizations"])),
+        ])
     lines.append(md_table(
-        ["Case", "Network", "Actants", "Translations", "Perspectives", "Characterizations"],
+        ["Case", "Networks", "Actants", "Translations", "Perspectives", "Characterizations"],
         rows,
     ))
     lines.append("")
@@ -93,12 +96,3 @@ def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
 
     lines += ["---", ""]
     return "\n".join(lines)
-
-
-def _case_slug(iri: str) -> str | None:
-    marker = "/cases/"
-    if marker not in iri:
-        return None
-    rest = iri.split(marker, 1)[1]
-    slug = rest.split("/", 1)[0].split("#", 1)[0]
-    return slug or None

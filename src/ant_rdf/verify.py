@@ -19,14 +19,14 @@ from pathlib import Path
 
 from pyshacl import validate as _pyshacl_validate
 from rdflib import Dataset, Graph, Literal, URIRef
-from rdflib.namespace import DCTERMS, RDF
+from rdflib.namespace import RDF
 from rich.console import Console
 
 from ant_rdf import ANT
 from ant_rdf.graph import (
     CASES_DIR,
-    SHARED_DIR,
     SH,
+    SHARED_DIR,
     WAIVERS_DIR,
     load_ontology,
     load_shapes,
@@ -79,8 +79,8 @@ def run_verify(
     #    pyshacl and the walkback helper, so blank-node IDs match.
     shapes = load_shapes(("core", "warnings", "translation"))
 
-    # 3. Load ontology for OWL hints
-    ont = load_ontology()
+    # 3. Parse the ontology as a sanity check (not handed to pyshacl — see below).
+    load_ontology()
 
     # 4. Run pyshacl with the shapes graph we'll re-use for walkback.
     #    advanced=False because pyshacl's advanced mode propagates
@@ -123,20 +123,53 @@ def run_verify(
     return exit_code
 
 
+def _scoped_data_dataset(case: str | None, perspective: str | None) -> Dataset:
+    """A data dataset optionally narrowed to one case and/or one perspective.
+
+    Perspective is a file-location fact (records don't encode it in their IRI),
+    so scoping is by file path, mirroring the compile driver: shared reference +
+    files not under ``perspectives/`` + files under ``perspectives/<p>/`` (or
+    ``_default``). Excludes sibling perspectives' TTL.
+    """
+    if not case and not perspective:
+        return _build_data_dataset(None)
+    ds = new_dataset()
+    for f in _all_ttl_files(SHARED_DIR):
+        ds.parse(f, format="turtle")
+    roots = [CASES_DIR / case] if case else [
+        d for d in sorted(CASES_DIR.iterdir()) if d.is_dir()
+    ]
+    for root in roots:
+        if not root.exists():
+            continue
+        for p in sorted(root.rglob("*.ttl")):
+            parts = p.parts
+            if perspective is not None and "perspectives" in parts:
+                i = parts.index("perspectives")
+                if i + 1 < len(parts) and parts[i + 1] not in (perspective, "_default"):
+                    continue
+            ds.parse(p, format="turtle")
+    return ds
+
+
 def run_list(
     kind: str | None = None,
     iri: str | None = None,
     perspective: str | None = None,
+    case: str | None = None,
 ) -> None:
-    """List records in the loaded graph."""
-    ds = _build_data_dataset(None)
-    g = ds.default_graph
+    """List records, optionally scoped by ``--case`` and/or ``--perspective``.
 
+    ``--iri`` (show one record) always sees the full graph; ``--kind`` / default
+    listing honor the scope."""
     if iri:
+        g = _build_data_dataset(None).default_graph
         console.print(f"[bold]Details for[/bold] {iri}")
         for p, o in g.predicate_objects(URIRef(iri)):
             console.print(f"  {p} → {o}")
         return
+
+    g = _scoped_data_dataset(case, perspective).default_graph
 
     classes_to_list: list[URIRef]
     if kind:
@@ -173,7 +206,6 @@ def create_waiver(
         )
         raise SystemExit(2)
 
-    from rdflib import XSD as _XSD
 
     from ant_rdf.models import ConstraintWaiver
     from ant_rdf.serialize import add, write_turtle
@@ -402,7 +434,7 @@ def _print_report(
             console.print(f"  [yellow]⚠[/yellow] {w['focus']}")
             console.print(f"     shape : {w['source_shape']}")
             console.print(f"     msg   : {w['message']}")
-            console.print(f"     fix   : run `ant waive add <shape> <target> ...` to record a justification.")
+            console.print("     fix   : run `ant waive add <shape> <target> ...` to record a justification.")
 
     if waived_count:
         console.print(f"\n[dim]({waived_count} warning(s) suppressed by waivers)[/dim]")

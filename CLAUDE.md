@@ -70,17 +70,38 @@ ethnographer either accepts (commit) or requests revision
 - **R9 (provenance per term).** When adding new ontology terms, every term gets `dcterms:source`. No exceptions.
 - **No `--no-verify` git commits.** No `git push --force`. No `gh issue close` unless the user explicitly requests. Standard Claude Code safety rules.
 
+## Reading vs authoring
+
+This file owns **authoring** (writing to the graph). [AGENTS.md](AGENTS.md) owns **reading** — how to route a question to the brief that answers it, the interpretive pitfalls (roles are not types; a reading is provenance), and the read-only `ant query` / `ant list` surface. Reach for AGENTS.md and the `ant-query` skill when the ethnographer is asking *what the graph says*; reach for this file and `ant-mgmt` / `ant-ingest` when they want to *change* it. After any change, `ant refresh <case>` regenerates the briefs (the `ant-refresh` skill).
+
 ## Allowed commands
 
 See [.claude/settings.json](.claude/settings.json) for the canonical allowlist. In brief:
 
-- **Always allowed:** `ant verify`, `ant compile`, `ant list`, `ant wiki`, `ant ontology validate`, `ant new-record *`, `ant edit-record *`, `ant ingest * --dry-run`, `ant scope new`, `ant analyze list-methods`, `ant waive list`, `uv run pytest`, `uv sync`, git read-only commands, `gh` read-only commands.
+- **Always allowed:** `ant verify`, `ant compile`, `ant refresh`, `ant list`, `ant query *`, `ant wiki`, `ant ontology validate`, `ant new-record *`, `ant edit-record *` (set-replaces only the fields you pass; byte-identical elsewhere), `ant ingest notes --dry-run`, `ant analyze list-methods`, `ant waive list`, `uv run pytest`, `uv run ruff`, `uv sync`, git read-only commands, `gh` read-only commands.
 - **Allowed but use with care:** `ant ingest * --commit` (writes triples — but reversible via git), `ant waive add` (writes a waiver — should reflect an explicit ethnographer-supplied justification).
-- **Require explicit confirmation:** `git commit`, `git push`, `gh pr create`, file deletions in `instances/`, ontology edits in `ontology/`.
+- **Require explicit confirmation:** `ant remove-record` (deletes a record; refuses while other records reference it unless `--force`), `git commit`, `git push`, `gh pr create`, file deletions in `instances/`, ontology edits in `ontology/`.
+- **Stubs, not features:** `ant scope new` exists but raises `NotImplementedError` (v1.1); `ant ingest` has only `notes` and `upload`. Don't promise the ethnographer a command that isn't there.
+
+## Verify
+
+CI runs exactly these; run them locally before claiming anything is done:
+
+```bash
+uv run ant ontology validate
+uv run ant verify                    # Tier-1 breaks; Tier-2 surfaces (R9b)
+uv run ruff check src tests
+uv run pytest -x
+for c in instances/cases/*/; do uv run ant refresh "$(basename "$c")"; done
+uv run ant wiki
+git diff --quiet briefs/ wiki/       # determinism gate: regenerated == committed
+```
+
+If the last line fails, the briefs or wiki are stale: commit the regenerated artifacts alongside the change that moved them (never hand-edit them back).
 
 ## When the ethnographer asks a question Claude can't answer
 
-Reach for the canonical case in [instances/cases/scallops/](instances/cases/scallops/) first — the Callon 1986 scallops example demonstrates every v1 commitment. Then ADR-0000, then ONTOLOGICAL_COMMITMENTS.md. If the question is about a term, the wiki concept page (`wiki/Concepts/<term>.md`) carries the founding-text citation.
+Reach for the canonical case in [instances/cases/scallops/](instances/cases/scallops/) first — the Callon 1986 scallops example demonstrates every v1 commitment. Then ADR-0000, then ONTOLOGICAL_COMMITMENTS.md. If the question is about a term, the wiki concept page (`wiki/Concept-<term>.md`) carries the founding-text citation.
 
 When in doubt about a design choice, name the relevant R-number (R1–R10) from ADR-0000 and ask the ethnographer whether the current resolution applies to their situation. Don't invent new resolutions.
 

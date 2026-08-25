@@ -46,6 +46,10 @@ src = ["src"]
 select = ["E", "F", "I", "UP", "B", "SIM"]
 ignore = ["E501"]
 
+[tool.ruff.lint.per-file-ignores]
+# typer declares CLI options as call-expressions in argument defaults by design.
+"src/ant_rdf/cli.py" = ["B008"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--tb=short"

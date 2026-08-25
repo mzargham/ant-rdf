@@ -14,7 +14,7 @@ from rdflib import RDF, URIRef
 from rich.console import Console
 
 from ant_rdf import ANT
-from ant_rdf.graph import CASES_DIR, new_dataset
+from ant_rdf.graph import CASES_DIR, SHARED_DIR, new_dataset
 
 console = Console()
 
@@ -78,6 +78,13 @@ def compile_document(
                     continue
                 ds.parse(p, format="turtle")
 
+        # Shared, perspective-agnostic reference (practices, and whatever else
+        # lives under instances/shared/) sits outside the case tree; per-case
+        # briefs need it to render practice labels and descriptions.
+        if SHARED_DIR.exists():
+            for p in sorted(SHARED_DIR.rglob("*.ttl")):
+                ds.parse(p, format="turtle")
+
     subject = _resolve_perspective_subject(file, src, perspective)
 
     module = import_module(REGISTRY[document_kind])
@@ -85,9 +92,10 @@ def compile_document(
 
     # Cross-case kinds are single-instance indexes: pin them to one canonical
     # path so a stray `-o briefs/koi-catalog.md` cannot fork a duplicate.
-    if document_kind in _CANONICAL_OUTPUT:
+    # (No `-o` at all still means "preview on stdout", as for every kind.)
+    if output and document_kind in _CANONICAL_OUTPUT:
         canonical = _CANONICAL_OUTPUT[document_kind]
-        if output and Path(output).resolve() != Path(canonical).resolve():
+        if Path(output).resolve() != Path(canonical).resolve():
             console.print(
                 f"[yellow]note[/yellow] {document_kind} is a cross-case index; "
                 f"writing to canonical {canonical} (ignoring -o {output})."
@@ -104,6 +112,87 @@ def compile_document(
     else:
         # Echo to stdout — useful for shell pipelines and quick previews.
         print(md)
+
+
+# ---------------------------------------------------------------------------
+# refresh: regenerate a case's whole canonical brief set in one go
+# ---------------------------------------------------------------------------
+#
+# A compiler module opts into `ant refresh` by declaring module-level
+# attributes; kinds that declare nothing (per-subject views such as
+# ActantProfile / TranslationTrace) are skipped and remain reachable through
+# `ant compile`.
+#
+#   REFRESH_SUFFIX: str        the filename suffix, e.g. "network" →
+#                              briefs/<case>-network.md
+#   PER_PERSPECTIVE: bool      one brief per grounded perspective (default False)
+#   MIN_PERSPECTIVES: int      skip the kind when the case has fewer
+#                              perspectives than this (default 0)
+#
+# Naming rule (reproduces the committed briefs/ layout): a case whose only
+# perspective is `_default` writes `<case>-<suffix>.md`; a case with named
+# perspectives writes `<case>-<perspective>-<suffix>.md` for each of them and
+# skips the `_default` stub.
+
+
+def _perspective_slugs(case: str) -> list[str]:
+    """Named frame slugs for a case (its ``perspectives/<slug>/`` dirs, minus
+    the auto-created ``_default`` stub)."""
+    pdir = CASES_DIR / case / "perspectives"
+    if not pdir.is_dir():
+        return []
+    return sorted(
+        d.name for d in pdir.iterdir()
+        if d.is_dir() and d.name != "_default"
+    )
+
+
+def refresh_plan(case: str) -> list[tuple[str, str, str | None]]:
+    """The ``(kind, output_path, perspective)`` triples ``refresh_case`` will
+    compile for ``case``, in registry order, then the cross-case catalog.
+    Pure (no I/O beyond reading the case directory) so it is testable."""
+    named = _perspective_slugs(case)
+    n_perspectives = len(named) or 1
+    plan: list[tuple[str, str, str | None]] = []
+    for kind, module_path in REGISTRY.items():
+        if kind in _CROSS_CASE_KINDS:
+            continue
+        module = import_module(module_path)
+        suffix = getattr(module, "REFRESH_SUFFIX", None)
+        if not suffix:
+            continue
+        if n_perspectives < getattr(module, "MIN_PERSPECTIVES", 0):
+            continue
+        if getattr(module, "PER_PERSPECTIVE", False) and named:
+            for p in named:
+                plan.append((kind, f"briefs/{case}-{p}-{suffix}.md", p))
+        else:
+            plan.append((kind, f"briefs/{case}-{suffix}.md", None))
+    for kind in sorted(_CROSS_CASE_KINDS):
+        plan.append((kind, _CANONICAL_OUTPUT[kind], None))
+    return plan
+
+
+def refresh_case(case: str, do_wiki: bool = False, do_verify: bool = False) -> None:
+    """Regenerate the whole canonical brief set for a case — every registry
+    kind that declares a refresh output, one per perspective where the kind
+    is per-perspective, plus the cross-case catalog. Optionally also
+    regenerate the wiki and run verify."""
+    case_dir = CASES_DIR / case
+    if not case_dir.is_dir():
+        raise SystemExit(f"No such case: {case} (expected {case_dir})")
+
+    for kind, output, perspective in refresh_plan(case):
+        compile_document(case, kind, output=output, perspective=perspective)
+
+    if do_wiki:
+        from ant_rdf.wiki import run_wiki
+        run_wiki(output_dir=None)
+    if do_verify:
+        from ant_rdf.verify import run_verify
+        code = run_verify()
+        if code != 0:
+            raise SystemExit(code)
 
 
 def _remove_stale_catalogs(canonical: Path) -> None:
@@ -161,10 +250,7 @@ def _resolve_perspective_subject(
     if not perspective:
         return None
 
-    if src.exists() and src.is_file():
-        case_root = _case_root_for(src)
-    else:
-        case_root = CASES_DIR / file
+    case_root = _case_root_for(src) if src.exists() and src.is_file() else CASES_DIR / file
     if case_root is None:
         return None
 
