@@ -36,7 +36,18 @@ uv run ant list               # all records, by class
 uv run ant wiki               # regenerate wiki/ from instances/
 ```
 
-Open [`wiki/Home.md`](wiki/Home.md) to navigate the worked example as a hyperlinked field journal. The scallops case demonstrates the central observer-relativity move (see [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) C5–C7): the larvae-collectors actant is simultaneously characterized as **Intermediary** (under experimental-oceanography practice, invariant: anchoring-substrate-as-designed) AND as **Mediator** (under seasonal-fishing-labor practice, invariant: rhythms-of-bay-work), without OWL inconsistency.
+Open [`wiki/Home.md`](wiki/Home.md) to navigate the worked example as a hyperlinked field journal. To pull a specific fact rather than browse:
+
+```bash
+uv run ant query roles larvae-collectors   # an actant's roles, one row per Characterization
+uv run ant query flips                     # actants read as different roles by different frames
+uv run ant query show fishermen            # one record, labels resolved
+uv run ant list --kind Actant --case koi --perspective architectural
+```
+
+[AGENTS.md](AGENTS.md) is the reader's contract — a question → brief → confirming-query table and the interpretive pitfalls (roles are not types; a reading is provenance). After authoring, `uv run ant refresh <case>` regenerates every brief for that case.
+
+ The scallops case demonstrates the central observer-relativity move (see [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) C5–C7): the larvae-collectors actant is simultaneously characterized as **Intermediary** (under experimental-oceanography practice, invariant: anchoring-substrate-as-designed) AND as **Mediator** (under seasonal-fishing-labor practice, invariant: rhythms-of-bay-work), without OWL inconsistency.
 
 ## How the pieces fit (MVC)
 
@@ -111,10 +122,13 @@ ant-rdf/
 │       │       ├── translations.ttl
 │       │       └── characterizations.ttl
 │       └── uploads/                       # raw materials (perspective-agnostic)
-├── briefs/                                # compiled Markdown
-├── wiki/                                  # generated hyperlinked navigation
+├── briefs/                                # compiled Markdown (ant refresh <case>)
+├── wiki/                                  # generated hyperlinked navigation (ant wiki)
 ├── src/ant_rdf/                           # Python package + CLI
-└── adr/                                   # foundational decisions
+├── tests/                                 # pytest suite (synthetic fixtures + public cases)
+├── adr/                                   # foundational decisions
+├── AGENTS.md                              # reader's contract (navigation, interpretation)
+└── CLAUDE.md                              # author's contract (the LLM workflow)
 ```
 
 ## Documents to read in order
@@ -122,7 +136,7 @@ ant-rdf/
 1. [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) — C1–C8, the philosophical commitments
 2. [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) — resolved design decisions (R1–R10)
 3. [FUTURE_WORK.md](FUTURE_WORK.md) — what v1 left out of scope, how features arrive, and the three-tier training/testing/novel validation regime (with the machine-mediation comparison-study programme)
-4. [CLAUDE.md](CLAUDE.md) — the LLM workflow contract (how Claude Code should interact with this repo)
+4. [CLAUDE.md](CLAUDE.md) — the LLM workflow contract for *authoring* (how Claude Code should write to this repo); [AGENTS.md](AGENTS.md) is its companion for *reading*
 5. [wiki/Home.md](wiki/Home.md) — the navigable wiki (each Concept page is a glossary entry with founding-text citations)
 
 ## Citation

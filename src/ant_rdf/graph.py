@@ -154,9 +154,16 @@ def load_full_dataset() -> Dataset:
 
 
 def sparql_select(
-    ds: Dataset, query: str, init_ns: dict[str, Namespace] | None = None
+    ds: Dataset,
+    query: str,
+    init_ns: dict[str, Namespace] | None = None,
+    init_bindings: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
-    """Run a SELECT query and return a list of variable→value dicts."""
+    """Run a SELECT query and return a list of variable→value dicts.
+
+    ``init_bindings`` pre-binds query variables (e.g. a parameterized view
+    query run once per perspective), keyed by bare variable name.
+    """
     ns: dict[str, Namespace] = dict(
         ant=ANT,
         prov=PROV,
@@ -171,7 +178,7 @@ def sparql_select(
     )
     if init_ns:
         ns.update(init_ns)
-    rows = ds.query(query, initNs=ns)
+    rows = ds.query(query, initNs=ns, initBindings=init_bindings or {})
     out: list[dict[str, Any]] = []
     for row in rows:
         out.append({str(v): row[v] for v in row.labels})

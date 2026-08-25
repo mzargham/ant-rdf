@@ -31,11 +31,17 @@ from rdflib.namespace import RDF
 
 from ant_rdf import ANT
 from ant_rdf.compilers._common import (
+    case_slug_of,
     description_of,
     label_of,
     local_name,
     md_table,
 )
+
+# `ant refresh` contract: one comparison per case, only when there is
+# something to compare.
+REFRESH_SUFFIX = "comparison"
+MIN_PERSPECTIVES = 2
 
 # Callon's four moments, in canonical order, for the translation comparison.
 _MOMENT_ORDER = [
@@ -70,28 +76,33 @@ def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
         ]
         return "\n".join(lines)
 
-    # Per-perspective bundle: holder, practice, matched network + translation.
+    # Per-perspective bundle: holder, practices, matched network + translation.
+    # A perspective may be grounded in several practices; every one of them
+    # maps to the perspective so no characterization is misfiled as an
+    # "extra lens" just because it cites the second grounding practice.
     frames: list[dict] = []
     practice_to_persp: dict[URIRef, URIRef] = {}
     for p in perspectives:
-        practice = next(iter(g.objects(p, ANT.perspectiveGroundedIn)), None)
+        practices = sorted(
+            pr for pr in g.objects(p, ANT.perspectiveGroundedIn) if isinstance(pr, URIRef)
+        )
         holder = next(iter(g.objects(p, ANT.perspectiveHeldBy)), None)
         tail = local_name(str(p))
         network = _by_tail(g, ANT.Network, tail)
         translation = _translation_by_tail(g, tail)
-        if isinstance(practice, URIRef):
-            practice_to_persp[practice] = p
+        for pr in practices:
+            practice_to_persp[pr] = p
         frames.append({
             "iri": p,
             "tail": tail,
             "label": label_of(g, p),
-            "practice": practice,
+            "practices": practices,
             "holder": holder,
             "network": network,
             "translation": translation,
         })
 
-    case_slug = _case_slug(str(perspectives[0]))
+    case_slug = case_slug_of(str(perspectives[0]))
     lines[0] = f"# Perspective Comparison: {case_slug}" if case_slug else lines[0]
     lines += [
         f"The {case_slug or 'this'} field site read through "
@@ -108,7 +119,7 @@ def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
         rows.append([
             f["label"],
             local_name(str(f["holder"])) if f["holder"] else "—",
-            local_name(str(f["practice"])) if f["practice"] else "—",
+            " · ".join(local_name(str(pr)) for pr in f["practices"]) or "—",
             label_of(g, f["network"]) if f["network"] else "_(no network)_",
         ])
     lines.append(md_table(
@@ -300,11 +311,3 @@ def _translation_by_tail(g, tail: str) -> URIRef | None:
         ):
             return s
     return None
-
-
-def _case_slug(iri: str) -> str | None:
-    marker = "/cases/"
-    if marker not in iri:
-        return None
-    rest = iri.split(marker, 1)[1]
-    return rest.split("/", 1)[0].split("#", 1)[0] or None

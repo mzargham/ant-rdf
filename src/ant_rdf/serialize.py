@@ -13,9 +13,10 @@ The dispatch table at the bottom maps every Pydantic model class to its
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 from rdflib import Dataset, Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, RDF, RDFS, XSD

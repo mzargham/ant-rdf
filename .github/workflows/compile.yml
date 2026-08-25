@@ -2,7 +2,7 @@
 #
 # Compile-and-diff: regenerate briefs and wiki from the canonical RDF; if
 # the regenerated output differs from what's committed, fail the build with
-# instructions to run `ant compile` / `ant wiki` locally and commit the
+# instructions to run `ant refresh` / `ant wiki` locally and commit the
 # updated artifacts. This enforces the RIME determinism invariant for v1:
 # same RDF → byte-identical compiled output.
 
@@ -13,6 +13,11 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+
+# One run per ref at a time; a newer push cancels the stale one.
+concurrency:
+  group: compile-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   compile-diff:
@@ -31,12 +36,14 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen
 
-      - name: Regenerate scallops brief
+      - name: Regenerate every case's brief set
+        # `ant refresh` walks the compiler registry, so every committed brief
+        # (per-frame network briefs, comparisons, the cross-case catalog) is
+        # covered by the gate — not just one hand-picked file.
         run: |
-          uv run ant compile \
-            instances/cases/scallops/perspectives/_default/networks.ttl \
-            NetworkBrief \
-            -o briefs/scallops-network.md
+          for case in instances/cases/*/; do
+            uv run ant refresh "$(basename "$case")"
+          done
 
       - name: Regenerate wiki
         run: uv run ant wiki
@@ -45,7 +52,7 @@ jobs:
         run: |
           if ! git diff --quiet briefs/ wiki/; then
             echo "::error::Committed briefs/ or wiki/ are out of sync with the canonical RDF."
-            echo "Run \`ant compile\` and \`ant wiki\` locally, then commit the regenerated artifacts."
+            echo "Run \`ant refresh <case>\` for each case and \`ant wiki\` locally, then commit the regenerated artifacts."
             echo ""
             echo "Diff:"
             git diff --stat briefs/ wiki/

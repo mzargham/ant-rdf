@@ -32,7 +32,7 @@ Humans, non-humans, objects, texts, animals, ideas, organizations enter the anal
 
 - `ant:Actant` has **no** `ant:HumanActant` / `ant:NonHumanActant` subclasses (those would be exactly the asymmetry ANT rejects).
 - The CLI catechism does not ask "is this a person or an object?" — that question is post-network, not pre-network.
-- `prov:Agent`'s "bears responsibility" framing is **deliberately not** imported as a global typing claim on `ant:Actant` — see C7 and §4.3 of the [plan](.claude/plans/) / R2 in [ADR-0000](adr/0000-foundational-decisions.md).
+- `prov:Agent`'s "bears responsibility" framing is **deliberately not** imported as a global typing claim on `ant:Actant` — see C7 and R2 in [ADR-0000](adr/0000-foundational-decisions.md).
 
 ---
 
@@ -101,7 +101,7 @@ The CLI guarantees **structural correctness** of RDF (SHACL Tier-1 Violations, c
 
 Between these sit **Tier-2 Warnings** — analytical hygiene that should not be violated silently but may be waived with a justification when the analyst has good reason.
 
-*Source:* RIME's V&V terminology (verification/validation distinction), extended with the tri-severity SHACL audit in §4.6 of [the plan](.claude/plans/).
+*Source:* RIME's V&V terminology (verification/validation distinction), extended with the tri-severity SHACL audit (R9b in [ADR-0000](adr/0000-foundational-decisions.md)).
 
 *What this means in practice:*
 
@@ -137,4 +137,4 @@ Each commitment is held with humility (per C1). If you disagree with one:
 2. Cite the founding text passage you think we've misread, or the analytical move you think is foreclosed.
 3. Propose how the vocabulary, CLI, or compilers should change.
 
-The commitments are revisable. The plan in `.claude/plans/` records the resolutions that led to the current ones — `R1–R10` in [ADR-0000](adr/0000-foundational-decisions.md). If a commitment is revised, both files must be updated in the same commit.
+The commitments are revisable. [ADR-0000](adr/0000-foundational-decisions.md) records the resolutions that led to the current ones (`R1–R10`). If a commitment is revised, both files must be updated in the same commit.

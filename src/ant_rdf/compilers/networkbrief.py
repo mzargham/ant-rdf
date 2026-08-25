@@ -23,6 +23,10 @@ from ant_rdf.compilers._common import (
     md_table,
 )
 
+# `ant refresh` contract: one network brief per grounded perspective.
+REFRESH_SUFFIX = "network"
+PER_PERSPECTIVE = True
+
 
 def compile_(ds: Dataset, subject: URIRef | None = None) -> str:
     """Render NetworkBrief for ``subject`` (or first ant:Network found)."""
