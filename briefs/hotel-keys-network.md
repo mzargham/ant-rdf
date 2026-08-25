@@ -8,18 +8,18 @@ The network of hotel manager, guests, front-desk staff, key, weighted fob, and r
 
 ## Participating actants
 
-| Actant | Description (truncated) | Local name |
+| Actant | Description | Local name |
 | --- | --- | --- |
-| Weighted brass fob | The heavy metal weight attached to the key. The material delegate that translates the manager's moral program into physi | fob |
+| Weighted brass fob | The heavy metal weight attached to the key. The material delegate that translates the manager's moral program into physical inconvenience. Latour's central exhibit: the missing mass that closes the circuit of the network. | fob |
 | Front-desk staff | The hotel staff who receive returned keys and notice missing ones. | front-desk |
 | Hotel guest | The guest occupying a room. Has an anti-program (taking the key with them, intentionally or by forgetting it). | guest |
 | The hotel building | The infrastructural actant whose continued operation depends on keys being available for room turnover. | hotel |
 | Room key | The mechanical key itself that opens the door. Without delegation, has no agency over guest behaviour. | key |
-| Hotel manager | The hotel's manager who originally posts the sign requesting key returns. Problematizer of the network: defines guests l | manager |
-| Polite request sign | A sign in the room asking guests to leave their key at the front desk. The pre-delegation inscription. Latour's foil — p | sign |
+| Hotel manager | The hotel's manager who originally posts the sign requesting key returns. Problematizer of the network: defines guests leaving with keys as the problem. | manager |
+| Polite request sign | A sign in the room asking guests to leave their key at the front desk. The pre-delegation inscription. Latour's foil — proof that words alone are insufficient. | sign |
 
 
-## Translations in the loaded scope
+## Translations
 
 ### The hotel-keys translation chain
 
@@ -27,22 +27,22 @@ The network of hotel manager, guests, front-desk staff, key, weighted fob, and r
 
 Latour's classical demonstration that technologies act — the heavy fob enrols the guest's body where the polite sign could not. Reads through all four Callon moments.
 
-| Moment | Label | Description (truncated) |
+| Moment | Label | Description |
 | --- | --- | --- |
-| Enrolment | Enrolment: guests start returning keys | Guests, finding the weighted key uncomfortable in pocket or bag, increasingly return it to the desk |
-| Interessement | Interessement: try a sign, then try a fob | The manager tries to interest guests with a polite sign. Sign fails (Latour 1991's key empirical fin |
-| Mobilization | Mobilization: the fob speaks for the manager | Even when the manager is asleep, the fob continues to enforce the program. Latour's point: the netwo |
-| Problematization | Problematization: guests leave with keys | The manager problematizes: 'guests are leaving with the keys, and we need them back to turn over roo |
+| Enrolment | Enrolment: guests start returning keys | Guests, finding the weighted key uncomfortable in pocket or bag, increasingly return it to the desk on the way out. The fob has enrolled the guest's body into the manager's program. |
+| Interessement | Interessement: try a sign, then try a fob | The manager tries to interest guests with a polite sign. Sign fails (Latour 1991's key empirical finding). Manager swaps in a heavy fob, cutting off the alternative of pocketing the key comfortably. |
+| Mobilization | Mobilization: the fob speaks for the manager | Even when the manager is asleep, the fob continues to enforce the program. Latour's point: the network's voice is delegated to a non-human spokesperson that never gets tired. |
+| Problematization | Problematization: guests leave with keys | The manager problematizes: 'guests are leaving with the keys, and we need them back to turn over rooms'. |
 
 
 ## Characterizations within this network
 
-| Target | Role | Per practice | Invariance |
-| --- | --- | --- | --- |
-| Weighted brass fob | Intermediary | room-occupancy | weight-as-weight |
-| Weighted brass fob | Mediator | hotel-administration | behavioural-compliance-outcome |
-| Weighted brass fob | ObligatoryPassagePoint | hotel-administration | key-circulation |
-| Hotel manager | Spokesperson | hotel-administration | key-return-policy |
+| Target | Role | Per practice | Invariance | Description |
+| --- | --- | --- | --- | --- |
+| Weighted brass fob | Intermediary | room-occupancy | weight-as-weight | From the guest's room-occupancy practice, the fob just transmits its physical mass without further transformation — uncomfortable, but not productive of meaning. Demonstrates §4.1.1 observer-relativity in the Latour 1991 case. |
+| Weighted brass fob | Mediator | hotel-administration | behavioural-compliance-outcome | From the hotel-administration practice, the fob transforms what it transmits — the manager's polite request becomes physical compliance. Outputs (returned keys) cannot be predicted from inputs (a metal weight). |
+| Weighted brass fob | ObligatoryPassagePoint | hotel-administration | key-circulation | Within the hotel-administration practice, every guest's key-disposition decision now passes through the fob — they cannot ignore the weight. Manual OPP assignment per §4.1.2; v2 rule-based tagging could derive this from network topology. |
+| Hotel manager | Spokesperson | hotel-administration | key-return-policy | The manager speaks for the hotel's interest in key returns, originally via the sign and later via the delegate that is the fob. |
 
 
 ---

@@ -1,12 +1,13 @@
 # Case Catalog
 
-All ant:Network records across 3 case(s) in the loaded graph.
+All ant:Network records across 4 case(s) in the loaded graph.
 
 | Case | Network | Actants | Translations | Perspectives | Characterizations |
 | --- | --- | --- | --- | --- | --- |
 | hotel-keys | The hotel-keys assemblage | 7 | 1 | 1 | 4 |
 | koi | KOI as constitutive infrastructure | 14 | 2 | 3 | 13 |
 | koi | Building the loop in the field | 14 | 2 | 3 | 13 |
+| pi-learning | Continual learning across computers, services, and notebooks | 17 | 1 | 1 | 4 |
 | scallops | St Brieuc Bay scallop-farming network | 5 | 1 | 1 | 4 |
 
 
@@ -31,6 +32,14 @@ The assemblage as the doctrine frames it: scoped-authority knowledge organizatio
 <!-- https://w3id.org/ant/cases/koi/network/ethnographic -->
 
 The same infrastructure as encountered in field sites: ethnographers and community participants enacting, resisting, and re-shaping the loop (artificial organisational intelligence). The forget incident is a moment where an affordance was turned to advocacy and degraded a shared club good. Held together by participatory digital ethnography; foregrounds intent, consequence, and contestation that the architecture cannot see. Durability (Law 2008): the primary durability is the ethnography itself occurring — the community participating and the researcher responding, the collection as a living relation. Telescope and Obsidian add material durability by making the data less ephemeral and more usable: a genuine upgrade to persistent, shareable records where paper field notes, private local files, or what is only in the ethnographer's head would fade and be lost. The configuration also holds discursively through the participatory method and its writing-up. Most distinctively, 'building the loop' means the ethnography is not apart from the studied but feeds back into and becomes part of it: feeding the analysis back to the community and discussing it makes the study part of that community's own history — embodied within it rather than apart from it — so the reflection (or refraction) the study showed them can become part of the community's future self. This yields a strategic durability of relationship: established, different, and ongoing. Contested / unraveling: the central failure mode is the loop not actually closing. One friction point is community knowledge of the loop itself — whether people even respond to the DM — which can stall the whole system. Another is the loop's heavy reliance on an analysis-and-synthesis stage that draws on sources and thinking beyond the field site: the loop is not complete in itself but depends on many activities and stages coming together. Tools like this repository can make loop-closure easier and more accessible, but can never entirely close it — there will always need to be people with the time, attention, and willingness to do the interpretive labor of formulating and communicating perspectives. The loop is not automatable, even if it can be infrastructured and facilitated by tools. The unraveling, then, is loop-closure failure: having all the parts yet not achieving closure, or some aspect breaking such that it ceases to be a continuous feedback loop. That continuous loop closure is what is meant to differentiate this from conventional ethnography.
+
+## pi-learning
+
+### Continual learning across computers, services, and notebooks
+
+<!-- https://w3id.org/ant/cases/pi-learning/network -->
+
+A distributed personal-learning setup spanning multiple computers, some bespoke services, and paper notebooks, covering both hobby and academic interests. The habit currently holding it together is a daily ISO-dated markdown file (e.g. 2026-07-18.md) in which the author records what they learned, thought about, or worked on that day — carried over from Logseq (abandoned once it became too slow as the number of files grew) but kept as plain markdown so it can be retrieved later with 'git grep'. The author always keeps the current day's file open and looks back a day or two when feeling lost about recent work. The characteristic failure mode: interests and threads drop out of active habit and cool down — sometimes indefinitely — until a serendipitous rediscovery reactivates them and pulls them back into the current set of habits. Attempts to prevent this by building or adopting interfaces (e.g. kanban boards) tend to fail the same way: the system itself falls into disuse and is forgotten. No weekly review has been made to stick.
 
 ## scallops
 
