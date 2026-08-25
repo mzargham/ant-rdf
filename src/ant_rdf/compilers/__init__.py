@@ -24,7 +24,20 @@ REGISTRY: dict[str, str] = {
     "ActantProfile": "ant_rdf.compilers.actantprofile",
     "TranslationTrace": "ant_rdf.compilers.translationtrace",
     "CaseCatalog": "ant_rdf.compilers.casecatalog",
+    # Reader-oriented vantage points (orientation hubs first).
+    "ReadingGuide": "ant_rdf.compilers.readingguide",
+    "CaseSynopsis": "ant_rdf.compilers.casesynopsis",
+    "PositionalityLedger": "ant_rdf.compilers.positionalityledger",
     "PerspectiveComparison": "ant_rdf.compilers.perspectivecomparison",
+    # Cross-perspective compilers (ADR-0002).
+    "ActantAcrossFrames": "ant_rdf.compilers.actantacrossframes",
+    "OPPMap": "ant_rdf.compilers.oppmap",
+    "InscriptionsBrief": "ant_rdf.compilers.inscriptionsbrief",
+    "SameProgramTrace": "ant_rdf.compilers.sameprogramtrace",
+    "DurabilityDashboard": "ant_rdf.compilers.durabilitydashboard",
+    "CharacterizationCoverage": "ant_rdf.compilers.characterizationcoverage",
+    "TensionsView": "ant_rdf.compilers.tensionsview",
+    "Glossary": "ant_rdf.compilers.glossary",
 }
 
 # Compilers in this set load the FULL dataset rather than just one case —
@@ -128,6 +141,9 @@ def compile_document(
 #   PER_PERSPECTIVE: bool      one brief per grounded perspective (default False)
 #   MIN_PERSPECTIVES: int      skip the kind when the case has fewer
 #                              perspectives than this (default 0)
+#   REQUIRES_GROUNDED: bool    skip the kind when no perspective of the case
+#                              is grounded in a practice (the reader-vantage
+#                              views pivot on grounded frames; default False)
 #
 # Naming rule (reproduces the committed briefs/ layout): a case whose only
 # perspective is `_default` writes `<case>-<suffix>.md`; a case with named
@@ -147,12 +163,23 @@ def _perspective_slugs(case: str) -> list[str]:
     )
 
 
+def _case_has_grounded_perspective(case: str) -> bool:
+    from ant_rdf.compilers._common import has_grounded_perspective
+    from ant_rdf.graph import load_case
+
+    case_dir = CASES_DIR / case
+    if not case_dir.is_dir():
+        return False
+    return has_grounded_perspective(load_case(case).default_graph)
+
+
 def refresh_plan(case: str) -> list[tuple[str, str, str | None]]:
     """The ``(kind, output_path, perspective)`` triples ``refresh_case`` will
     compile for ``case``, in registry order, then the cross-case catalog.
     Pure (no I/O beyond reading the case directory) so it is testable."""
     named = _perspective_slugs(case)
     n_perspectives = len(named) or 1
+    grounded = _case_has_grounded_perspective(case)
     plan: list[tuple[str, str, str | None]] = []
     for kind, module_path in REGISTRY.items():
         if kind in _CROSS_CASE_KINDS:
@@ -162,6 +189,8 @@ def refresh_plan(case: str) -> list[tuple[str, str, str | None]]:
         if not suffix:
             continue
         if n_perspectives < getattr(module, "MIN_PERSPECTIVES", 0):
+            continue
+        if getattr(module, "REQUIRES_GROUNDED", False) and not grounded:
             continue
         if getattr(module, "PER_PERSPECTIVE", False) and named:
             for p in named:

@@ -58,7 +58,7 @@ ethnographer either accepts (commit) or requests revision
    - Run `ant verify`
    - Tier-1 violations: fix the data (not the shape, unless governance has decided otherwise)
    - Tier-2 warnings: either fix the data or run `ant waive add` with a justification the ethnographer explicitly supplies — never invent justifications
-   - `ant compile` the relevant brief; `ant wiki` to regenerate navigation
+   - `ant refresh <case>` regenerates every brief the case supports (the network brief(s); for a case with a grounded perspective also the reader set — guide, synopsis, positionality, glossary, OPP map, inscriptions, durability, coverage, tensions; for two or more frames also comparison, actants-across-frames, same-program-trace); `ant wiki` to regenerate navigation
    - Show the ethnographer the brief; ask for revision in their words; loop
 
 ## Critical rules (these are not negotiable)
@@ -72,7 +72,7 @@ ethnographer either accepts (commit) or requests revision
 
 ## Reading vs authoring
 
-This file owns **authoring** (writing to the graph). [AGENTS.md](AGENTS.md) owns **reading** — how to route a question to the brief that answers it, the interpretive pitfalls (roles are not types; a reading is provenance), and the read-only `ant query` / `ant list` surface. Reach for AGENTS.md and the `ant-query` skill when the ethnographer is asking *what the graph says*; reach for this file and `ant-mgmt` / `ant-ingest` when they want to *change* it. After any change, `ant refresh <case>` regenerates the briefs (the `ant-refresh` skill).
+This file owns **authoring** (writing to the graph). [AGENTS.md](AGENTS.md) owns **reading** — how to route a question to the brief that answers it, the interpretive pitfalls (roles are not types; a reading is provenance), and the read-only `ant query` / `ant list` surface. Reach for AGENTS.md and the `ant-read` / `ant-query` skills when the ethnographer is asking *what the graph says*; reach for this file and `ant-mgmt` / `ant-ingest` when they want to *change* it. After any change, `ant refresh <case>` regenerates the briefs (the `ant-refresh` skill).
 
 ## Allowed commands
 

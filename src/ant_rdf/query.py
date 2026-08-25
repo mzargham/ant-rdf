@@ -35,6 +35,14 @@ from ant_rdf.compilers._common import (
 console = Console()
 
 
+_STATUS_TOKENS = {
+    "stabilized": "Stabilized",
+    "precarious": "Precarious",
+    "unravelled": "Unravelled",
+    "unraveled": "Unravelled",
+}
+
+
 class QueryError(ValueError):
     """A query could not be resolved (bad slug, unknown token, …)."""
 
@@ -92,6 +100,105 @@ def query_roles(g: Graph, actant: URIRef) -> list[dict]:
             "practice": local_name(str(prac)) if isinstance(prac, URIRef) else "",
         })
     return sorted(rows, key=lambda r: (r["frame"], r["role"], r["characterization"]))
+
+
+def query_traffic(g: Graph, passage: URIRef) -> list[dict]:
+    """Translations that must clear (``tracesToPassage``) or pass through
+    (``passesThrough``) an obligatory passage point actant."""
+    rows: list[dict] = []
+    for pred, via in ((ANT.tracesToPassage, "traces"), (ANT.passesThrough, "passes-through")):
+        for t in g.subjects(pred, passage):
+            if not isinstance(t, URIRef):
+                continue
+            au = next(iter(g.objects(t, ANT.authoredUnder)), None)
+            rows.append({
+                "translation": label_of(g, t),
+                "via": via,
+                "frame": frame_label(g, au) if isinstance(au, URIRef) else "",
+            })
+    return sorted(rows, key=lambda r: r["translation"])
+
+
+def query_status(g: Graph, status: str) -> list[dict]:
+    """Translations by behavioral status. ``forming`` = no ``hasStatus`` triple
+    (a deliberate 'not yet assessable' state, not missing data)."""
+    token = status.lower()
+    forming = token == "forming"
+    want = None if forming else _STATUS_TOKENS.get(token)
+    if not forming and want is None:
+        raise QueryError(
+            f"unknown status {status!r}; expected one of "
+            "stabilized / precarious / unravelled / forming"
+        )
+    rows: list[dict] = []
+    for t in g.subjects(RDF.type, ANT.Translation):
+        if not isinstance(t, URIRef):
+            continue
+        st = next(iter(g.objects(t, ANT.hasStatus)), None)
+        st_name = local_name(str(st)) if isinstance(st, URIRef) else None
+        hit = (st_name is None) if forming else (st_name == want)
+        if not hit:
+            continue
+        du = next(iter(g.objects(t, ANT.hasDurability)), None)
+        au = next(iter(g.objects(t, ANT.authoredUnder)), None)
+        rows.append({
+            "translation": label_of(g, t),
+            "frame": frame_label(g, au) if isinstance(au, URIRef) else "",
+            "durability": local_name(str(du)) if isinstance(du, URIRef) else "",
+        })
+    return sorted(rows, key=lambda r: r["translation"])
+
+
+def query_same_program(g: Graph, of: URIRef | None = None) -> list[list[str]]:
+    """Clusters of translations linked by ``readsSameProgramAs`` (a symmetric
+    relation). If ``of`` is given, only the cluster containing it."""
+    adj: dict[URIRef, set[URIRef]] = {}
+    for s, o in g.subject_objects(ANT.readsSameProgramAs):
+        if isinstance(s, URIRef) and isinstance(o, URIRef):
+            adj.setdefault(s, set()).add(o)
+            adj.setdefault(o, set()).add(s)
+    seen: set[URIRef] = set()
+    clusters: list[list[URIRef]] = []
+    for node in sorted(adj, key=str):
+        if node in seen:
+            continue
+        stack, comp = [node], []
+        while stack:
+            n = stack.pop()
+            if n in seen:
+                continue
+            seen.add(n)
+            comp.append(n)
+            stack.extend(adj[n] - seen)
+        clusters.append(sorted(comp, key=str))
+    if of is not None:
+        clusters = [c for c in clusters if of in c]
+    return [[label_of(g, n) for n in c] for c in clusters]
+
+
+def query_anti_programs(g: Graph) -> list[dict]:
+    """The ``opposes`` edges: program of action -> the translation/program it
+    runs against."""
+    rows = [
+        {"program": label_of(g, s), "opposes": label_of(g, o)}
+        for s, o in g.subject_objects(ANT.opposes)
+        if isinstance(s, URIRef) and isinstance(o, URIRef)
+    ]
+    return sorted(rows, key=lambda r: r["program"])
+
+
+def query_manifests(g: Graph) -> list[dict]:
+    """The ``manifestsAs`` edges: an actant -> the inscription it also is (C9)."""
+    rows = [
+        {
+            "actant": label_of(g, s),
+            "inscription": label_of(g, o),
+            "inscription_type": _type_name(g, o),
+        }
+        for s, o in g.subject_objects(ANT.manifestsAs)
+        if isinstance(s, URIRef) and isinstance(o, URIRef)
+    ]
+    return sorted(rows, key=lambda r: (r["actant"], r["inscription"]))
 
 
 def _roles_by_actant(g: Graph) -> dict[URIRef, dict[URIRef, set[str]]]:
@@ -245,6 +352,71 @@ def run_flips(as_json: bool = False) -> None:
                 f"{fr} = {'/'.join(roles)}" for fr, roles in sorted(r["by_frame"].items())
             )
             console.print(f"  {r['actant']}: {parts}")
+    _emit(rows, as_json, render)
+
+
+def run_traffic(passage: str, as_json: bool = False) -> None:
+    g = load_graph()
+    s = resolve(g, passage)
+    rows = query_traffic(g, s)
+
+    def render(rows: list[dict]) -> None:
+        console.print(f"[bold]{label_of(g, s)}[/bold] — traffic ({len(rows)})")
+        for r in rows:
+            console.print(f"  {r['translation']} {escape('[' + r['frame'] + ']')} ({r['via']})")
+        if not rows:
+            console.print("  (nothing traces to or passes through this passage yet)")
+    _emit(rows, as_json, render)
+
+
+def run_status(status: str, as_json: bool = False) -> None:
+    g = load_graph()
+    rows = query_status(g, status)
+
+    def render(rows: list[dict]) -> None:
+        console.print(f"[bold]{status.capitalize()}[/bold] translations ({len(rows)})")
+        for r in rows:
+            dur = f" · {r['durability']}" if r["durability"] else ""
+            console.print(f"  {r['translation']} {escape('[' + r['frame'] + ']')}{dur}")
+    _emit(rows, as_json, render)
+
+
+def run_same_program(of: str | None = None, as_json: bool = False) -> None:
+    g = load_graph()
+    subj = resolve(g, of) if of else None
+    clusters = query_same_program(g, subj)
+
+    def render(clusters: list[list[str]]) -> None:
+        console.print(f"[bold]Same-program clusters[/bold] ({len(clusters)})")
+        for i, c in enumerate(clusters, 1):
+            console.print(f"  {i}. " + " ↔ ".join(c))
+    _emit(clusters, as_json, render)
+
+
+def run_anti_programs(as_json: bool = False) -> None:
+    g = load_graph()
+    rows = query_anti_programs(g)
+
+    def render(rows: list[dict]) -> None:
+        console.print(f"[bold]Anti-programs[/bold] ({len(rows)})")
+        for r in rows:
+            console.print(f"  {r['program']} — opposes → {r['opposes']}")
+    _emit(rows, as_json, render)
+
+
+def run_manifests(as_json: bool = False) -> None:
+    g = load_graph()
+    rows = query_manifests(g)
+
+    def render(rows: list[dict]) -> None:
+        console.print(
+            f"[bold]Manifestations[/bold] (an actant that is also an inscription) ({len(rows)})"
+        )
+        for r in rows:
+            console.print(
+                f"  {r['actant']} — manifests as → {r['inscription']} "
+                f"{escape('[' + r['inscription_type'] + ']')}"
+            )
     _emit(rows, as_json, render)
 
 

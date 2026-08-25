@@ -19,6 +19,34 @@ def case_slug_of(iri: str) -> str | None:
     return iri.split(marker, 1)[1].split("/", 1)[0].split("#", 1)[0] or None
 
 
+def network_for_perspective(g: Graph, p: URIRef) -> URIRef | None:
+    """The ant:Network a perspective authors, by the repo convention
+    ``perspectives/<x>`` ↔ ``network/<x>``; when no tail matches and the graph
+    holds exactly one network (a single-frame case whose perspective is the
+    ``_default`` stub), that network."""
+    nets = sorted(s for s in g.subjects(RDF.type, ANT.Network) if isinstance(s, URIRef))
+    slug = local_name(str(p))
+    for n in nets:
+        if local_name(str(n)) == slug:
+            return n
+    return nets[0] if len(nets) == 1 else None
+
+
+def perspective_for_network(g: Graph, network: URIRef) -> URIRef | None:
+    """Inverse of :func:`network_for_perspective`: tail match first, else the
+    lone grounded perspective when the graph has exactly one."""
+    persps = sorted(p for p in g.subjects(RDF.type, ANT.Perspective) if isinstance(p, URIRef))
+    tail = local_name(str(network))
+    for p in persps:
+        if local_name(str(p)) == tail:
+            return p
+    grounded = [
+        p for p in persps
+        if next(iter(g.objects(p, ANT.perspectiveGroundedIn)), None) is not None
+    ]
+    return grounded[0] if len(grounded) == 1 else None
+
+
 def perspective_index(g: Graph) -> tuple[list[dict], dict[URIRef, URIRef]]:
     """Return ``(frames, practice_to_persp)`` for a whole-case graph.
 
@@ -44,14 +72,7 @@ def perspective_index(g: Graph) -> tuple[list[dict], dict[URIRef, URIRef]]:
         for pr in practices:
             practice_to_persp[pr] = p
         slug = local_name(str(p))
-        network = next(
-            (
-                s
-                for s in sorted(g.subjects(RDF.type, ANT.Network))
-                if isinstance(s, URIRef) and local_name(str(s)) == slug
-            ),
-            None,
-        )
+        network = network_for_perspective(g, p)
         frames.append(
             {"iri": p, "slug": slug, "label": label_of(g, p),
              "practices": practices, "network": network}
@@ -139,6 +160,46 @@ def md_table(headers: list[str], rows: Iterable[list[str]]) -> str:
             cells.append("")
         lines.append(_join_row(cells))
     return "\n".join(lines) + "\n"
+
+
+# Navigation hubs a reader can always jump back to. A per-brief footer links to
+# these so no brief is an island (the reading guide links everything in full).
+# They are compiled by `ant refresh` for every case with a grounded perspective;
+# a case without one gets no footer (see `see_also_footer`).
+_FOOTER_HUBS = [
+    ("guide.md", "Reading guide"),
+    ("synopsis.md", "Synopsis"),
+    ("positionality.md", "Positionality"),
+    ("glossary.md", "Glossary"),
+]
+
+
+def has_grounded_perspective(g: Graph) -> bool:
+    """Whether any ant:Perspective in the graph is grounded in a practice — the
+    condition under which the reader-vantage briefs (and the hub footer) render."""
+    return any(
+        next(iter(g.objects(p, ANT.perspectiveGroundedIn)), None) is not None
+        for p in g.subjects(RDF.type, ANT.Perspective)
+    )
+
+
+def see_also_footer(case: str | None, exclude: str | None = None, g: Graph | None = None) -> str:
+    """A '---' + 'See also:' block linking to the orientation hubs.
+
+    Links are relative to ``briefs/`` (all briefs live there) and named by the
+    ``<case>-<suffix>.md`` convention `ant refresh` uses. ``exclude`` skips the
+    current brief's own filename so a hub does not link to itself. When ``g``
+    is given and has no grounded perspective, the hubs are not compiled for
+    that case, so only the rule is emitted.
+    """
+    if not case or (g is not None and not has_grounded_perspective(g)):
+        return "---\n"
+    links = [
+        f"[{title}]({case}-{suffix})"
+        for suffix, title in _FOOTER_HUBS
+        if f"{case}-{suffix}" != exclude
+    ]
+    return "---\n\n**See also:** " + " · ".join(links) + "\n"
 
 
 def _join_row(cells: list[str]) -> str:

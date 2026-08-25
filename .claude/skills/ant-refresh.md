@@ -31,7 +31,13 @@ uv run ant refresh koi --verify --wiki
 - `--wiki` also regenerates `wiki/` (the whole-graph hyperlinked traversal; spans every case, unlike the per-case briefs).
 - Omit both flags to just recompile the briefs.
 
-What gets written follows one naming rule: a case whose only perspective is `_default` writes `briefs/<case>-network.md`; a case with named perspectives writes `briefs/<case>-<perspective>-network.md` for each, plus `briefs/<case>-comparison.md`. The catalog is always `briefs/case-catalog.md`. To see the plan without writing anything:
+What gets written follows one rule, decided by the case's perspectives:
+
+- **Always:** one network brief per perspective (`briefs/<case>-network.md` for a lone `_default`; `briefs/<case>-<perspective>-network.md` otherwise) and the cross-case `briefs/case-catalog.md`.
+- **If at least one perspective is grounded in a practice:** the reader set — `guide` (start here), `synopsis`, `positionality`, `glossary` (the four hubs every footer links), plus `opp-map`, `inscriptions`, `durability`, `coverage`, `tensions`.
+- **If two or more perspectives:** the cross-frame views — `comparison`, `actants-across-frames`, `same-program-trace`.
+
+A case whose only perspective is the ungrounded `_default` stub gets just the network brief and the catalog. To see the plan without writing anything:
 
 ```bash
 uv run python -c "from ant_rdf.compilers import refresh_plan; print(refresh_plan('koi'))"
