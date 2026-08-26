@@ -133,8 +133,8 @@ ant-rdf/
 
 ## Documents to read in order
 
-1. [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) — C1–C8, the philosophical commitments
-2. [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) — resolved design decisions (R1–R10)
+1. [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) — C1–C9, the philosophical commitments
+2. [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) — resolved design decisions (R1–R10); then [ADR-0001](adr/0001-perspective-isolation-named-graphs.md)–[0007](adr/0007-inscriptions-can-be-actants-manifests-as.md) for the multi-perspective vocabulary (cross-frame links, translation status/durability, the shared actant home, `authoredUnder`, `FluidObject`, the invariance axis, `manifestsAs`)
 3. [FUTURE_WORK.md](FUTURE_WORK.md) — what v1 left out of scope, how features arrive, and the three-tier training/testing/novel validation regime (with the machine-mediation comparison-study programme)
 4. [CLAUDE.md](CLAUDE.md) — the LLM workflow contract for *authoring* (how Claude Code should write to this repo); [AGENTS.md](AGENTS.md) is its companion for *reading*
 5. [wiki/Home.md](wiki/Home.md) — the navigable wiki (each Concept page is a glossary entry with founding-text citations)

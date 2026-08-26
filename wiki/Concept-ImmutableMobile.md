@@ -8,7 +8,7 @@
 
 ## Definition
 
-An inscription / entity that holds form constant while circulating, enabling long-distance control (Law 1986: Portuguese ships, charts, almanacs). Compare ant:FluidObject (v2; de Laet & Mol 2000) which works by mutability instead.
+An inscription / entity that holds form constant while circulating, enabling long-distance control (Law 1986: Portuguese ships, charts, almanacs). Compare ant:FluidObject (de Laet & Mol 2000) which works by mutability instead.
 
 ## Source
 

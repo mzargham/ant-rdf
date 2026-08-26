@@ -16,6 +16,6 @@ This actant has been characterized in the role(s) below, under specified practic
 
 | Role | Within network | Per practice | Invariance | Description |
 | --- | --- | --- | --- | --- |
-| [Intermediary](Concept-Intermediary) | [KOI as constitutive infrastructure](Case-koi) | protocol-design | constitutive-layer-held-invariant | Read through protocol design, a routine forget invocation is an Intermediary: it mutates the data — which the system is designed to permit — but does not change the rules or systems that afford that power, so it does not confuse the operative and constitutive layers. The forget signal is carried through faithfully; what is held invariant is the constitutive layer itself. |
+| [Intermediary](Concept-Intermediary) | [KOI as constitutive infrastructure](Case-koi) | protocol-design | passes through: constitutive-layer-held-invariant | Read through protocol design, a routine forget invocation is an Intermediary: it mutates the data — which the system is designed to permit — but does not change the rules or systems that afford that power, so it does not confuse the operative and constitutive layers. The forget signal is carried through faithfully; what is held invariant is the constitutive layer itself. |
 
 

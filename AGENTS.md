@@ -31,13 +31,14 @@ Start at [`wiki/Home.md`](wiki/Home.md) for the whole graph, or at a case's netw
 - **A Perspective is provenance.** It names who is reading (`perspectiveHeldBy`), from which practice (`perspectiveGroundedIn`), tracking which invariance. Characterizations join to perspectives through their practice.
 - **A Translation is the four Callon moments** — problematization, interessement, enrolment, mobilization — and is "done" when a behavioral regularity stabilizes, not forever.
 
-## Five interpretive pitfalls (the fidelity risks)
+## Six interpretive pitfalls (the fidelity risks)
 
 1. **Roles are not types.** `Mediator` / `Intermediary` / `ObligatoryPassagePoint` / `Spokesperson` are values assigned *inside* a `Characterization` — **never `rdf:type` on an actant** (R3/R6/C2/C3). The same actant can be Mediator under one practice, Intermediary under another (the scallops towlines are the canonical example). Never write "X is a Mediator"; write "under <practice>, X is characterized as a Mediator."
 2. **A reading is provenance, not fact** (C6/C7). Every claim is authored from one perspective; agreement across perspectives is a finding, not objectivity.
 3. **`ant:Network` is a summary, not a container** (R5). Actants relate via `participatesIn`; the network is the analyst's act-4 name for the assemblage.
 4. **Shared IRIs inflate counts.** A class census counts triples across perspectives, not distinct entities; an actant present in two frames appears twice.
 5. **A missing practice on a Characterization is a warning, not a shrug.** `ant verify` reports it at Tier-2; `ant query roles` shows the frame as `(no practice)`. Do not paper over it in prose.
+6. **Actant and Inscription are parallel registers, not disjoint types** (C9). The same entity can be both — a living repository is an inscription (a trace that circulates) *and* an actant (a node that acts). Coexistence is recorded with `ant:manifestsAs` ([ADR-0007](adr/0007-inscriptions-can-be-actants-manifests-as.md)), never inferred. Likewise **no status on a translation is deliberate** — "forming / not yet assessed", not missing data ([ADR-0002](adr/0002-cross-frame-links-and-status.md)).
 
 ## Read-only CLI cheatsheet
 
@@ -62,4 +63,4 @@ uv run ant verify                          # SHACL Tier-1/2 + cross-refs
 ## Handoffs
 
 - **To change the graph** → [CLAUDE.md](CLAUDE.md) and the authoring skills. **TTL is never hand-edited; briefs are never hand-edited** — both change only through the CLI, then `ant refresh <case>`.
-- **Theory & constraints** → [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) (C1–C8), [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) (R1–R10).
+- **Theory & constraints** → [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) (C1–C9), [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) (R1–R10).
