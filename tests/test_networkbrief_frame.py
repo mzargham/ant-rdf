@@ -8,14 +8,17 @@ from __future__ import annotations
 from rdflib import URIRef
 
 from ant_rdf.compilers import networkbrief
-from ant_rdf.models import Mobilization, Network, Translation
+from ant_rdf.models import Mobilization, Network, Perspective, Translation
 from ant_rdf.serialize import build_dataset
 
 T = "https://w3id.org/ant/cases/test"
+AG = "https://w3id.org/ant/agent/x"
 
 
 def _models():
     return [
+        Perspective(iri=f"{T}/perspectives/alpha", label="Alpha", description="a", held_by=AG, case="test"),
+        Perspective(iri=f"{T}/perspectives/beta", label="Beta", description="b", held_by=AG, case="test"),
         Network(iri=f"{T}/network/alpha", label="Alpha net", description="a", case="test"),
         Network(iri=f"{T}/network/beta", label="Beta net", description="b", case="test"),
         Mobilization(iri=f"{T}/moment/m", label="M", description="m", case="test"),
@@ -42,8 +45,6 @@ def test_default_perspective_keeps_its_translation():
     """Regression: a single-frame case whose perspective is the ``_default``
     stub (tail never equals the network slug) must still render its
     translation — the frame resolves to the lone perspective."""
-    from ant_rdf.models import Perspective
-
     models = [
         Perspective(iri=f"{T}/perspectives/_default", label="stub", description="d",
                     held_by="https://w3id.org/ant/agent/_unspecified", case="test"),
