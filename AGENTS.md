@@ -10,20 +10,30 @@ A docs-as-code toolkit for Actor-Network-Theory / material-semiotic readings of 
 
 ## Read this first
 
-Start at [`wiki/Home.md`](wiki/Home.md) for the whole graph, or at a case's network brief (`briefs/scallops-network.md`) for one reading. For a multi-perspective case, the comparison brief (`briefs/koi-comparison.md`) is the interpretive key.
+For a case with a grounded perspective, start at its reading guide (`briefs/koi-guide.md`, `briefs/pi-learning-guide.md`) — it links every other brief in reading order; the positionality ledger is the interpretive key and the synopsis the gist. For the canonical scallops case (one ungrounded `_default` perspective) start at `briefs/scallops-network.md`. [`wiki/Home.md`](wiki/Home.md) spans the whole graph.
 
 ## Question → brief (and the query that confirms it)
 
 | The question | Brief | Confirming query |
 |---|---|---|
 | Which cases exist, how big is each? | `briefs/case-catalog.md` | `ant list --case <case>` |
+| In what order do I read a case? | `briefs/<case>-guide.md` | — |
+| Who is speaking, from which practice? | `briefs/<case>-positionality.md` | — |
+| The whole case at a glance? | `briefs/<case>-synopsis.md` | — |
 | One perspective's full reading of a case? | `briefs/<case>-network.md` or `briefs/<case>-<perspective>-network.md` | `ant list --kind Actant --case <case> --perspective <p>` |
-| How is actant X read, and by whom? | the network brief's "Characterizations" table | `ant query roles X` |
+| How is actant X read, and by whom? | `briefs/<case>-actants-across-frames.md` (or the network brief's "Characterizations" table) | `ant query roles X` |
 | Where do two frames agree vs flip? | `briefs/<case>-comparison.md` | `ant query flips` |
-| Which actant is the obligatory passage point? | the network brief's "Characterizations" table | `ant query sparql` on `ant:assignsRole ant:ObligatoryPassagePoint` |
-| What does an ontology term mean, and where does it come from? | `wiki/Concept-<Term>.md` | — |
+| Which actants are OPPs / what clears one? | `briefs/<case>-opp-map.md` | `ant query traffic <passage>` |
+| What carries forward / who produces & draws on what? | `briefs/<case>-inscriptions.md` | `ant query manifests` |
+| Which actants are read vs left bare? | `briefs/<case>-coverage.md` | `ant query roles X` |
+| What's precarious / still forming? | `briefs/<case>-durability.md` | `ant query status precarious` |
+| What's contested / under strain? | `briefs/<case>-tensions.md` | `ant query anti-programs` |
+| One program across all frames? | `briefs/<case>-same-program-trace.md` | `ant query same-program` |
+| What does an ontology term mean, and where does it come from? | `briefs/<case>-glossary.md` or `wiki/Concept-<Term>.md` | — |
 | Where is a word mentioned? | — | `ant query search <text>` |
 | What exactly does one record say? | `wiki/Actant-<case>--<slug>.md` | `ant query show <slug>` |
+
+The cross-frame briefs exist only for cases with two or more grounded perspectives; `ant refresh <case>` compiles exactly the set the case supports.
 
 ## The mental model
 
@@ -47,6 +57,11 @@ Everything here is read-only (never writes triples). See the [`ant-query`](.clau
 ```bash
 uv run ant query roles larvae-collectors   # an actant's roles, frame by frame (via Characterization)
 uv run ant query flips                     # actants read as different roles across frames
+uv run ant query traffic <passage>         # translations that must clear an OPP
+uv run ant query status precarious         # or: stabilized | unravelled | forming
+uv run ant query same-program              # one program read across frames
+uv run ant query anti-programs             # the ant:opposes edges
+uv run ant query manifests                 # actant/inscription coexistence (C9)
 uv run ant query search scallop            # text search over labels + descriptions
 uv run ant query show fishermen            # fidelity-aware record view
 uv run ant query sparql "SELECT ..."       # escape hatch
@@ -57,7 +72,7 @@ uv run ant verify                          # SHACL Tier-1/2 + cross-refs
 
 ## The skills
 
-- **Reading (this file's companions):** [`ant-query`](.claude/skills/ant-query.md) (graph-fact recipes), [`ant-refresh`](.claude/skills/ant-refresh.md) (regenerate briefs/wiki).
+- **Reading (this file's companions):** [`ant-read`](.claude/skills/ant-read.md) (route a question + interpret), [`ant-query`](.claude/skills/ant-query.md) (graph-fact recipes), [`ant-refresh`](.claude/skills/ant-refresh.md) (regenerate briefs/wiki).
 - **Authoring (see CLAUDE.md):** [`ant-mgmt`](.claude/skills/ant-mgmt.md) (catechism), [`ant-ingest`](.claude/skills/ant-ingest.md) (notes/uploads), [`ant-gvrn`](.claude/skills/ant-gvrn.md) (ontology governance).
 
 ## Handoffs

@@ -45,7 +45,7 @@ uv run ant query show fishermen            # one record, labels resolved
 uv run ant list --kind Actant --case koi --perspective architectural
 ```
 
-[AGENTS.md](AGENTS.md) is the reader's contract — a question → brief → confirming-query table and the interpretive pitfalls (roles are not types; a reading is provenance). After authoring, `uv run ant refresh <case>` regenerates every brief for that case.
+[AGENTS.md](AGENTS.md) is the reader's contract — a question → brief → confirming-query table and the interpretive pitfalls (roles are not types; a reading is provenance). After authoring, `uv run ant refresh <case>` regenerates every brief the case supports: its network brief(s); for a case with a grounded perspective the reader set (`briefs/<case>-guide.md` is the "start here" — synopsis, positionality ledger, glossary, OPP map, inscriptions, durability dashboard, characterization coverage, tensions); and for two or more perspectives the cross-frame views (comparison, actants across frames, same-program trace). The koi case shows the full set.
 
  The scallops case demonstrates the central observer-relativity move (see [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) C5–C7): the larvae-collectors actant is simultaneously characterized as **Intermediary** (under experimental-oceanography practice, invariant: anchoring-substrate-as-designed) AND as **Mediator** (under seasonal-fishing-labor practice, invariant: rhythms-of-bay-work), without OWL inconsistency.
 

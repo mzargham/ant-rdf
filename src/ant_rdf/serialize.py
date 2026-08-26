@@ -25,6 +25,7 @@ from ant_rdf import ANT
 from ant_rdf.graph import new_dataset
 from ant_rdf.models import (
     Actant,
+    Agent,
     Analysis,
     AnalysisReport,
     AntModel,
@@ -32,6 +33,7 @@ from ant_rdf.models import (
     ConstraintWaiver,
     Enrolment,
     FluidObject,
+    GlossaryTerm,
     ImmutableMobile,
     Inscription,
     Interessement,
@@ -220,6 +222,29 @@ def _add_practice(g: Graph, obj: Practice) -> URIRef:
     return s
 
 
+def _add_agent(g: Graph, obj: Agent) -> URIRef:
+    s = _iri(obj.iri)
+    _add_base(g, s, obj, URIRef("http://www.w3.org/ns/prov#Agent"))
+    return s
+
+
+_SKOS = "http://www.w3.org/2004/02/skos/core#"
+
+
+def _add_glossary_term(g: Graph, obj: GlossaryTerm) -> URIRef:
+    s = _iri(obj.iri)
+    _add_base(g, s, obj, URIRef(_SKOS + "Concept"))
+    if obj.acronym:
+        g.add((s, URIRef(_SKOS + "altLabel"), Literal(obj.acronym)))
+    if obj.used_as:
+        g.add((s, URIRef(_SKOS + "scopeNote"), Literal(obj.used_as)))
+    if obj.category:
+        g.add((s, DCTERMS.subject, Literal(obj.category)))
+    for src in obj.sources:
+        g.add((s, DCTERMS.source, Literal(src)))
+    return s
+
+
 def _add_problematization(g: Graph, obj: Problematization) -> URIRef:
     s = _iri(obj.iri)
     _add_base(g, s, obj, _ant("Problematization"))
@@ -270,6 +295,8 @@ def _add_translation(g: Graph, obj: Translation) -> URIRef:
 
 _DISPATCH: dict[type, Callable[[Graph, Any], URIRef]] = {
     Actant: _add_actant,
+    Agent: _add_agent,
+    GlossaryTerm: _add_glossary_term,
     Analysis: _add_analysis,
     AnalysisReport: _add_analysis_report,
     Characterization: _add_characterization,
