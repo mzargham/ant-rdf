@@ -19,7 +19,19 @@ The heterogeneous network Michel Callon analyzed in 'Some Elements of a Sociolog
 
 ## Translations
 
-_No translations recorded in the loaded scope._
+### The Callon-1986 translation chain
+
+<!-- https://w3id.org/ant/cases/scallops/translation/main -->
+
+The translation that Callon traces from problematization through mobilization. Ultimately precarious: a single winter's trawling unravels the web (Law 2008 quotation: 'all it takes is for one translation to fail and the whole web of reality unravels').
+
+| Moment | Label | Description |
+| --- | --- | --- |
+| Enrolment | Enrolment: coordinated roles | Scallops successfully anchor in significant numbers (some seasons). Fishermen accept the no-trawl zones. Scientific colleagues accept the experimental results. Each actant plays its scripted role. |
+| Interessement | Interessement: locking in roles | The researchers cut competing alternatives — they negotiate with fishermen to refrain from trawling protected zones, and they design collectors that prevent scallop larvae from anchoring anywhere else. Each actant is interested into a single role within the network. |
+| Mobilization | Mobilization: spokespersons emerge | The researchers speak for the scallops (citing anchoring counts), for the fishermen (citing community acceptance), and for the bay itself (citing the technique's promise). The network speaks with one voice — until it doesn't. |
+| Problematization | Problematization: declining scallop populations | The three researchers define the problem: St Brieuc Bay scallop populations are declining and unstudied. They position themselves as indispensable by proposing the larvae-collector experiment and positioning fishermen and scallops as needing to pass through their experimental apparatus. |
+
 
 ## Characterizations within this network
 

@@ -21,7 +21,19 @@ The network of hotel manager, guests, front-desk staff, key, weighted fob, and r
 
 ## Translations
 
-_No translations recorded in the loaded scope._
+### The hotel-keys translation chain
+
+<!-- https://w3id.org/ant/cases/hotel-keys/translation/main -->
+
+Latour's classical demonstration that technologies act — the heavy fob enrols the guest's body where the polite sign could not. Reads through all four Callon moments.
+
+| Moment | Label | Description |
+| --- | --- | --- |
+| Enrolment | Enrolment: guests start returning keys | Guests, finding the weighted key uncomfortable in pocket or bag, increasingly return it to the desk on the way out. The fob has enrolled the guest's body into the manager's program. |
+| Interessement | Interessement: try a sign, then try a fob | The manager tries to interest guests with a polite sign. Sign fails (Latour 1991's key empirical finding). Manager swaps in a heavy fob, cutting off the alternative of pocketing the key comfortably. |
+| Mobilization | Mobilization: the fob speaks for the manager | Even when the manager is asleep, the fob continues to enforce the program. Latour's point: the network's voice is delegated to a non-human spokesperson that never gets tired. |
+| Problematization | Problematization: guests leave with keys | The manager problematizes: 'guests are leaving with the keys, and we need them back to turn over rooms'. |
+
 
 ## Characterizations within this network
 

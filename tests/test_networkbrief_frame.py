@@ -36,3 +36,23 @@ def test_whole_case_compile_scopes_translations_by_authored_under():
     assert "### Alpha reading" in md
     assert "### Beta reading" not in md
     assert "### Legacy reading" in md  # un-attributed: kept
+
+
+def test_default_perspective_keeps_its_translation():
+    """Regression: a single-frame case whose perspective is the ``_default``
+    stub (tail never equals the network slug) must still render its
+    translation — the frame resolves to the lone perspective."""
+    from ant_rdf.models import Perspective
+
+    models = [
+        Perspective(iri=f"{T}/perspectives/_default", label="stub", description="d",
+                    held_by="https://w3id.org/ant/agent/_unspecified", case="test"),
+        Network(iri=f"{T}/network", label="The net", description="d", case="test"),
+        Mobilization(iri=f"{T}/moment/m", label="M", description="m", case="test"),
+        Translation(iri=f"{T}/translation/main", label="The chain", description="d",
+                    case="test", has_moment=[f"{T}/moment/m"],
+                    authored_under=f"{T}/perspectives/_default"),
+    ]
+    md = networkbrief.compile_(build_dataset(*models), subject=URIRef(f"{T}/network"))
+    assert "### The chain" in md
+    assert "No translations recorded" not in md
