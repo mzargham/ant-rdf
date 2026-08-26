@@ -12,5 +12,5 @@ The network within which a Characterization is asserted.
 
 ## Source
 
-Synthesized per plan §4.1.1.
+Synthesized for this vocabulary; ADR-0000 R3 (observer-relative roles via Characterization).
 

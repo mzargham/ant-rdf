@@ -1,13 +1,14 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# ADR-0000 — Foundational decisions (R1–R10)
+# ADR-0000 — Foundational decisions (R1–R10, with R8a, R9a, R9b)
 
 **Status:** accepted (v0.1.0-draft) — pending expert-call confirmation per remaining open items.
 **Date:** 2026-05-14
 **Deciders:** repo maintainers + Ellie Rennie + project ethnographers
 **Supersedes:** none (initial set)
+**Amended by:** [ADR-0001](0001-perspective-isolation-named-graphs.md) (R8 / C6: single-graph discipline now, named graphs later), [ADR-0002](0002-cross-frame-links-and-status.md) (R9: cross-frame terms), [ADR-0003](0003-shared-actant-home-and-identity-guard.md) (R9b: `ActantShape` joins Tier-1), [ADR-0004](0004-graph-derivable-translation-frame.md) (R3: translations attributed to a perspective), [ADR-0005](0005-fluid-objects-and-material-carry-forward.md), [ADR-0006](0006-invariance-variance-coding-axis.md) (R3: the invariance axis), [ADR-0007](0007-inscriptions-can-be-actants-manifests-as.md) (R1: C9). Index: [README.md](README.md).
 
-This document records the foundational design decisions made before v0.1.0. Each decision (R1–R10) was raised as an open question during planning and resolved by the user with expert input. The decisions are folded into the body of the codebase at the locations noted in the "Where it lives" column; this ADR is the durable record of the *decisions themselves* and the reasoning, so future contributors can understand why the system is shaped the way it is.
+This document records the foundational design decisions made before v0.1.0. Each decision (R1–R10, plus the sub-decisions R8a, R9a, R9b) was raised as an open question during planning and resolved by the user with expert input. The decisions are folded into the body of the codebase at the locations noted in the "Where it lives" column; this ADR is the durable record of the *decisions themselves* and the reasoning, so future contributors can understand why the system is shaped the way it is.
 
 A decision listed here is **accepted**, not frozen. To revise: open an issue tagged `adr-revision`, name the R-number, and propose the change. Revisions require updating this ADR and the body locations together.
 
@@ -29,7 +30,7 @@ A decision listed here is **accepted**, not frozen. To revise: open an issue tag
 
 **Why.** Latour's generalized symmetry refuses pre-network agency attribution; some perspectives carry responsibility-attribution framing (policy analysts), others reject it (Latourian fieldworkers). Forcing one global typing would smuggle one observer-frame into the ontology.
 
-**Where it lives.** [ontology/ant-prov-align.ttl](../ontology/ant-prov-align.ttl); `ant:ProvAgent` / `ant:ProvInfluencer` classes in [ontology/material-semiotics-core.ttl](../ontology/material-semiotics-core.ttl); §4.3 of the plan in `.claude/plans/`.
+**Where it lives.** [ontology/ant-prov-align.ttl](../ontology/ant-prov-align.ttl); `ant:ProvAgent` / `ant:ProvInfluencer` classes in [ontology/material-semiotics-core.ttl](../ontology/material-semiotics-core.ttl).
 
 ---
 
@@ -70,7 +71,7 @@ A decision listed here is **accepted**, not frozen. To revise: open an issue tag
 
 **SPARQL CONSTRUCT** can derive a candidate Network from associations, but materializing it into the graph is an explicit human commitment via `ant new-record network --from-construct <q.sparql>` — never silent auto-derivation.
 
-**Where it lives.** `ant:Network`, `ant:Scope`, `ant:Analysis`, `ant:AnalysisReport` in [ontology/material-semiotics-core.ttl](../ontology/material-semiotics-core.ttl); §4.7 of the plan.
+**Where it lives.** `ant:Network`, `ant:Scope`, `ant:Analysis`, `ant:AnalysisReport` in [ontology/material-semiotics-core.ttl](../ontology/material-semiotics-core.ttl). Acts 1 and 3 have data shapes but no engine (`ant scope new`, `ant analyze list-methods` are stubs); act 2 is `ant query`; act 4 is `ant new-record network` and the compiled briefs.
 
 ---
 
@@ -82,7 +83,7 @@ A decision listed here is **accepted**, not frozen. To revise: open an issue tag
 
 **Generalization.** This pattern (`ant:TaggingRule` in v2) supports the analyst's move "any actant that satisfies `<rule>` should get `<attribute>`" for any role — OPP, Spokesperson, Mediator/Intermediary (where invariance can be computed), ImmutableMobile, etc.
 
-**Where it lives.** `ant:ObligatoryPassagePoint` in [ontology/material-semiotics-core.ttl](../ontology/material-semiotics-core.ttl); §4.1.2 of the plan.
+**Where it lives.** `ant:ObligatoryPassagePoint` in [ontology/material-semiotics-core.ttl](../ontology/material-semiotics-core.ttl); traffic through a passage is recorded with `ant:tracesToPassage` ([ADR-0002](0002-cross-frame-links-and-status.md)) and rendered by `OPPMap`.
 
 ---
 
@@ -90,7 +91,7 @@ A decision listed here is **accepted**, not frozen. To revise: open an issue tag
 
 **Decision.** Latour's *An Inquiry into Modes of Existence* (AIME) is post-classical-ANT and represents a *correction* to ANT (where the "network" is one of 15 modes). Including AIME's mode vocabulary in v1 would muddle the Callon+Latour+Law/Mol synthesis. Reserved for a v2 extension module `ant-aime.ttl`.
 
-**Where it lives.** `ant:Mode` listed under "Deferred to v2" in the plan inventory; no class defined in v1.
+**Where it lives.** Nowhere yet — no class is defined in v1.
 
 ---
 
@@ -98,17 +99,25 @@ A decision listed here is **accepted**, not frozen. To revise: open an issue tag
 
 **Decision.** Annemarie Mol's multiplicity (different practices enacting different realities of the same object) is technically deep — in RDF it requires either named graphs per enactment or per-practice reification. v2 lifts to named graphs over a quadstore. v1 must not paint into a corner that forces a breaking change.
 
-**Operational guarantee.** Quad-readiness (R8a, below) — every assertion already carries the perspective it was authored under; the file-system + IRI conventions name the graphs v2 will instantiate; `graph.py` uses `rdflib.Dataset` (quad-capable) from day one.
+**Operational guarantee.** Quad-readiness (R8a, below).
 
-**Where it lives.** §4.5 of the plan; [ONTOLOGICAL_COMMITMENTS.md](../ONTOLOGICAL_COMMITMENTS.md) C6.
+**Where it lives.** [ONTOLOGICAL_COMMITMENTS.md](../ONTOLOGICAL_COMMITMENTS.md) C6; the in-force single-graph discipline and the named-graph target are [ADR-0001](0001-perspective-isolation-named-graphs.md).
+
+---
+
+## R8a — Quad-readiness: v1 stores the graphs v2 will instantiate
+
+**Decision.** Every assertion already carries the perspective it was authored under: records live under `instances/cases/<case>/perspectives/<slug>/`, an `ant:Perspective` IRI is the name of the graph v2 will route that directory into, `graph.py` uses `rdflib.Dataset` (quad-capable) from day one, and a translation names its perspective in the graph itself (`ant:authoredUnder`, [ADR-0004](0004-graph-derivable-translation-frame.md)). The v1→v2 lift is a `publicID` argument on parse, not a data migration.
+
+**Where it lives.** [src/ant_rdf/graph.py](../src/ant_rdf/graph.py); the file layout in [docs/toolchain.md](../docs/toolchain.md).
 
 ---
 
 ## R9 — Every `ant:*` term carries `dcterms:source` to a founding text
 
-**Decision.** Every class, object property, and datatype property in the ontology carries a `dcterms:source` literal naming the founding text (Callon 1986, Latour 1991/2005, Law 1986/1994/2008, Mol 2002) or `"Synthesized per plan §X"` for terms we coined.
+**Decision.** Every class, object property, and datatype property in the ontology carries a `dcterms:source` literal naming the founding text (Callon 1986, Latour 1991/2005, Law 1986/1994/2008, Mol 2002) or `"Synthesized for this vocabulary; ADR-#### R# (…)"` for terms we coined.
 
-**Why.** Lets disagreements on the expert call become "you cited the wrong source" (resolvable by reading the text) rather than "you got Latour wrong" (unresolvable). Also makes the wiki's Concepts/ pages function as a navigable glossary with citations.
+**Why.** Lets disagreements on the expert call become "you cited the wrong source" (resolvable by reading the text) rather than "you got Latour wrong" (unresolvable). Also makes the wiki's `Concept-<Term>.md` pages function as a navigable glossary with citations.
 
 **Where it lives.** [ontology/material-semiotics-core.ttl](../ontology/material-semiotics-core.ttl) — every term carries a `dcterms:source` line. Tier-3 lint shape `ant:OntologyClassSourceShape` enforces this at governance time.
 
@@ -118,13 +127,13 @@ A decision listed here is **accepted**, not frozen. To revise: open an issue tag
 
 **Decision.** (a) Perspectives belong inside cases (perspective = relation between holder and seen-thing). (b) Current perspective metadata fields (`perspectiveHeldBy`, `perspectiveGroundedIn`, `perspectiveTracksInvariance`) are sufficient for v1. (c) No `--per-perspective` SHACL machinery in v1 — keep `ant verify` running across the merged graph. (d) Handling of overlapping/contradictory perspectives deferred to v2 with named-graph support.
 
-**Where it lives.** [ontology/material-semiotics-core.ttl](../ontology/material-semiotics-core.ttl) `ant:Perspective`; §4.5 of the plan.
+**Where it lives.** [ontology/material-semiotics-core.ttl](../ontology/material-semiotics-core.ttl) `ant:Perspective`.
 
 ---
 
 ## R9b — Tier-1 list as drafted; waivers carry no expiry default and no co-sign; CI default is non-strict
 
-**Decision.** The Tier-1 SHACL list as drafted (NetworkShape, PerspectiveShape, TranslationShape ≥1 moment, CharacterizationShape, IRI shape, cross-graph resolution) is the load-bearing set. Waivers:
+**Decision.** The Tier-1 SHACL list (`NetworkShape`, `ActantShape` — exactly one label and description, [ADR-0003](0003-shared-actant-home-and-identity-guard.md) —, `PerspectiveShape`, `TranslationShape` ≥ 1 moment, `CharacterizationShape`, `ConstraintWaiverShape`, plus cross-reference resolution in `verify.py`) is the load-bearing set. Waivers:
 
 - **No expiry default.** Most waivers don't expire; `ant:waiverExpires` is schema-optional and unused by default.
 - **No co-sign requirement.** A single accountable agent in `ant:waivedBy` is sufficient; sensitive cases handled by team policy, not ontology constraint.
@@ -146,10 +155,10 @@ A decision listed here is **accepted**, not frozen. To revise: open an issue tag
 
 ## Remaining open items (for the expert call)
 
-These are recorded in §9 of the plan in `.claude/plans/`. Summarized here as the ADR's "follow-ups":
+The planning-phase open items, with their current status:
 
-1. **Email Goodwin & Kuehn (2021)** for any TTL draft they may have — citable prior art and a potential parity reference for the hotel-keys case (step 11 of the plan).
-2. **Walk C1–C8 with the ethnographers and ANT experts** before the first ethnographer-authored case study is committed. Confirm that the methodological framing of `ant:Actant` (R1) lands without scholarly objection, and that the four-acts separation (R5) maps to fieldwork conceptualization.
-3. **First-case selection** beyond scallops. Confirm whether to reproduce the Latour 1991 hotel-keys example (parity with Goodwin/Kuehn 2021) or to lead with a contemporary fieldwork case the ethnographers own — likely both, with the contemporary case driving wiki-template iteration per the user's note.
-4. **Wiki structure feedback after first case lands** — the user has noted they expect the wiki layout to evolve to fit ethnographer use. The post-first-case review is a design checkpoint, not a polish pass.
-5. **v2 roadmap signoff.** Confirm the v2 priorities — named graphs for multiplicity (R8), rule-based tagging engine for analytical enrichment (R6), temporality via PROV-O properties on existing moment-classes — are the right next-priorities.
+1. **Email Goodwin & Kuehn (2021)** for any TTL draft they may have — citable prior art and a potential parity reference for the hotel-keys case. *Open.*
+2. **Walk C1–C9 with the ethnographers and ANT experts.** Confirm that the methodological framing of `ant:Actant` (R1) lands without scholarly objection, and that the four-acts separation (R5) maps to fieldwork conceptualization. *Open* — contemporary cases have since been committed, so this is a review rather than a gate.
+3. **First-case selection beyond scallops.** *Resolved:* both paths were taken — hotel-keys (Goodwin/Kuehn parity) and two contemporary cases (koi, pi-learning).
+4. **Wiki structure feedback after the first case lands.** *Resolved:* the wiki moved to a flat `Concept-*` / `Case-*` / `Actant-*` layout, and the reader-oriented briefs (guide, synopsis, positionality, …) were added on ethnographer feedback ([docs/toolchain.md](../docs/toolchain.md)).
+5. **v2 roadmap signoff.** Confirm the v2 priorities — named graphs for multiplicity (R8, [ADR-0001](0001-perspective-isolation-named-graphs.md)), rule-based tagging engine for analytical enrichment (R6), temporality via PROV-O properties on existing moment-classes ([FUTURE_WORK.md](../FUTURE_WORK.md)) — are the right next-priorities. *Open.*

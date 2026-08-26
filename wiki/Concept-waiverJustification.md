@@ -12,5 +12,5 @@ Required free-text justification for the waiver. Empty justification fails Tier-
 
 ## Source
 
-Synthesized per plan §4.6.
+Synthesized for this vocabulary; ADR-0000 R9b (tri-severity waivers).
 

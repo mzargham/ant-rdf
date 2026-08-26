@@ -6,7 +6,7 @@ content is out-of-scope here (per C7). Per C8, the same ``create_*`` helpers
 are reachable from the catechism skill, direct CLI invocation, and (via
 ``ingest.py``) note-import — one mechanism, multiple front-ends.
 
-File layout per §4.5 quad-readiness:
+File layout (quad-ready per C6 / ADR-0000 R8):
 
     instances/cases/<case>/perspectives/<perspective>/<kind>s.ttl
 
@@ -299,7 +299,7 @@ def create_characterization(
     invariance: str | None = None,
     description: str | None = None,
 ) -> Path:
-    """Create an ant:Characterization (§4.1.1)."""
+    """Create an ant:Characterization (ADR-0000 R3)."""
     _ensure_perspective_record(case, perspective)
     obj = Characterization(
         iri=iri,

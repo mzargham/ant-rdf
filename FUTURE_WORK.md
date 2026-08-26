@@ -2,7 +2,7 @@
 
 # Future work and validation regime
 
-`ant-rdf` v0.1.0-draft ships a deliberately **minimalist** v1 — the pattern in place, the round-trip working end-to-end, two training cases authored entirely through the CLI. Enough for a working ethnographer (specifically: Ellie) to use, find the seams, and tell us what's actually needed. This document records what was held out of v1, how features arrive, and the three-tier validation regime that should govern when machine-mediated analyses are permitted to make novel ethnographic claims.
+`ant-rdf` 0.1.0 ships a deliberately **minimalist** v1 — the pattern in place, the round-trip working end-to-end, four cases authored entirely through the CLI: two training cases from the source texts (scallops, hotel-keys) and two contemporary field cases (koi, read from two perspectives; pi-learning). Enough for a working ethnographer (specifically: Ellie) to use, find the seams, and tell us what's actually needed. This document records what was held out of v1, how features arrive, and the three-tier validation regime that should govern when machine-mediated analyses are permitted to make novel ethnographic claims.
 
 **A note on framing.** Future work here is not a binary v1-vs-v2 ladder. It's a **what / why / when** question driven by use:
 
@@ -10,13 +10,13 @@
 - **Why** — what real workload (a case study, a comparison, an authoring friction) makes it necessary
 - **When** — when it ships, which is *after* the workload is concrete, not in anticipation of it
 
-So the sections below describe scope-outs as candidates the toolkit is structurally ready for; whether and when they arrive depends on what the people using `ant-rdf` find missing. Two priorities are already named: a **test suite** (correctness floor for the existing v1) and **operational temporality** (the user has agreed temporality is critical for academic use in practice, and it's the most likely first request once real fieldwork starts landing).
+So the sections below describe scope-outs as candidates the toolkit is structurally ready for; whether and when they arrive depends on what the people using `ant-rdf` find missing. The first named priority, a **test suite**, has landed (1.8 below); the next is **operational temporality** (temporality is critical for academic use in practice, and it's the most likely first request once real fieldwork starts landing). Several other items below have since landed through the decisions in [adr/README.md](adr/README.md) and are marked as such.
 
 **The framing premise.** This toolkit is a **prosthesis**. Like every prosthesis it changes what it amplifies. Treating it as a neutral instrument would itself be an analytical mistake — exactly the kind of mistake material-semiotics insists we should refuse. So future work is not only about adding features; it is about understanding what the prosthesis does to the analyses it mediates.
 
 ## 1. What v1 deliberately held out of scope
 
-Each of the following was a *resolved* decision during planning to defer the feature, not an oversight. The decisions are recorded in [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) and revisited here with the implementation paths we expect to follow.
+Each of the following was a *resolved* decision during planning to defer the feature, not an oversight. The founding decisions are in [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) and the later ones in [adr/README.md](adr/README.md); each item below is revisited with the implementation path we expect to follow, or the ADR that already took it.
 
 ### 1.1 Operational temporality — top priority for the first real-fieldwork increment
 
@@ -88,7 +88,7 @@ What:
 
 Why: scaling — when a case has hundreds of actants, manual OPP assignment becomes impractical, and a rule that flags candidates for ethnographer confirmation is a useful prosthesis. methodology - when algebraic graph theory or other quantitative methods are attached to relevant quantitive phenomena by qualified domain experts.
 
-When: after a real case generates enough actants that manual characterization is the bottleneck, and after the comparison-study programme (§2.4) has begun so we have evidence about how machine-mediated tagging affects ethnographic readings.
+When: after a real case generates enough actants that manual characterization is the bottleneck, and after the comparison-study programme (section 2.4) has begun so we have evidence about how machine-mediated tagging affects ethnographic readings.
 
 ### 1.4 AIME modes-of-existence
 
@@ -109,13 +109,13 @@ When: after a real case generates enough actants that manual characterization is
 **Why deferred.** Binary properties cover the common case; qualified relations are a heavier authoring burden. v1 should be cheap to use.
 
 **Implementation path.**
-- Add `ant:EnrolmentRelation`, `ant:TranslationRelation`, `ant:RolePlaying` as reified n-ary nodes with `ant:strength`, `ant:isContested`, `ant:contestedBy`, plus the temporal properties from §1.1.
+- Add `ant:EnrolmentRelation`, `ant:TranslationRelation`, `ant:RolePlaying` as reified n-ary nodes with `ant:strength`, `ant:isContested`, `ant:contestedBy`, plus the temporal properties from section 1.1.
 - CLI: `ant new-record enrolment-relation --strength 0.7 --contested-by <iri>` etc.
 - Compilers gain a "strength heatmap" view across a network's translations.
 
 ### 1.6 Better ingest parsers (transcripts, observations, NER-from-prose)
 
-**Out of v1 scope.** `ant ingest transcript` and `ant ingest observation` are stubs that point users to `ant ingest notes` with YAML frontmatter. We deliberately did NOT implement NER-style auto-extraction of actants from free prose.
+**Out of v1 scope.** `ant ingest` has exactly two paths, `notes` (YAML frontmatter, specified in [docs/notes-format.md](docs/notes-format.md)) and `upload`; there is no transcript or observation parser. We deliberately did NOT implement NER-style auto-extraction of actants from free prose.
 
 **Why deferred.** Auto-extraction from prose is exactly the place where machine mediation can start making claims the ethnographer didn't make. The v1 commitment is the **review-document dry-run pattern**: every ingestion path lands as *candidates* requiring explicit human confirmation. Building better parsers without first establishing the candidate-review-confirm discipline would invite drift.
 
@@ -126,11 +126,9 @@ When: after a real case generates enough actants that manual characterization is
 
 ### 1.7 Comparative compilers + scope-aware briefs
 
-**Out of v1 scope.** Compilers v1 render one record or one case at a time. Cross-perspective contrastive views, scope-aware filtering, and side-by-side comparative analysis are deferred.
+**Landed (cross-perspective views).** [ADR-0002](adr/0002-cross-frame-links-and-status.md) added the cross-frame predicates, and `PerspectiveComparison`, `ActantAcrossFrames` and `SameProgramTrace` render the same field site across perspectives (the koi case ships all three); the reader set (synopsis, positionality, OPP map, durability, coverage, tensions, glossary, guide) reads the union graph. See [docs/toolchain.md](docs/toolchain.md) for the full list.
 
-**Implementation path (paired with §1.2 multiplicity work).**
-- `--perspectives a,b --mode contrast` flag on NetworkBrief renders the same network from two perspectives side-by-side, highlighting where Characterizations diverge (this is the §4.1.1 mechanism made visually legible).
-- `ant scope new` becomes operational (act 1 of the four acts per §4.7); `ant compile … --scope <iri>` filters compilation to that scope.
+**Still out of scope: scope-aware filtering.** `ant scope new` remains a stub (act 1 of the four acts, ADR-0000 R5); `ant compile … --scope <iri>` filtering waits on the named-graph lift (section 1.2).
 
 ### 1.8 Test suite
 
@@ -163,14 +161,14 @@ The first validation is **review against the training set** — getting back wha
 
 The toolkit is built on Callon (1986), Latour (1991, 2005), Law (1986, 1994, 2008), Mol (2002), and a small set of allied texts. Each canonical example in those works — the scallops of St Brieuc Bay, the hotel-key fob, the Portuguese maritime network, Pasteur's anthrax vaccine, *The Body Multiple*'s atherosclerosis enactments, the laboratory's modes of ordering — is a *training case*. Producing them through the toolkit and getting back analyses that the original authors would recognise is the lowest bar. **If we can't reproduce these, we have nothing.**
 
-**v1 status.** Two training cases shipped: [scallops](instances/cases/scallops/) (Callon 1986) and [hotel-keys](instances/cases/hotel-keys/) (Latour 1991, Goodwin/Kuehn 2021 parity). Both are end-to-end demonstrations that the v1 mechanics work.
+**v1 status.** Two training cases shipped: [scallops](instances/cases/scallops/) (Callon 1986) and [hotel-keys](instances/cases/hotel-keys/) (Latour 1991, Goodwin/Kuehn 2021 parity). Both are end-to-end demonstrations that the v1 mechanics work. Two contemporary cases (koi, pi-learning) also ship; they belong to the testing tier below, not the training set.
 
 **Expected v1.0 set.**
 - Scallops (Callon 1986) ✓
 - Hotel keys (Latour 1991, Goodwin/Kuehn 2021 parity) ✓
 - Portuguese maritime network (Law 1986) — immutable mobiles canon
 - Pasteur and anthrax (Latour 1988) — "great man as network effect"
-- *The Body Multiple* atherosclerosis (Mol 2002) — multiplicity, demands the §1.2 named-graph lift before it can be honoured
+- *The Body Multiple* atherosclerosis (Mol 2002) — multiplicity, demands the section 1.2 named-graph lift before it can be honoured
 - Aramis (Latour 1996) — failed translation, modes-of-existence pre-AIME
 - Laboratory modes-of-ordering (Law 1994) — discursive durability
 
@@ -187,7 +185,7 @@ The second validation is **generalisation testing**. Cases that:
 
 Examples we expect to explore:
 - Akrich's *De-scription of technical objects* (1992) — predates Latour 2005's mediator/intermediary refinement, lets us probe whether v1's encoding survives the terminology shift.
-- de Laet & Mol's Zimbabwe bush pump (2000) — fluid technology that should *break* `ant:ImmutableMobile` in interesting ways and force an `ant:FluidObject` extension.
+- de Laet & Mol's Zimbabwe bush pump (2000) — fluid technology. `ant:FluidObject` has since been declared as the sibling of `ant:ImmutableMobile` ([ADR-0005](adr/0005-fluid-objects-and-material-carry-forward.md)); the bush pump remains the testing case that should exercise it.
 - Singleton's UK cervical screening programme (1998) — ambivalent enrolment, partial translation.
 - Hennion's music amateurs / drug addicts attachment studies (1999, 2001) — affective material semiotics.
 - A contemporary STS case the project ethnographers select, ideally one with a recent peer-reviewed analysis we can compare against.
@@ -237,7 +235,7 @@ Practical norms:
 Carrying forward from [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md):
 
 - Email Goodwin & Kuehn (2021) for any TTL draft of the hotel-keys ontology they may have — citable prior art and (if available) reference content for the existing hotel-keys case.
-- Walk the eight ontological commitments (C1–C8) and ten resolved decisions (R1–R10) with the ethnographers and ANT-fluent reviewers before the first contemporary case study is committed.
-- Confirm the priorities of §1 above (which §1 features land first) against ethnographer-team workload.
-- Sign off on the validation regime in §2: do we accept Tier 1/2/3 as the gating structure for permitting novel-results use?
-- Sign off on the comparison-study design in §2.4: which collaborating ethnographer-team pair will run the first paired analysis, and on which field site?
+- Walk the nine ontological commitments (C1–C9) and the resolved decisions (R1–R10 with R8a/R9a/R9b; ADR-0001…0007) with the ethnographers and ANT-fluent reviewers — the first contemporary cases have already been committed, so this is now a review, not a gate.
+- Confirm the priorities of section 1 above (which features land first) against ethnographer-team workload.
+- Sign off on the validation regime in section 2: do we accept Tier 1/2/3 as the gating structure for permitting novel-results use?
+- Sign off on the comparison-study design in section 2.4: which collaborating ethnographer-team pair will run the first paired analysis, and on which field site?

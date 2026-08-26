@@ -26,7 +26,7 @@ _See the full trace: [Pulling a thread: from discovery to (attempted) retention]
 
 ## Characterizations (observer-relative role assignments)
 
-Each row records an analyst's claim *within a context*: the (target, network, practice, invariance) tuple grounds the role assignment. The same actant may appear with different roles across rows — that's not contradiction, it's [§4.1.1 observer-relativity](Concept-Characterization).
+Each row records an analyst's claim *within a context*: the (target, network, practice, invariance) tuple grounds the role assignment. The same actant may appear with different roles across rows — that's not contradiction, it's [observer-relativity](Concept-Characterization) (R3).
 
 | Target | Role | Network | Practice | Invariance | Description |
 | --- | --- | --- | --- | --- | --- |

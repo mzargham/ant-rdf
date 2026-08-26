@@ -2,7 +2,7 @@
 
 # Ontological commitments (C1–C9)
 
-The vocabulary in this repo is built on eight explicit commitments — synthesized from Callon's sociology of translation, Latour's classical ANT, and Law/Mol post-ANT material semiotics. These are the philosophical premises a contributor is opting into when they author records, write SHACL shapes, or extend the ontology. They are also what `ant verify` and the wiki render are *implicitly* documenting in every artifact they produce.
+The vocabulary in this repo is built on nine explicit commitments — synthesized from Callon's sociology of translation, Latour's classical ANT, and Law/Mol post-ANT material semiotics. These are the philosophical premises a contributor is opting into when they author records, write SHACL shapes, or extend the ontology. They are also what `ant verify` and the wiki render are *implicitly* documenting in every artifact they produce.
 
 Every contentious commitment names the founding-text move it inherits. Pushback from the expert call should be on whether the *commitment* lands correctly, not whether we got Latour/Callon/Law/Mol "right" — those debates are settled here by citation, not arbitration.
 
@@ -59,7 +59,7 @@ Practices **enact** realities; we model enactments, not constructions. There is 
 *What this means in practice:*
 
 - `ant:Practice` is a first-class class, not a property modifier.
-- `ant:Characterization` (the reified role-assignment mechanism, §4.1.1) carries `ant:perPractice` to make the *enacting practice* explicit on every observer-relative claim.
+- `ant:Characterization` (the reified role-assignment mechanism, R3) carries `ant:perPractice` to make the *enacting practice* explicit on every observer-relative claim.
 - The CLI does not ask "what social context produced this?" — it asks "from within which practice are you describing this?"
 
 ---
@@ -80,9 +80,9 @@ Translations can fail. Networks unravel. Durability is achieved, never given. Th
 
 ## C6 — Multiplicity and partial connection (v2-ready via quad-ready v1)
 
-Different perspectives / analysis scopes on the same fieldsite may be **simultaneously valid even when otherwise contradictory** — Mol's multiplicity and Law's modes of ordering. The v2 ontology lifts this into named graphs over a quadstore.
+Different perspectives / analysis scopes on the same field site may be **simultaneously valid even when otherwise contradictory** — Mol's multiplicity and Law's modes of ordering. The v2 ontology lifts this into named graphs over a quadstore.
 
-**v1 is quad-ready** — every assertion already carries the perspective it was authored under, and the file-system + IRI conventions name the graphs v2 will instantiate. The v1→v2 transition is mechanical, not a rewrite.
+**v1 is quad-ready** — every assertion already carries the perspective it was authored under, and the file-system + IRI conventions name the graphs v2 will instantiate. The v1→v2 transition is mechanical, not a rewrite. Until then the single-graph discipline of [ADR-0001](adr/0001-perspective-isolation-named-graphs.md) is in force: a shared actant's identity is frame-neutral and byte-identical (guarded at Tier-1, [ADR-0003](adr/0003-shared-actant-home-and-identity-guard.md)), and every translation is attributed to its perspective in the graph ([ADR-0004](adr/0004-graph-derivable-translation-frame.md)).
 
 *Source:* Mol (2002), *The Body Multiple*; Strathern (1991), *Partial Connections*; Law (2008).
 
@@ -91,7 +91,7 @@ Different perspectives / analysis scopes on the same fieldsite may be **simultan
 - `ant:Perspective` is a first-class v1 class. Its IRI string *is* the named-graph URI v2 will use (no migration step changes IRIs).
 - Records live under `instances/cases/<case>/perspectives/<slug>/` — the directory layout is the v2 graph shape; v1 flattens on load.
 - `graph.py` uses `rdflib.Dataset` (quad-capable) from day one. The v1→v2 switch is one `publicID` argument.
-- **v1 partial down-payment on multiplicity:** reified `ant:Characterization` (§4.1.1) lets the same actant carry incompatible role-assignments (e.g., Mediator under one practice, Intermediary under another) without OWL inconsistency — *before* quad activation. See [the scallops case](instances/cases/scallops/) for a worked example.
+- **v1 partial down-payment on multiplicity:** reified `ant:Characterization` (R3) lets the same actant carry incompatible role-assignments (e.g., Mediator under one practice, Intermediary under another) without OWL inconsistency — *before* quad activation. See [the scallops case](instances/cases/scallops/) for a worked example.
 
 ---
 
@@ -118,7 +118,7 @@ Ethnographers ingest material through multiple channels: live conversational cat
 
 **All paths land in the same RDF graph and pass the same SHACL bar.** The conversational catechism is *one* path, not *the* path.
 
-*Source:* Synthesized per plan §5 and user-confirmed.
+*Source:* Synthesized for this toolkit (ADR-0000) and user-confirmed.
 
 *What this means in practice:*
 
@@ -142,7 +142,7 @@ The shift that lets an inscription act is **immutable → fluid**. A frozen docu
 - The two classes carry no `owl:disjointWith`; a node may be typed both, and the same entity may be named in both registers. The `ant-gvrn` skill refuses to add the disjointness.
 - The coexistence is never inferred or forced; it is asserted, optionally, with `ant:manifestsAs` (an actant is manifested as an inscription) — see [ADR-0007](adr/0007-inscriptions-can-be-actants-manifests-as.md).
 - The relation is directional in authoring (actant → inscription) but recoverable both ways by querying the subjects of `ant:manifestsAs`.
-- It is the immutable→fluid shift, not the fact of being code, that makes a trace an actor: prefer `ant:FluidObject` for the inscription side when the thing persists by mutation.
+- It is the immutable→fluid shift, not the fact of being code, that makes a trace an actor: prefer `ant:FluidObject` ([ADR-0005](adr/0005-fluid-objects-and-material-carry-forward.md)) for the inscription side when the thing persists by mutation; the same invariance/variance axis governs the Mediator–Intermediary reading ([ADR-0006](adr/0006-invariance-variance-coding-axis.md)).
 
 ---
 
@@ -154,4 +154,4 @@ Each commitment is held with humility (per C1). If you disagree with one:
 2. Cite the founding text passage you think we've misread, or the analytical move you think is foreclosed.
 3. Propose how the vocabulary, CLI, or compilers should change.
 
-The commitments are revisable. [ADR-0000](adr/0000-foundational-decisions.md) records the resolutions that led to the current ones (`R1–R10`). If a commitment is revised, both files must be updated in the same commit.
+The commitments are revisable. [ADR-0000](adr/0000-foundational-decisions.md) records the resolutions that led to the current ones (`R1–R10`, with `R8a`, `R9a`, `R9b`), and [adr/README.md](adr/README.md) indexes the later decisions. If a commitment is revised, both files must be updated in the same commit.

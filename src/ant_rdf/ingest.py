@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Non-conversational ingestion: notes, transcripts, observations, uploads.
+"""Non-conversational ingestion: YAML-frontmatter notes and raw-material uploads.
 
 All paths produce structurally correct RDF (per C7) and route through a
 dry-run + review-document workflow before committing triples — the
@@ -14,9 +14,9 @@ v1 supports two ingestion formats:
 2. **Raw-material uploads** — register a file (PDF, image, audio) as an
    ``ant:Inscription`` with content-addressed provenance.
 
-Transcript and observation ingestion stubs are exposed in the CLI but
-defer their real parsers to v1.1 — the v1 commitment is the workflow
-shape, not heroic NLP.
+Transcript / observation parsers are deliberately not built (FUTURE_WORK.md,
+"Better ingest parsers"): the v1 commitment is the review-document workflow,
+not heroic NLP. The notes format is specified in docs/notes-format.md.
 """
 
 from __future__ import annotations
@@ -34,9 +34,11 @@ from ant_rdf.graph import CASES_DIR
 from ant_rdf.new_record import (
     create_actant,
     create_characterization,
+    create_inscription,
     create_moment,
     create_network,
     create_perspective,
+    create_program_of_action,
     create_translation,
 )
 
@@ -86,7 +88,7 @@ def ingest_notes(
 ) -> None:
     """Parse a YAML-frontmatter markdown note into candidate records.
 
-    Frontmatter shape (see ``docs/ingest-notes-format.md`` once written):
+    Frontmatter shape (the canonical spec is ``docs/notes-format.md``):
 
         ---
         ant:
@@ -157,6 +159,8 @@ _COMMITTERS = {
     "perspective": create_perspective,
     "characterization": create_characterization,
     "moment": create_moment,
+    "inscription": create_inscription,
+    "program": create_program_of_action,
 }
 
 
@@ -225,7 +229,7 @@ def ingest_upload(
 ) -> None:
     """Register a raw material file as an ant:Inscription with file-hash provenance.
 
-    Per §5 ingestion-invariants: uploads are perspective-agnostic. The file
+    Per C8 (plural ingestion): uploads are perspective-agnostic. The file
     itself is copied (via reference) into ``instances/cases/<case>/uploads/``;
     a corresponding TTL records the IRI, label, file hash, and original path.
     """

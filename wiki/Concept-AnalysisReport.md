@@ -12,5 +12,5 @@ Act-4 artifact: documentation citing a scope + (optional) analysis + narrative r
 
 ## Source
 
-Synthesized per plan §4.7.
+Synthesized for this vocabulary; ADR-0000 R5 (the four acts).
 

@@ -2,7 +2,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
 <https://w3id.org/ant/cases/hotel-keys/char/fob-as-intermediary> a ant:Characterization ;
-    dcterms:description "From the guest's room-occupancy practice, the fob just transmits its physical mass without further transformation — uncomfortable, but not productive of meaning. Demonstrates §4.1.1 observer-relativity in the Latour 1991 case." ;
+    dcterms:description "From the guest's room-occupancy practice, the fob just transmits its physical mass without further transformation — uncomfortable, but not productive of meaning. Demonstrates observer-relativity (R3) in the Latour 1991 case." ;
     ant:assignsRole ant:Intermediary ;
     ant:characterizes <https://w3id.org/ant/cases/hotel-keys/actant/fob> ;
     ant:invarianceCriterion "weight-as-weight" ;
@@ -18,7 +18,7 @@
     ant:withinNetwork <https://w3id.org/ant/cases/hotel-keys/network> .
 
 <https://w3id.org/ant/cases/hotel-keys/char/fob-as-opp> a ant:Characterization ;
-    dcterms:description "Within the hotel-administration practice, every guest's key-disposition decision now passes through the fob — they cannot ignore the weight. Manual OPP assignment per §4.1.2; v2 rule-based tagging could derive this from network topology." ;
+    dcterms:description "Within the hotel-administration practice, every guest's key-disposition decision now passes through the fob — they cannot ignore the weight. Manual OPP assignment (R6); rule-based tagging could derive this from network topology later." ;
     ant:assignsRole ant:ObligatoryPassagePoint ;
     ant:characterizes <https://w3id.org/ant/cases/hotel-keys/actant/fob> ;
     ant:invarianceCriterion "key-circulation" ;

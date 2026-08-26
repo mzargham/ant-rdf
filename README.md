@@ -4,153 +4,48 @@
 
 **A material-semiotics / Actor-Network-Theory vocabulary and authoring toolkit for ethnographers and STS analysts.**
 
-`ant-rdf` is a docs-as-code repository for analyzing networks of heterogeneous associations — people, things, texts, organizations, animals, ideas — using the conceptual toolkit developed by Callon, Latour, Law, and Mol. The canonical source of truth is RDF (Turtle); compilers render Markdown briefs and a hyperlinked wiki for review and navigation. Authoring happens through a Python CLI that accepts both conversational input (via an LLM-mediated catechism) and structured ingestion (notes import, raw-material upload).
+`ant-rdf` is a docs-as-code repository for analyzing networks of heterogeneous associations — people, things, texts, organizations, animals, ideas — with the conceptual toolkit developed by Callon, Latour, Law, and Mol. The canonical source of truth is RDF (Turtle in the `https://w3id.org/ant#` namespace); compilers render it into reviewable Markdown briefs and a hyperlinked wiki; a Python CLI authors the records, callable directly or through an LLM-mediated conversation. The vocabulary is a synthesis of Callon's sociology of translation, Latour's classical ANT, and post-ANT material semiotics (Law 2008, Mol 2002), published as a reusable semantic-web vocabulary.
 
-The vocabulary itself is the first serious synthesis of Callon's sociology of translation, Latour's classical ANT, and post-ANT material semiotics (Law 2008, Mol 2002) published as a reusable semantic-web vocabulary. The namespace is `https://w3id.org/ant#`.
+> **On naming.** Following Law 2008, "actor-network theory" is one strand of a broader **material semiotics** — a toolkit of sensibilities, not a theory. The repo keeps `ant-rdf` for recognition and frames the vocabulary as material-semiotic throughout. And reflexively: `ant-rdf` is itself an assemblage of the kind such analysis interrogates — the toolkit is a prosthesis, not a neutral instrument. That reading, and the validation and comparison-study programme it implies, is the [abstract](abstract.md).
 
-> **Note on naming.** Following Law 2008, "actor-network theory" is one strand of a broader **material semiotics** — a *toolkit of sensibilities*, not a theory. We keep `ant-rdf` as the repo name for recognition but frame the vocabulary as material-semiotic throughout.
+## Start here, by who you are
 
-## A reflexive note (see the [abstract](abstract.md))
-
-`ant-rdf` is itself an assemblage of the kind that material-semiotic analysis is built to interrogate: ethnographers, ANT/STS scholars, a Python toolchain, an LLM mediator, deterministic Turtle, SHACL constraints, GitHub Actions, a wiki, and the cases being studied — all actants in a network that produces the analytical work attributed downstream to "the ethnographer's reading." The toolkit is therefore a **prosthesis**, not a neutral instrument, and the project treats it that way: a [three-tier validation regime](FUTURE_WORK.md#2-validation-regime-training-testing-novel) (training cases / testing cases / novel results) plus a [paired comparison-study programme](FUTURE_WORK.md#24-machine-mediation-comparison-studies-the-key-future-research-thread) (the same field site analysed with and without `ant-rdf`, by independent teams) are how we try to stay honest about what machine mediation gains, loses, and *transforms*.
-
-**Three further notes worth flagging up front** (and developed in the abstract):
-
-- **Theoretical home: Artificial Organisational Intelligence and "building the loop".** The reflexive framing is named and developed in ***Building the Loop: The Role of Ethnography in Artificial Organisational Intelligence*** (Rennie, Nabben, Zargham, Potts, Coco, Miller, and Green, 2026, *EPIC Proceedings* 2025/1, [DOI:10.1111/epic.70009](https://doi.org/10.1111/epic.70009)). The paper — co-authored by Rennie (this repo's co-author) and Zargham (its primary author) — introduces **AOI** (the capacity for organisations to make their knowledge legible and governable through regulated feedback loops) and **building the loop** (the move from "human *in* the loop" oversight to "human *building* the loop" deliberate construction of socio-technical pipelines). The Dynamical Systems Group itself is *enacting* this theory: `ant-rdf` is part of a self-infrastructured pattern-family that also includes the DSG-internal `trl-knowledgebase` and `RIME-product-docs` (private repos, referenced not linked).
-- **Git and RDF/SHACL are canonically complementary.** Git records *change as time-ordered authored events*; RDF/SHACL records *state as structured validated relations*. Held together they let a reader reconstruct both the structure of the field-as-currently-read and the trajectory by which that reading was reached. This complementarity was tested empirically in [Open-MBEE/flexo-conflict-resolution-policy-research](https://github.com/Open-MBEE/flexo-conflict-resolution-policy-research) (Zargham et al., 2026, especially the Exp 14–20 arc) and `ant-rdf` inherits the finding. The commit history of *this* repo will itself become data for the comparison-study programme.
-- **The docs-as-code-with-semantic-web pattern is replicating.** It is one of several repositories shaped around the same scaffolding (canonical RDF + deterministic compilers + LLM-callable CLI + reviewable briefs + an authoring contract for humans and LLMs). The pattern is taking on the character of a small *pattern language* because its ergonomics suit the kind of accountability LLM-mediated work — widely adopted and frequently mindlessly so — has lacked. Lineage details and citations are in the [abstract](abstract.md).
-
-→ **Read the [abstract](abstract.md)** for the full socio-material reading of the project itself.
+| You are… | Read |
+|---|---|
+| **New to material semiotics / ANT** | [docs/primer.md](docs/primer.md) — every concept in ten minutes, then the scallops case read record by record |
+| **Adopting the toolchain** (developer, analyst) | [docs/toolchain.md](docs/toolchain.md) — install, file layout, every command, the sixteen compilers, how to read a verification result, the C / R / ADR index |
+| **Facilitating a session** with an ethnographer (a person at the keyboard, or driving an LLM) | [docs/facilitation.md](docs/facilitation.md) — the session shape, the questions to ask, what the ethnographer owns vs the tool, the review loop |
+| **An LLM agent** working in this repo | [CLAUDE.md](CLAUDE.md) to author (write to the graph); [AGENTS.md](AGENTS.md) to read (route a question to a brief, interpret without misreading) |
+| **Reviewing the theory or the design** | [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) (C1–C9) → [adr/README.md](adr/README.md) (R1–R10 and ADR-0001…0007) → [FUTURE_WORK.md](FUTURE_WORK.md) → [abstract.md](abstract.md) |
 
 ## Quickstart
 
 ```bash
-git clone https://github.com/mzargham/ant-rdf
-cd ant-rdf
+git clone https://github.com/mzargham/ant-rdf && cd ant-rdf
 uv sync
-uv run ant version            # ant-rdf 0.1.0
-
-# Inspect the canonical scallops case (Callon 1986)
-uv run ant verify             # ✓ all conforms (Tier 1 + Tier 2)
-uv run ant list               # all records, by class
-uv run ant wiki               # regenerate wiki/ from instances/
+uv run ant version                          # ant-rdf 0.1.0
+uv run ant verify                           # SHACL Tier-1/2 + cross-refs; a few Tier-2 warnings are expected on the public cases
+uv run ant query roles larvae-collectors    # the scallops flip: Intermediary under one practice, Mediator under another
+uv run ant refresh koi --plan               # what the multi-perspective case compiles to
 ```
 
-Open [`wiki/Home.md`](wiki/Home.md) to navigate the worked example as a hyperlinked field journal. To pull a specific fact rather than browse:
+Open [briefs/koi-guide.md](briefs/koi-guide.md) for a case with a reading guide, [briefs/scallops-network.md](briefs/scallops-network.md) for the canonical worked example, or [wiki/Home.md](wiki/Home.md) for the whole graph. Four public cases ship: **scallops** (Callon 1986, the canonical example), **hotel-keys** (Latour 1991), **koi** (a contemporary field site read from two perspectives) and **pi-learning** (a self-directed-learning network); see [briefs/case-catalog.md](briefs/case-catalog.md).
 
-```bash
-uv run ant query roles larvae-collectors   # an actant's roles, one row per Characterization
-uv run ant query flips                     # actants read as different roles by different frames
-uv run ant query show fishermen            # one record, labels resolved
-uv run ant list --kind Actant --case koi --perspective architectural
+## How it works, in one paragraph
+
+Records live under `instances/cases/<case>/perspectives/<perspective>/` as deterministic Turtle written only by the `ant` CLI. `ant verify` checks them against SHACL shapes in three tiers — structural violations break, analytical-hygiene warnings surface and can be waived with a justification, lint is advisory (**C7**: the tool guarantees structure, the ethnographer guarantees content). `ant refresh <case>` compiles the briefs a case supports; `ant wiki` regenerates the navigation; CI fails if committed artifacts differ from a fresh regeneration. The layout, the commands and the compilers are documented in [docs/toolchain.md](docs/toolchain.md).
+
+```text
+ontology/          the vocabulary + SHACL shapes (CC0)
+instances/         shared practices/agents, and one directory per case
+briefs/  wiki/     derived — never hand-edited
+src/ant_rdf/       the `ant` CLI and the compilers          tests/  docs/  adr/
 ```
-
-[AGENTS.md](AGENTS.md) is the reader's contract — a question → brief → confirming-query table and the interpretive pitfalls (roles are not types; a reading is provenance). After authoring, `uv run ant refresh <case>` regenerates every brief the case supports: its network brief(s); for a case with a grounded perspective the reader set (`briefs/<case>-guide.md` is the "start here" — synopsis, positionality ledger, glossary, OPP map, inscriptions, durability dashboard, characterization coverage, tensions); and for two or more perspectives the cross-frame views (comparison, actants across frames, same-program trace). The koi case shows the full set.
-
- The scallops case demonstrates the central observer-relativity move (see [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) C5–C7): the larvae-collectors actant is simultaneously characterized as **Intermediary** (under experimental-oceanography practice, invariant: anchoring-substrate-as-designed) AND as **Mediator** (under seasonal-fishing-labor practice, invariant: rhythms-of-bay-work), without OWL inconsistency.
-
-## How the pieces fit (MVC)
-
-| Role | Lives in | What it does |
-|---|---|---|
-| **Model** | `ontology/material-semiotics-core.ttl` + alignments + SHACL shapes | The vocabulary itself: classes, properties, constraints, founding-text citations. |
-| **Controller** | `src/ant_rdf/` (the `ant` CLI) | Authors validated RDF records via flag-driven, interactive (catechism), or ingest (notes/upload) paths. |
-| **View** | `briefs/`, `wiki/`, generated by `src/ant_rdf/compilers/` and `src/ant_rdf/wiki.py` | Deterministic Markdown briefs and the wiki for human review and navigation. |
-
-The same CLI surface is reachable by humans and by LLMs (via the Claude skill in `.claude/skills/`). The CLI guarantees **structural correctness** (SHACL Tier-1, cross-reference resolution, deterministic Turtle); the ethnographer is responsible for **content correctness** — that the triples correspond to what was observed in the field. See [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) C7.
-
-## Authoring paths (plural ingestion, per C8)
-
-You can land records in the graph through any of these paths. All four produce structurally correct RDF and pass the same SHACL bar; the conversational catechism is *one* path, not *the* path.
-
-```bash
-# 1. Flag-driven (LLM-callable and expert-direct)
-uv run ant new-record actant \
-    --case scallops --iri https://w3id.org/ant/cases/scallops/actant/x \
-    --label "X" --description "..." \
-    --participates-in https://w3id.org/ant/cases/scallops/network
-
-# 2. Conversational catechism (interactive prompts)
-uv run ant new-record interactive actant
-
-# 3. Note import (existing field notes with YAML frontmatter)
-uv run ant ingest notes path/to/notes.md --case scallops --dry-run
-# inspect /tmp/ant-review-notes.md, then commit:
-uv run ant ingest notes path/to/notes.md --case scallops --commit
-
-# 4. Raw upload (PDFs, images, audio — registered as ant:Inscription)
-uv run ant ingest upload path/to/paper.pdf --case scallops
-```
-
-## Verify, waive, compile
-
-```bash
-uv run ant verify                       # SHACL + cross-refs, tri-severity
-uv run ant verify --strict              # warnings become breaks
-uv run ant verify --lint                # add Tier-3 ontology lint
-uv run ant verify --no-waivers          # audit raw warnings
-
-# Tier-2 warnings can be acknowledged with justification (see ADR-0000 R9b).
-# Tier-1 violations are never waivable — fix the data.
-uv run ant waive add \
-    https://w3id.org/ant#TranslationCompletenessShape \
-    https://w3id.org/ant/cases/scallops/translation/main \
-    --by https://example.org/ethnographer/me \
-    --justification "Translation failed at interessement (winter 1985)."
-
-uv run ant compile instances/cases/scallops/perspectives/_default/networks.ttl \
-    NetworkBrief -o briefs/scallops-network.md
-```
-
-## Repository layout
-
-```
-ant-rdf/
-├── ontology/
-│   ├── material-semiotics-core.ttl       # the vocabulary
-│   ├── ant-prov-align.ttl                # optional PROV-O alignment
-│   └── shapes/                            # SHACL shapes (Tier 1/2/3)
-├── instances/
-│   ├── shared/                            # reusable practices, actants
-│   ├── waivers/                           # ant:ConstraintWaiver records
-│   └── cases/<case-slug>/
-│       ├── perspectives/                  # quad-ready for v2 named graphs
-│       │   └── <perspective-slug>/
-│       │       ├── _perspective.ttl
-│       │       ├── networks.ttl
-│       │       ├── actants.ttl
-│       │       ├── translations.ttl
-│       │       └── characterizations.ttl
-│       └── uploads/                       # raw materials (perspective-agnostic)
-├── briefs/                                # compiled Markdown (ant refresh <case>)
-├── wiki/                                  # generated hyperlinked navigation (ant wiki)
-├── src/ant_rdf/                           # Python package + CLI
-├── tests/                                 # pytest suite (synthetic fixtures + public cases)
-├── adr/                                   # foundational decisions
-├── AGENTS.md                              # reader's contract (navigation, interpretation)
-└── CLAUDE.md                              # author's contract (the LLM workflow)
-```
-
-## Documents to read in order
-
-1. [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) — C1–C9, the philosophical commitments
-2. [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) — resolved design decisions (R1–R10); then [ADR-0001](adr/0001-perspective-isolation-named-graphs.md)–[0007](adr/0007-inscriptions-can-be-actants-manifests-as.md) for the multi-perspective vocabulary (cross-frame links, translation status/durability, the shared actant home, `authoredUnder`, `FluidObject`, the invariance axis, `manifestsAs`)
-3. [FUTURE_WORK.md](FUTURE_WORK.md) — what v1 left out of scope, how features arrive, and the three-tier training/testing/novel validation regime (with the machine-mediation comparison-study programme)
-4. [CLAUDE.md](CLAUDE.md) — the LLM workflow contract for *authoring* (how Claude Code should write to this repo); [AGENTS.md](AGENTS.md) is its companion for *reading*
-5. [wiki/Home.md](wiki/Home.md) — the navigable wiki (each Concept page is a glossary entry with founding-text citations)
 
 ## Citation
 
-If you use this vocabulary in academic work, please cite:
-
-> Zargham, M. and Rennie, E. (2026). *ant-rdf: A material-semiotics vocabulary for actor-network analysis.* https://github.com/mzargham/ant-rdf
-
-And the founding texts the vocabulary synthesizes — Callon (1986), Latour (1991, 2005), Law (1986, 1994, 2008), Mol (2002). Every term in the ontology carries a `dcterms:source` pointing to its founding text.
+If you use `ant-rdf` in published work, cite this repository and the founding texts the vocabulary inherits from (every term carries a `dcterms:source`; see the wiki's concept pages). The theoretical frame — Artificial Organisational Intelligence and "building the loop" — is developed in Rennie et al. (2026), [DOI:10.1111/epic.70009](https://doi.org/10.1111/epic.70009).
 
 ## Licensing
 
-Three artifact classes, three licenses — see [LICENSE.md](LICENSE.md):
-
-- **Code** (`src/`, tests, CI): Apache-2.0
-- **Ontology** (`ontology/*.ttl`): CC0-1.0
-- **Documentation** (`README.md`, `wiki/`, briefs, ADR): CC-BY-4.0
+Tri-licensed by artifact class: **code** Apache-2.0, **ontology** CC0-1.0, **documentation, briefs, wiki and case data** CC-BY-4.0. See [LICENSE.md](LICENSE.md).
