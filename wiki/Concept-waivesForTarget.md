@@ -12,5 +12,5 @@ The IRI of the focus node the waiver applies to.
 
 ## Source
 
-Synthesized per plan §4.6.
+Synthesized for this vocabulary; ADR-0000 R9b (tri-severity waivers).
 

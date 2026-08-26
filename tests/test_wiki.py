@@ -55,7 +55,7 @@ def test_link_integrity(tmp_path: Path) -> None:
     for md in sorted(files):
         text = (tmp_path / md).read_text(encoding="utf-8")
         for tgt in _internal_targets(text):
-            if f"{tgt}.md" not in files and tgt not in files:
+            if not tgt or (f"{tgt}.md" not in files and tgt not in files):
                 dangling.append((md, tgt))
 
     assert not dangling, f"dangling internal wiki links: {dangling}"

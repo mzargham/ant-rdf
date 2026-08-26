@@ -8,7 +8,7 @@
 # material-semiotics-core.ttl. Consumers who want philosophical cleanliness
 # (no foreign upper-vocab commitments) can import core alone.
 #
-# DESIGN NOTE — per R2 / plan §4.3: This file does NOT subclass ant:Actant
+# DESIGN NOTE — per R2 (ADR-0000): This file does NOT subclass ant:Actant
 # under prov:Agent (or prov:Influencer). Whether an actant is treated as a
 # responsibility-bearing prov:Agent or a lighter prov:Influencer is itself
 # observer-relative and recorded via ant:Characterization (see core file).
@@ -29,7 +29,7 @@
 <https://w3id.org/ant/prov-align>
     a owl:Ontology ;
     rdfs:label "ant-rdf optional PROV-O alignment"@en ;
-    dcterms:description "Optional alignment of ant: vocabulary terms to W3C PROV-O. Consumers import this in addition to material-semiotics-core.ttl when they want prov:Activity / prov:Entity / prov:Plan / prov:Role typing on translation moments and related concepts. Per §4.3, this file deliberately does NOT subclass ant:Actant under prov:Agent or prov:Influencer — those typings are perspective-relative and assigned via ant:Characterization."@en ;
+    dcterms:description "Optional alignment of ant: vocabulary terms to W3C PROV-O. Consumers import this in addition to material-semiotics-core.ttl when they want prov:Activity / prov:Entity / prov:Plan / prov:Role typing on translation moments and related concepts. Per ADR-0000 R2, this file deliberately does NOT subclass ant:Actant under prov:Agent or prov:Influencer — those typings are perspective-relative and assigned via ant:Characterization."@en ;
     dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
     owl:versionInfo "0.1.0-draft" ;
     owl:imports <https://w3id.org/ant> ;
@@ -97,7 +97,7 @@ ant:hasProgram rdfs:subPropertyOf prov:hadPlan .
 # =============================================================================
 #
 # - ant:Actant ↛ prov:Agent / prov:Influencer:
-#   Per R2/§4.3 these typings are perspective-relative; they are assigned via
+#   Per R2 these typings are perspective-relative; they are assigned via
 #   ant:Characterization with ant:assignsRole ant:ProvAgent or ant:ProvInfluencer.
 #   A global subClassOf would smuggle one observer-frame into the ontology.
 #
@@ -112,5 +112,5 @@ ant:hasProgram rdfs:subPropertyOf prov:hadPlan .
 #
 # - ant:Characterization ↛ prov:Influence or qualified-influence pattern:
 #   Tempting (the shapes are similar). Deferred to v1.1 because the dual
-#   prov:Agent/prov:Influencer characterization mechanism (§4.3) is novel and
+#   prov:Agent/prov:Influencer characterization mechanism (R2) is novel and
 #   not yet stable enough to anchor in PROV's qualified pattern.

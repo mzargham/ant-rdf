@@ -12,5 +12,5 @@ An actant participates in an analyst-named network (act-4 documentation membersh
 
 ## Source
 
-Synthesized per §4.7.
+Synthesized for this vocabulary; ADR-0000 R5 (the four acts).
 

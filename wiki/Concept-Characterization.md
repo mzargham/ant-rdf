@@ -8,11 +8,11 @@
 
 ## Definition
 
-A reified n-ary relation that assigns a role to a target actant or interaction *within a context*: a network, an authoring practice, and (where relevant) the invariance criterion being tracked. The mechanism that lets the same actant be simultaneously characterized as Mediator under one practice and Intermediary under another without OWL inconsistency. Also used for the dual PROV-Agent / PROV-Influencer alignment (§4.3) and for ethnographer-asserted OPP assignment (§4.1.2).
+A reified n-ary relation that assigns a role to a target actant or interaction *within a context*: a network, an authoring practice, and (where relevant) the invariance criterion being tracked. The mechanism that lets the same actant be simultaneously characterized as Mediator under one practice and Intermediary under another without OWL inconsistency. Also used for the dual PROV-Agent / PROV-Influencer alignment (ADR-0000 R2) and for ethnographer-asserted OPP assignment (ADR-0000 R6).
 
 ## Source
 
-Synthesized per plan §4.1.1, post-Law 2008.
+Synthesized for this vocabulary, post-Law 2008; ADR-0000 R3 (observer-relative roles via Characterization).
 
 ## Examples (records typed with this term)
 

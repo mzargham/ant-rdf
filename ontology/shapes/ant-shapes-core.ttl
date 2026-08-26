@@ -8,7 +8,7 @@
 # operate. Tier-1 violations are NEVER waivable — `ant verify` rejects any
 # ant:ConstraintWaiver targeting a Tier-1 shape.
 #
-# Per plan §4.6: keep deliberately minimal. Analytical openness requires
+# Per R9b (ADR-0000): keep deliberately minimal. Analytical openness requires
 # SHACL silence on places where ANT's commitments resist pre-decision.
 
 @prefix ant:     <https://w3id.org/ant#> .

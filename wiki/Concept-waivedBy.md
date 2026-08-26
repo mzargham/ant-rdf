@@ -12,5 +12,5 @@ The agent (analyst, team) accountable for this waiver. No co-sign required (per 
 
 ## Source
 
-Synthesized per plan §4.6.
+Synthesized for this vocabulary; ADR-0000 R9b (tri-severity waivers).
 

@@ -1,15 +1,19 @@
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
 # Licensing
 
 This repository contains three classes of artifact, each licensed
-appropriately. The split is deliberate — every file in the repo carries an
-SPDX-License-Identifier header naming which clause applies. When in doubt,
-check the header on the specific file.
+appropriately. The split is deliberate — every *source* file carries an
+SPDX-License-Identifier header naming which clause applies; generated
+artifacts and case data inherit the license of their directory per the
+table below. When in doubt, check the header on the specific file, then
+this table.
 
 | Artifact class | License | File |
 |---|---|---|
 | **Code** (Python in `src/` and `tests/`, GitHub Actions workflows, scripts) | **Apache License 2.0** | [LICENSE-CODE](LICENSE-CODE) |
 | **Ontology** (`ontology/*.ttl`, SHACL shapes, alignment modules) | **Creative Commons Zero v1.0 Universal (CC0-1.0)** | [LICENSE-ONTOLOGY](LICENSE-ONTOLOGY) |
-| **Documentation & briefs** (`README.md`, `CLAUDE.md`, `ONTOLOGICAL_COMMITMENTS.md`, `adr/`, `briefs/`, `wiki/`, narrative content) | **Creative Commons Attribution 4.0 International (CC-BY-4.0)** | [LICENSE-DOCS](LICENSE-DOCS) |
+| **Documentation, briefs, wiki and case data** (`README.md`, `CLAUDE.md`, `AGENTS.md`, `ONTOLOGICAL_COMMITMENTS.md`, `FUTURE_WORK.md`, `abstract.md`, `docs/`, `adr/`, `.claude/skills/`, the generated `briefs/` and `wiki/`, and the ethnographic case records under `instances/`) | **Creative Commons Attribution 4.0 International (CC-BY-4.0)** | [LICENSE-DOCS](LICENSE-DOCS) |
 
 ## Why three licenses?
 
@@ -24,17 +28,21 @@ check the header on the specific file.
 
 ## SPDX headers
 
-Every file in this repo carries an SPDX-License-Identifier comment so
+Every source file carries an SPDX-License-Identifier comment so
 license-scanning tools and humans can quickly see which terms apply
 without consulting this file:
 
 ```
-# SPDX-License-Identifier: Apache-2.0          # Python files
-# SPDX-License-Identifier: CC0-1.0             # Turtle ontology / shapes
-<!-- SPDX-License-Identifier: CC-BY-4.0 -->    # Markdown (where applicable)
+# SPDX-License-Identifier: Apache-2.0          # Python files, workflows, tools
+# SPDX-License-Identifier: CC0-1.0             # ontology/*.ttl and ontology/shapes/*.ttl
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->    # hand-written Markdown
 ```
 
-If you find a file without a header, please flag it as an issue or PR.
+Generated Markdown (`briefs/`, `wiki/`) and the instance Turtle under
+`instances/` (written only by the `ant` CLI) carry no per-file header; they
+are CC-BY-4.0 by the table above. The `pyproject.toml` license field names
+Apache-2.0 alone because the distributed wheel contains only `src/ant_rdf`.
+If you find a *source* file without a header, please flag it.
 
 ## Contributions
 

@@ -1,91 +1,74 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# CLAUDE.md — LLM workflow contract for ant-rdf
+# CLAUDE.md — LLM workflow contract for ant-rdf (authoring)
 
-This file tells Claude (or any LLM agent) how to interact with this repository. It is the working contract between the model, the ethnographer, and the discipline of the docs-as-code paradigm. The repo's expectation: **assertions about the field come from humans; structural correctness comes from the CLI**.
+This file tells Claude (or any LLM agent) how to **write to** this repository. It is the working contract between the model, the ethnographer, and the docs-as-code discipline: **assertions about the field come from humans; structural correctness comes from the CLI.** Its companion [AGENTS.md](AGENTS.md) owns **reading** — routing a question to the brief that answers it and interpreting without misreading. The human-facing version of the practice is [docs/facilitation.md](docs/facilitation.md).
 
-Read [README.md](README.md) first for the architecture, [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) for the philosophical premises (C1–C9), and [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) for the foundational decisions (R1–R10) before authoring or modifying records.
+Read [docs/primer.md](docs/primer.md) for the concepts, [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) for the premises (C1–C9), and [adr/README.md](adr/README.md) for the decisions (R1–R10 with R8a/R9a/R9b, and ADR-0001…0007) before authoring or modifying records.
 
 ## The golden path
 
-```
-natural-language description from ethnographer
-  ↓ (Claude skill: ant-mgmt or ant-ingest)
-ant CLI invocation (flag-driven or interactive)
+```text
+natural-language description from the ethnographer
+  ↓ (skill: ant-mgmt, or ant-ingest for notes/uploads)
+ant CLI invocation (new-record / edit-record / ingest)
   ↓ (serialize.py + new_record.py)
-deterministic Turtle in instances/cases/<case>/perspectives/<slug>/
+deterministic Turtle in instances/cases/<case>/…
   ↓ (ant verify — SHACL tri-severity + cross-refs)
-ant compile → Markdown brief in briefs/
-ant wiki    → hyperlinked navigation in wiki/
-  ↓ (human reviews the rendered artifacts)
-ethnographer either accepts (commit) or requests revision
-  ↓ (Claude re-invokes the CLI; never hand-edits the TTL)
+ant refresh <case> → briefs/ ;  ant wiki → wiki/
+  ↓ (the ethnographer reviews the rendered artifacts)
+accept (commit records + regenerated artifacts together) or revise
+  ↓ (Claude re-invokes the CLI; never hand-edits TTL or a brief)
 ```
 
-**TTL is never hand-edited.** Every change goes through the CLI. The determinism invariant (same model → same TTL) is what lets us trust round-trips.
+**TTL, briefs and wiki are never hand-edited.** Every change goes through the CLI; the determinism invariant (same graph → same bytes) is what lets us trust round-trips, and `.claude/settings.json` denies direct edits to `instances/**/*.ttl`, `briefs/**`, `wiki/**`.
 
 ## What Claude is for, what Claude is not for
 
-**Claude is for** — translating the ethnographer's plain-language description of a case (or notes file) into the precise CLI invocations that produce structurally correct RDF. Walking the catechism. Asking clarifying questions when the ethnographer's description doesn't determine a specific field. Generating dry-run review documents and waiting for confirmation.
+**For** — translating the ethnographer's plain-language description of a case (or notes file) into the precise CLI invocations that produce structurally correct RDF; walking the catechism; asking the clarifying question when a description does not determine a field; running the dry-run and waiting for confirmation.
 
-**Claude is not for** — making ethnographic claims on the ethnographer's behalf. Auto-extracting actants from text without confirmation. Bypassing dry-run for `ant ingest notes`. Hand-editing TTL files. Choosing perspectives or invariances without explicit human input (these are observer-frame decisions, not technical ones).
+**Not for** — making ethnographic claims on the ethnographer's behalf; auto-extracting actants from prose; bypassing the dry-run; hand-editing TTL; choosing perspectives, practices, invariances, statuses, passages or waiver justifications without explicit human input (these are observer-frame decisions, not technical ones).
+
+## Skills
+
+Each is a `.claude/skills/<name>/SKILL.md` and carries its own procedure and critical rules:
+
+- **ant-mgmt** — the conversational catechism (prerequisites → network → actants → moments → translation → inscriptions → characterizations → contested), the definition-first routine for uncertain roles, the Tier-2 fix-or-waive conversation, the connectivity triage.
+- **ant-ingest** — notes (`ant ingest notes`, format in [docs/notes-format.md](docs/notes-format.md)) and uploads; always dry-run first.
+- **ant-gvrn** — ontology and shape changes; the atomicity rule; what to refuse.
+- **ant-refresh**, **ant-read**, **ant-query** — the reading side (see AGENTS.md).
 
 ## Authoring flow for a new case
 
-1. **Ask the ethnographer:**
-   - What is the case slug (kebab-case)?
-   - What's the IRI base (typically `https://w3id.org/ant/cases/<slug>/`)?
-   - Are we starting from a blank conversation, existing notes, or raw materials? *(Per C8 — offer the off-ramp.)*
+1. Ask the case slug, the IRI base (`https://w3id.org/ant/cases/<slug>/`), and — **per C8, offer the off-ramp** — whether we start from conversation, existing notes, or raw materials.
+2. Author the reading's provenance first: agent → practice → perspective (`ant new-record agent / practice / perspective --grounded-in …`). A translation must be `--authored-under` a perspective (ADR-0004).
+3. Walk the catechism (ant-mgmt) or the ingest path (ant-ingest).
+4. `ant verify`: Tier-1 → fix the data; Tier-2 → the ethnographer fixes or waives with their own justification (never invent one); connectivity warnings → the ordered triage, never straight to a waiver.
+5. `ant refresh <case> --wiki`; show the ethnographer the brief; take revisions in their words; loop.
 
-2. **If conversational** — walk the [ant-mgmt skill](.claude/skills/ant-mgmt.md) catechism:
-   - Network (label, narrative description)
-   - Actants (resist asking "human or non-human?" — that pre-categorizes)
-   - Translations + their moments (which of the four are visible? If fewer than four, plan a waiver naming the moment of failure)
-   - Inscriptions / immutable mobiles
-   - From whose practice are you describing this? (optional but encouraged — captures the observer-frame for any Characterization)
-   - Where is the configuration holding (Material / Strategic / Discursive durability)?
-   - What's contested or unraveling?
+## Critical rules (not negotiable)
 
-3. **If note-import** — switch to the [ant-ingest skill](.claude/skills/ant-ingest.md):
-   - Help structure the ethnographer's existing notes into the YAML-frontmatter format `ant ingest notes` expects
-   - Run dry-run first; show the generated `/tmp/ant-review-*.md`
-   - Walk through each candidate; revise the notes file as needed
-   - Commit only after the ethnographer confirms
+- **C7.** The CLI guarantees structure; the ethnographer guarantees content. Claude translates; it does not arbitrate field truth.
+- **R3.** Never `:x a ant:Mediator`. Roles go through `ant:Characterization` with explicit practice and invariance; if the ethnographer declines to specify a practice, record without it and let Tier-2 warn — the warning is the right outcome.
+- **R6.** OPP is assigned via a Characterization with `assigns_role ant:ObligatoryPassagePoint`, never as a type.
+- **ADR-0004.** Every translation is `--authored-under` a perspective.
+- **C8.** Offer the ingestion off-ramp at every step.
+- **R9.** A new ontology term gets `dcterms:source`, no exceptions; ontology edits require the maintainer's explicit confirmation.
+- No `--no-verify` commits, no force-pushes, no closing issues unless asked.
 
-4. **If upload** — register each raw material via `ant ingest upload`, then circle back to characterization (which is what the ethnographer actually has interpretive claims about — the upload alone is perspective-agnostic).
+## Permissions
 
-5. **After the records land:**
-   - Run `ant verify`
-   - Tier-1 violations: fix the data (not the shape, unless governance has decided otherwise)
-   - Tier-2 warnings: either fix the data or run `ant waive add` with a justification the ethnographer explicitly supplies — never invent justifications
-   - `ant refresh <case>` regenerates every brief the case supports (the network brief(s); for a case with a grounded perspective also the reader set — guide, synopsis, positionality, glossary, OPP map, inscriptions, durability, coverage, tensions; for two or more frames also comparison, actants-across-frames, same-program-trace); `ant wiki` to regenerate navigation
-   - Show the ethnographer the brief; ask for revision in their words; loop
+`.claude/settings.json` is the canonical policy; in brief:
 
-## Critical rules (these are not negotiable)
-
-- **C7 (verification vs validation).** The CLI guarantees structural correctness. The ethnographer guarantees content correctness. Claude is the translator between natural language and CLI invocations — it does not arbitrate field truth.
-- **R3 (Mediator/Intermediary observer-relative).** Never write `:x a ant:Mediator` as a direct typing on an actant — always go through `ant:Characterization` with explicit `per_practice` and `invariance_criterion`. If the ethnographer hasn't specified a practice, ask. If they decline to specify, record the Characterization without `per_practice` and let Tier-2 warn (the warning is the right outcome).
-- **R6 (OPP as emergent attribute).** OPP is assigned via `ant:Characterization` with `assigns_role https://w3id.org/ant#ObligatoryPassagePoint`. Never as `:x a ant:ObligatoryPassagePoint` directly.
-- **C8 (plural ingestion).** Offer the ingestion off-ramp at every step. Don't assume conversational is the right path.
-- **R9 (provenance per term).** When adding new ontology terms, every term gets `dcterms:source`. No exceptions.
-- **No `--no-verify` git commits.** No `git push --force`. No `gh issue close` unless the user explicitly requests. Standard Claude Code safety rules.
-
-## Reading vs authoring
-
-This file owns **authoring** (writing to the graph). [AGENTS.md](AGENTS.md) owns **reading** — how to route a question to the brief that answers it, the interpretive pitfalls (roles are not types; a reading is provenance), and the read-only `ant query` / `ant list` surface. Reach for AGENTS.md and the `ant-read` / `ant-query` skills when the ethnographer is asking *what the graph says*; reach for this file and `ant-mgmt` / `ant-ingest` when they want to *change* it. After any change, `ant refresh <case>` regenerates the briefs (the `ant-refresh` skill).
-
-## Allowed commands
-
-See [.claude/settings.json](.claude/settings.json) for the canonical allowlist. In brief:
-
-- **Always allowed:** `ant verify`, `ant compile`, `ant refresh`, `ant list`, `ant query *`, `ant wiki`, `ant ontology validate`, `ant new-record *`, `ant edit-record *` (set-replaces only the fields you pass; byte-identical elsewhere), `ant ingest notes --dry-run`, `ant analyze list-methods`, `ant waive list`, `uv run pytest`, `uv run ruff`, `uv sync`, git read-only commands, `gh` read-only commands.
-- **Allowed but use with care:** `ant ingest * --commit` (writes triples — but reversible via git), `ant waive add` (writes a waiver — should reflect an explicit ethnographer-supplied justification).
-- **Require explicit confirmation:** `ant remove-record` (deletes a record; refuses while other records reference it unless `--force`), `git commit`, `git push`, `gh pr create`, file deletions in `instances/`, ontology edits in `ontology/`.
-- **Stubs, not features:** `ant scope new` exists but raises `NotImplementedError` (v1.1); `ant ingest` has only `notes` and `upload`. Don't promise the ethnographer a command that isn't there.
+- **Run freely:** the read-only and derived-artifact commands (`ant verify / compile / refresh / list / query / wiki / ontology validate`, `new-record *`, `edit-record *`, `ingest notes --dry-run`, `waive list`, `pytest`, `ruff`), read-only git and `gh`.
+- **Use with care:** `ant ingest … --commit` (only after the ethnographer confirms the review document); `ant waive add` (only with the ethnographer's own justification).
+- **Ask first:** `ant remove-record`, `git commit`, `git push`, `gh pr create`, deleting anything under `instances/`, editing `ontology/`.
+- **Denied:** direct `Edit`/`Write` on `instances/**/*.ttl`, `briefs/**`, `wiki/**`; destructive git.
+- **Stubs:** `ant scope new` and `ant analyze list-methods` print a message and do nothing; `ant ingest` has only `notes` and `upload`. Do not promise the ethnographer a command that isn't there.
 
 ## Verify
 
-CI runs exactly these; run them locally before claiming anything is done:
+CI runs exactly these (`verify.yml` the first four, `compile.yml` the rest); run them locally before claiming anything is done:
 
 ```bash
 uv run ant ontology validate
@@ -99,12 +82,10 @@ git diff --quiet briefs/ wiki/       # determinism gate: regenerated == committe
 
 If the last line fails, the briefs or wiki are stale: commit the regenerated artifacts alongside the change that moved them (never hand-edit them back).
 
-## When the ethnographer asks a question Claude can't answer
+## When the ethnographer asks something Claude can't answer
 
-Reach for the canonical case in [instances/cases/scallops/](instances/cases/scallops/) first — the Callon 1986 scallops example demonstrates every v1 commitment. Then ADR-0000, then ONTOLOGICAL_COMMITMENTS.md. If the question is about a term, the wiki concept page (`wiki/Concept-<term>.md`) carries the founding-text citation.
+Reach for the worked examples first — [docs/primer.md](docs/primer.md) reads the scallops case record by record (observer-relativity, R3); the koi case is the multi-perspective example. Then the concept page (`wiki/Concept-<Term>.md`, which carries the founding-text citation), then ADR-0000 and ONTOLOGICAL_COMMITMENTS.md. When in doubt about a design choice, name the relevant R-number or ADR and ask the ethnographer whether it applies; don't invent a new resolution.
 
-When in doubt about a design choice, name the relevant R-number (R1–R10) from ADR-0000 and ask the ethnographer whether the current resolution applies to their situation. Don't invent new resolutions.
+## Memory
 
-## Memory and context
-
-Claude's persistent memory should NOT include ethnographic claims about cases — those live in the RDF and the wiki, where the ethnographer owns them. Memory can include: this repo's paradigm (already in CLAUDE.md), the ethnographer's preferences for catechism style, recurring case-slug conventions the team uses. Memory should *not* include: which actants exist in which case (read the graph), which roles a Characterization assigns (read the Characterization), or what someone said about a specific translation (that's a field claim).
+Claude's persistent memory must not hold ethnographic claims about cases — those live in the RDF and the briefs, where the ethnographer owns them. Memory may hold this repo's paradigm, the ethnographer's preferences for catechism style, and slug conventions; not which actants exist in which case, which roles a Characterization assigns, or what someone said about a translation.

@@ -76,8 +76,6 @@ dmypy.json
 .idea/
 # .vscode/
 
-# Temporary review documents from `ant ingest` dry-runs
-/tmp/ant-review-*.md
 
 # macOS
 .DS_Store

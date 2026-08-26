@@ -12,7 +12,6 @@
       "Bash(uv run ant ingest notes:* --dry-run*)",
       "Bash(uv run ant ingest notes:* --commit*)",
       "Bash(uv run ant ingest upload*)",
-      "Bash(uv run ant scope*)",
       "Bash(uv run ant query*)",
       "Bash(uv run ant analyze*)",
       "Bash(uv run ant waive list*)",
@@ -44,13 +43,7 @@
       "Bash(head*)",
       "Bash(tail*)",
       "Bash(wc*)",
-      "Read(*)",
-      "Edit(briefs/**)",
-      "Edit(wiki/**)",
-      "Write(briefs/**)",
-      "Write(wiki/**)",
-      "Edit(instances/**/*.ttl)",
-      "Write(instances/**/*.ttl)"
+      "Read(*)"
     ],
     "deny": [
       "Bash(git push --force*)",
@@ -66,7 +59,13 @@
       "Bash(gh issue edit*)",
       "Bash(gh issue comment*)",
       "Bash(rm -rf*)",
-      "Bash(rm -fr*)"
+      "Bash(rm -fr*)",
+      "Edit(instances/**/*.ttl)",
+      "Write(instances/**/*.ttl)",
+      "Edit(briefs/**)",
+      "Write(briefs/**)",
+      "Edit(wiki/**)",
+      "Write(wiki/**)"
     ]
   }
 }

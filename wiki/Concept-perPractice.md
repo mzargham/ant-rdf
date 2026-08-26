@@ -12,5 +12,5 @@ The practice (observer-frame) under which a Characterization is asserted. Makes 
 
 ## Source
 
-Synthesized per plan §4.1.1; Law, J. (2008); Mol, A. (2002).
+Synthesized for this vocabulary (ADR-0000 R3); Law, J. (2008); Mol, A. (2002).
 

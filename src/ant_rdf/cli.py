@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """``ant`` CLI — Typer app exposing record authoring, validation, compilation, and wiki.
 
-Subcommands (per plan §5):
+Subcommands:
 
 * ``ant new-record <kind> ...``    — create a record (flag-driven)
 * ``ant new-record interactive``    — walk-me-through (conversational)
@@ -15,7 +15,7 @@ Subcommands (per plan §5):
 * ``ant list``                      — census of records (scopeable by case/perspective)
 * ``ant query <subcommand>``        — read-only navigation (roles, flips, show, …)
 * ``ant ontology validate``         — governance helper
-* ``ant scope new``                 — declare a scope (act 1, §4.7; v1.1 stub)
+* ``ant scope new``                 — declare a scope (act 1 of the four acts, ADR-0000 R5; stub)
 * ``ant analyze list-methods``      — analytical methods (act 3 stub, v2)
 * ``ant wiki``                      — generate wiki pages
 
@@ -30,6 +30,7 @@ import typer
 from rich.console import Console
 
 from ant_rdf import __version__
+from ant_rdf.compilers import REGISTRY as _KINDS
 
 app = typer.Typer(
     name="ant",
@@ -45,11 +46,11 @@ console = Console()
 
 new_record_app = typer.Typer(help="Create a record (flag-driven or interactive).")
 edit_record_app = typer.Typer(help="Mutate an existing record.")
-ingest_app = typer.Typer(help="Non-conversational ingestion: notes, transcripts, uploads.")
+ingest_app = typer.Typer(help="Non-conversational ingestion: YAML-frontmatter notes and raw-material uploads.")
 ontology_app = typer.Typer(help="Ontology governance helpers.")
 waive_app = typer.Typer(help="Record or audit Tier-2 SHACL waivers.")
-scope_app = typer.Typer(help="Scope-selection (act 1 of the four acts; §4.7).")
-analyze_app = typer.Typer(help="Analysis (act 3 of the four acts; v1 stub).")
+scope_app = typer.Typer(help="Scope selection (act 1 of the four acts, ADR-0000 R5). Stub — not implemented.")
+analyze_app = typer.Typer(help="Analysis (act 3 of the four acts, ADR-0000 R5). Stub — no methods yet.")
 query_app = typer.Typer(
     help="Read-only graph queries for navigating the field (see the ant-query skill)."
 )
@@ -82,7 +83,7 @@ def verify(
     lint: bool = typer.Option(False, "--lint", help="Also report Tier-3 advisory shapes."),
     no_waivers: bool = typer.Option(False, "--no-waivers", help="Ignore waivers; raw warnings."),
 ) -> None:
-    """SHACL + cross-reference validation with tri-severity output (§4.6)."""
+    """SHACL + cross-reference validation with tri-severity output (C7 / R9b)."""
     from ant_rdf.verify import run_verify
 
     code = run_verify(graph=graph, strict=strict, lint=lint, no_waivers=no_waivers)
@@ -92,8 +93,8 @@ def verify(
 @app.command()
 def compile(
     file: str = typer.Argument(..., help="Source TTL file (or case slug)."),
-    document_kind: str = typer.Argument(..., help="DocumentKind (e.g., NetworkBrief)."),
-    output: str | None = typer.Option(None, "-o", "--output", help="Output Markdown path."),
+    document_kind: str = typer.Argument(..., help="DocumentKind — one of: " + ", ".join(sorted(_KINDS)) + "."),
+    output: str | None = typer.Option(None, "-o", "--output", help="Output Markdown path (omit to print to stdout). CaseCatalog always writes to briefs/case-catalog.md."),
     perspective: str | None = typer.Option(
         None, "--perspective", help="Render from a specific perspective (default: merge-all)."
     ),
@@ -132,11 +133,16 @@ def refresh(
     case: str = typer.Argument(..., help="Case slug whose brief set to regenerate (e.g. 'koi')."),
     wiki: bool = typer.Option(False, "--wiki", help="Also regenerate the wiki/."),
     verify: bool = typer.Option(False, "--verify", help="Also run `ant verify` at the end."),
+    plan: bool = typer.Option(False, "--plan", help="Print what would be written and exit (no files touched)."),
 ) -> None:
     """Regenerate a case's whole canonical brief set (one command instead of
     one `ant compile` per brief). Briefs are derived — never hand-edit them."""
-    from ant_rdf.compilers import refresh_case
+    from ant_rdf.compilers import refresh_case, refresh_plan
 
+    if plan:
+        for kind, output, persp in refresh_plan(case):
+            console.print(f"  {kind:<26} → {output}" + (f"  (--perspective {persp})" if persp else ""))
+        return
     refresh_case(case, do_wiki=wiki, do_verify=verify)
 
 
@@ -299,7 +305,7 @@ def new_network(
     from_construct: str | None = typer.Option(None, "--from-construct"),
     out: str | None = typer.Option(None, "--out"),
 ) -> None:
-    """Create an ant:Network record (act-4: documentation of an analyst-named summary)."""
+    """Create an ant:Network record (an analyst-named summary; act 4 of the four acts, ADR-0000 R5)."""
     from ant_rdf.new_record import create_network
 
     create_network(
@@ -322,7 +328,7 @@ def new_actant(
     draws_on: list[str] = typer.Option([], "--draws-on", help="Inscription IRIs this actant consumes / builds on (ant:drawsOn)."),
     manifests_as: list[str] = typer.Option([], "--manifests-as", help="Inscription IRIs this actant is also present as (ant:manifestsAs; C9 / ADR-0007)."),
     has_program: list[str] = typer.Option([], "--has-program", help="ProgramOfAction IRIs this actant carries (ant:hasProgram — a program is never standalone)."),
-    enrols: list[str] = typer.Option([], "--enrols", help="Actant IRIs this actant enrols (ant:enrols, binary v1 form; FUTURE_WORK §1.5)."),
+    enrols: list[str] = typer.Option([], "--enrols", help="Actant IRIs this actant enrols (ant:enrols, binary v1 form; see FUTURE_WORK.md, reified relations)."),
     out: str | None = typer.Option(None, "--out"),
 ) -> None:
     """Create an ant:Actant record. Use --perspective _shared for a shared actant's
@@ -485,7 +491,7 @@ def new_characterization(
     perspective: str = typer.Option("_default", "--perspective"),
     description: str | None = typer.Option(None, "--description"),
 ) -> None:
-    """Create an ant:Characterization (reified context-bound role assignment; §4.1.1)."""
+    """Create an ant:Characterization (a reified, context-bound role assignment; ADR-0000 R3)."""
     from ant_rdf.new_record import create_characterization
 
     create_characterization(
@@ -921,7 +927,7 @@ def ontology_validate() -> None:
 
 
 # ---------------------------------------------------------------------------
-# scope / analyze subcommands (the four acts, §4.7)
+# scope / analyze subcommands (the four acts, ADR-0000 R5) — stubs
 # ---------------------------------------------------------------------------
 
 
@@ -932,8 +938,13 @@ def scope_new(
     perspective: list[str] = typer.Option([], "--perspective"),
     filter_: list[str] = typer.Option([], "--filter"),
 ) -> None:
-    """Declare an ant:Scope (act 1)."""
-    raise NotImplementedError("ant scope new — to be implemented in src/ant_rdf/scope.py (v1.1)")
+    """Declare an ant:Scope (act 1 of the four acts). STUB — not implemented yet."""
+    console.print(
+        "[yellow]ant scope new is a stub:[/yellow] scope selection (act 1, ADR-0000 R5) is not "
+        "implemented yet. Compile per case with `ant compile <case> <DocumentKind>` or "
+        "`ant refresh <case>`; see FUTURE_WORK.md."
+    )
+    raise typer.Exit(code=1)
 
 
 @analyze_app.command("list-methods")
