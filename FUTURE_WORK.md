@@ -134,13 +134,20 @@ When: after a real case generates enough actants that manual characterization is
 
 ### 1.8 Test suite
 
-**Out of v1 scope.** v0.1.0-draft has no `pytest` tests beyond the CI scaffold. Working v1.0 requires a test suite.
+**Partially landed.** `tests/` now exists and CI gates on it (`uv run pytest -x`, no longer soft-failed). Fixtures are synthetic (`https://w3id.org/ant/test`) or the public cases; nothing under `instances/` is written by a test.
 
-**Implementation path (immediate next correctness pass; should land before any contemporary case-study fieldwork lands).**
-- Determinism tests: same model → byte-identical Turtle (D15 invariant).
-- Round-trip tests: `new-record → verify → compile → wiki` produces stable artifacts.
-- SHACL tier tests: Tier-1 violations break; Tier-2 warnings surface; waivers suppress.
-- Ingest tests: dry-run produces expected review documents; commit produces matching triples.
+*What is covered:*
+- Determinism: same model → byte-identical Turtle regardless of insertion order; parse → re-serialize round-trips (`test_serialize_determinism.py`).
+- Compile determinism: `ant refresh <case>` reproduces the committed `briefs/` byte for byte; `ant wiki` twice is byte-identical, and every internal wiki link resolves (`test_refresh.py`, `test_wiki.py`).
+- In-place editing: `edit-record` set-replaces only the given fields, equals fresh authoring, is idempotent; `remove-record` refuses while referenced (`test_edit_record.py`).
+- Read surface: `ant query roles/flips/search/show/sparql` and `ant list --case/--perspective` scoping, including the multi-practice perspective regression (`test_query.py`, `test_list_scope.py`, `test_perspectivecomparison.py`).
+- Smoke: a minimal synthetic graph conforms to Tier-1/2 and renders (`test_core_smoke.py`).
+
+*Still open:*
+- SHACL negative controls: one test per shape proving it *fires* on the bad case, not only that good data passes.
+- Ingest tests: dry-run produces the expected review document; commit produces matching triples.
+- `mypy --strict` is configured but not gated (≈50 findings); add to CI once they are worked off.
+- Packaging: the wheel does not ship `ontology/` or `instances/`, and the loaders in `graph.py` resolve paths relative to the checkout. Downstream consumers that install `ant-rdf` as a dependency must load TTL by explicit path. Fix = package the ontology data and make loaders accept a repo root (a project-root marker such as `ant.toml`).
 
 ---
 
@@ -214,7 +221,7 @@ The methodological commitment: comparison-study reports are **co-authored** by t
 
 ## 3. How features arrive
 
-Features land in this repo when use surfaces them as needed — not before. The plan in `.claude/plans/` records what we *expected* to need; the issue tracker and the comparison-study findings will record what we *actually* need.
+Features land in this repo when use surfaces them as needed — not before. [ADR-0000](adr/0000-foundational-decisions.md) records what we *expected* to need; the issue tracker and the comparison-study findings will record what we *actually* need.
 
 Practical norms:
 

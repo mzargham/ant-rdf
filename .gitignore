@@ -78,3 +78,6 @@ dmypy.json
 
 # Temporary review documents from `ant ingest` dry-runs
 /tmp/ant-review-*.md
+
+# macOS
+.DS_Store

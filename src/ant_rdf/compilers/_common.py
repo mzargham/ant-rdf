@@ -6,7 +6,57 @@ from __future__ import annotations
 from collections.abc import Iterable
 
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import DCTERMS, RDFS
+from rdflib.namespace import DCTERMS, RDF, RDFS
+
+from ant_rdf import ANT
+
+
+def case_slug_of(iri: str) -> str | None:
+    """Extract the case slug from a ``.../cases/<slug>/...`` IRI."""
+    marker = "/cases/"
+    if marker not in iri:
+        return None
+    return iri.split(marker, 1)[1].split("/", 1)[0].split("#", 1)[0] or None
+
+
+def perspective_index(g: Graph) -> tuple[list[dict], dict[URIRef, URIRef]]:
+    """Return ``(frames, practice_to_persp)`` for a whole-case graph.
+
+    ``frames`` is a per-perspective list (sorted by IRI) of dicts with keys
+    ``iri, slug, label, practices, network``. ``practice_to_persp`` maps EVERY
+    grounding practice → its perspective IRI, so a perspective grounded in
+    several practices is matched by all of them (a characterization made
+    ``perPractice`` any of them lands in that frame). Only grounded
+    perspectives are included (the auto-created ``_default`` stub drops out).
+    """
+    frames: list[dict] = []
+    practice_to_persp: dict[URIRef, URIRef] = {}
+    persps = sorted(
+        p
+        for p in g.subjects(RDF.type, ANT.Perspective)
+        if isinstance(p, URIRef)
+        and next(iter(g.objects(p, ANT.perspectiveGroundedIn)), None) is not None
+    )
+    for p in persps:
+        practices = sorted(
+            pr for pr in g.objects(p, ANT.perspectiveGroundedIn) if isinstance(pr, URIRef)
+        )
+        for pr in practices:
+            practice_to_persp[pr] = p
+        slug = local_name(str(p))
+        network = next(
+            (
+                s
+                for s in sorted(g.subjects(RDF.type, ANT.Network))
+                if isinstance(s, URIRef) and local_name(str(s)) == slug
+            ),
+            None,
+        )
+        frames.append(
+            {"iri": p, "slug": slug, "label": label_of(g, p),
+             "practices": practices, "network": network}
+        )
+    return frames, practice_to_persp
 
 
 def slugify(iri: str) -> str:
@@ -37,6 +87,13 @@ def label_of(g: Graph, subject: URIRef) -> str:
     """rdfs:label of a subject; falls back to local_name(iri)."""
     lit = one_literal(g, subject, RDFS.label, "")
     return lit or local_name(str(subject))
+
+
+def frame_label(g: Graph, perspective: URIRef) -> str:
+    """A compact human label for a perspective, for a table's Frame column:
+    the perspective's rdfs:label trimmed at the first ' · ' (a convention for
+    long qualifying tails), falling back to the IRI slug when unlabelled."""
+    return label_of(g, perspective).split(" · ")[0].strip()
 
 
 def description_of(g: Graph, subject: URIRef) -> str:

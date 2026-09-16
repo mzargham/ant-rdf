@@ -18,10 +18,6 @@ file is re-serialized deterministically.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
-
-from rdflib import Dataset
-from rdflib.namespace import RDF
 
 from ant_rdf.graph import CASES_DIR, SHARED_DIR, new_dataset
 from ant_rdf.models import (

@@ -1,14 +1,13 @@
 # Case Catalog
 
-All ant:Network records across 4 case(s) in the loaded graph.
+4 case(s) in the loaded graph, one row each; the networks are named with their descriptions below.
 
-| Case | Network | Actants | Translations | Perspectives | Characterizations |
+| Case | Networks | Actants | Translations | Perspectives | Characterizations |
 | --- | --- | --- | --- | --- | --- |
-| hotel-keys | The hotel-keys assemblage | 7 | 1 | 1 | 4 |
-| koi | KOI as constitutive infrastructure | 14 | 2 | 3 | 13 |
-| koi | Building the loop in the field | 14 | 2 | 3 | 13 |
-| pi-learning | Continual learning across computers, services, and notebooks | 17 | 1 | 1 | 4 |
-| scallops | St Brieuc Bay scallop-farming network | 5 | 1 | 1 | 4 |
+| hotel-keys | 1 | 7 | 1 | 1 | 4 |
+| koi | 2 | 14 | 2 | 3 | 13 |
+| pi-learning | 1 | 17 | 1 | 1 | 4 |
+| scallops | 1 | 5 | 1 | 1 | 4 |
 
 
 ## hotel-keys

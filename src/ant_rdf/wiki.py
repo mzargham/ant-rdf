@@ -142,6 +142,36 @@ the ontology as a glossary.
 """
 
 
+_REPO_BASE = "https://github.com/mzargham/ant-rdf"
+_REPO_LINK_RE = re.compile(r'(\[[^\]]*\]\()((?!https?://|#)[^)\s]+)(\))')
+
+
+def _absolutize_repo_links(md: str) -> str:
+    """Rewrite abstract.md's relative link targets for life inside the wiki.
+
+    abstract.md is written at the repo root but rendered as wiki pages, so
+    its links fall into two kinds:
+
+    - ``wiki/<Page>.md`` → ``<Page>.md`` (a wiki-internal link; the wiki is
+      flat, so the prefix goes)
+    - a path that exists in the repo (``adr/…``, ``ontology/…``,
+      ``ONTOLOGICAL_COMMITMENTS.md``) → an absolute GitHub URL, so it does
+      not become a dangling wiki link
+
+    Anything else (``Home.md``, ``Concept-Actant.md``) is already a wiki
+    page name and is left alone.
+    """
+    def _repl(m: re.Match) -> str:
+        target = m.group(2)
+        if target.startswith("wiki/"):
+            return f"{m.group(1)}{target[len('wiki/'):]}{m.group(3)}"
+        if (REPO_ROOT / target).exists():
+            kind = "tree" if target.endswith("/") else "blob"
+            return f"{m.group(1)}{_REPO_BASE}/{kind}/main/{target}{m.group(3)}"
+        return m.group(0)
+    return _REPO_LINK_RE.sub(_repl, md)
+
+
 def _split_abstract() -> dict[str, str] | None:
     """Split abstract.md into federated wiki pages.
 
@@ -169,7 +199,7 @@ def _split_abstract() -> dict[str, str] | None:
             continue
         if seen_h1 or body_lines:
             body_lines.append(line)
-    body = "\n".join(body_lines).strip()
+    body = _absolutize_repo_links("\n".join(body_lines).strip())
 
     # Split by H2 markers. The text before the first H2 is the "prelude".
     sections: list[tuple[str | None, str]] = []
