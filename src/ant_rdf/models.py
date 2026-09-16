@@ -170,6 +170,29 @@ class Practice(AntModel):
     """
 
 
+class Agent(AntModel):
+    """A prov:Agent — the analyst/team that holds a perspective (ant:perspectiveHeldBy).
+
+    Perspective-agnostic shared identity (a name for an IRI that would otherwise
+    render as a bare slug); lives under instances/shared/, like Practice.
+    """
+
+
+class GlossaryTerm(AntModel):
+    """A skos:Concept — a load-bearing term the reading leans on that is NOT part
+    of the ANT ontology.
+
+    A reader aid: the concise definition (``description``) is taken faithfully from
+    a cited source (``sources``), never invented; ``used_as`` hooks it to how the
+    field site actually uses the word. Shared reference, under instances/shared/.
+    """
+
+    acronym: str | None = None  # skos:altLabel
+    used_as: str | None = None  # skos:scopeNote — "in this reading, …"
+    category: str | None = None  # dcterms:subject — bucket for grouping in the glossary
+    sources: list[str] = Field(default_factory=list)  # dcterms:source citations (may include a URL)
+
+
 class Characterization(BaseModel):
     """Reified n-ary role assignment with (network, practice, invariance) context.
 

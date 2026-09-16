@@ -155,6 +155,36 @@ The same routine applies, more lightly, even when the ethnographer asserts a rol
 - "What's breaking down or being challenged?"
 - v1 records this as a note in the network's description; v2 will reify as `ant:Controversy`.
 
+## Connectivity nonconformance (the AICC triage)
+
+`ant:TranslationAnchoredShape` and `ant:ProgramCarriedShape` warn when a record
+would land **disconnected from the graph** (a translation with no
+`tracesToPassage` / `readsSameProgramAs` in either direction; a program no
+actant carries via `hasProgram`). Connectivity is a conformance property of the
+mapping: prose that names a connection the graph doesn't draw is an incomplete
+conversion (ADR-0002), not a style issue.
+
+When one of these fires, do NOT jump straight to a waiver. Flag the record as
+nonconformant and walk the triage **in order**, with the ethnographer deciding
+at each step:
+
+1. **Intent mismatch** — read the record's label/description back. Does it mean
+   something different from what any candidate edge would claim? If so the
+   *record* is what needs revising (`edit-record`), not the graph around it.
+   Re-verify after.
+2. **Missing data** — the description usually names the connection already
+   (an actant, a passage, a sibling translation). Ask the ethnographer for the
+   claim and author it: `edit-record translation --traces-to-passage /
+   --reads-same-program-as`, `edit-record actant --has-program / --enrols`.
+   If the named counterpart has no node yet, that is the finding — propose the
+   missing actant (`new-record actant`) first. Program carriers are structural
+   actants, never named individuals.
+3. **Ill-formed** — if the record does not survive scrutiny as a translation or
+   program *of this network*, discard it (`remove-record`), recording the
+   reasoning in the commit message.
+4. **Waive** — only if none of the above apply, `ant waive add` with the
+   ethnographer's justification in their own words (rule below).
+
 ## After the records land
 
 Always run:

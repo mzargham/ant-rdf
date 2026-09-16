@@ -13,19 +13,26 @@ import pytest
 from ant_rdf.models import (
     Actant,
     Characterization,
+    FluidObject,
     Mobilization,
     Network,
     Perspective,
     Practice,
+    ProgramOfAction,
     Translation,
 )
 from ant_rdf.query import (
     QueryError,
+    query_anti_programs,
     query_flips,
+    query_manifests,
     query_roles,
+    query_same_program,
     query_search,
     query_show,
     query_sparql,
+    query_status,
+    query_traffic,
     resolve,
 )
 from ant_rdf.serialize import build_dataset
@@ -62,7 +69,19 @@ def _models(*, beta_practices: list[str] | None = None) -> list:
                perspective="alpha", participates_in=[f"{T}/network/alpha"]),
         Mobilization(iri=f"{T}/moment/m1", label="M1", description="m", case="test"),
         Translation(iri=f"{T}/translation/t1", label="Prog One", description="d1", case="test",
-                    has_moment=[f"{T}/moment/m1"]),
+                    has_moment=[f"{T}/moment/m1"], has_status=f"{A}Precarious",
+                    traces_to_passage=[f"{T}/actant/gate"], reads_same_program_as=[f"{T}/translation/t2"],
+                    authored_under=f"{T}/perspectives/alpha"),
+        Translation(iri=f"{T}/translation/t2", label="Prog Two", description="d2", case="test",
+                    has_moment=[f"{T}/moment/m1"], has_status=f"{A}Stabilized",
+                    authored_under=f"{T}/perspectives/beta"),
+        Translation(iri=f"{T}/translation/t-forming", label="Prog Forming", description="d3", case="test",
+                    has_moment=[f"{T}/moment/m1"], authored_under=f"{T}/perspectives/alpha"),
+        ProgramOfAction(iri=f"{T}/program/anti", label="The Anti", description="opposes one",
+                        case="test", opposes=[f"{T}/translation/t1"]),
+        FluidObject(iri=f"{T}/inscription/repo", label="Living Repo", description="d", case="test"),
+        Actant(iri=f"{T}/actant/platform", label="Platform", description="d", case="test",
+               participates_in=[f"{T}/network/alpha"], manifests_as=[f"{T}/inscription/repo"]),
     ]
 
 
@@ -132,3 +151,33 @@ def test_sparql_escape_hatch():
         "SELECT ?c WHERE { ?c a ant:Characterization ; ant:assignsRole ant:Mediator }",
     )
     assert [r["c"] for r in rows] == [f"{T}/char/x-a"]
+
+
+def test_traffic_lists_translations_clearing_a_passage():
+    g = _g()
+    rows = query_traffic(g, resolve(g, "gate"))
+    assert [r["translation"] for r in rows] == ["Prog One"]
+    assert rows[0]["via"] == "traces" and rows[0]["frame"] == "Alpha frame"
+
+
+def test_status_including_forming_as_absent_status():
+    g = _g()
+    assert [r["translation"] for r in query_status(g, "precarious")] == ["Prog One"]
+    assert [r["translation"] for r in query_status(g, "stabilized")] == ["Prog Two"]
+    assert [r["translation"] for r in query_status(g, "forming")] == ["Prog Forming"]
+    with pytest.raises(QueryError):
+        query_status(g, "bogus")
+
+
+def test_same_program_clusters_and_filter():
+    g = _g()
+    assert query_same_program(g) == [["Prog One", "Prog Two"]]
+    assert query_same_program(g, resolve(g, "t1")) == [["Prog One", "Prog Two"]]
+
+
+def test_anti_programs_and_manifests():
+    g = _g()
+    assert query_anti_programs(g) == [{"program": "The Anti", "opposes": "Prog One"}]
+    assert query_manifests(g) == [
+        {"actant": "Platform", "inscription": "Living Repo", "inscription_type": "FluidObject"}
+    ]

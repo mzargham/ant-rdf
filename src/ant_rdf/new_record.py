@@ -22,9 +22,11 @@ from pathlib import Path
 from ant_rdf.graph import CASES_DIR, SHARED_DIR, new_dataset
 from ant_rdf.models import (
     Actant,
+    Agent,
     AntModel,
     Characterization,
     FluidObject,
+    GlossaryTerm,
     ImmutableMobile,
     Inscription,
     Network,
@@ -344,6 +346,43 @@ def create_moment(
         iri=iri, label=label, description=description, case=case, perspective=perspective,
     )
     target = Path(out) if out else _file_for_kind(case, perspective, "moment")
+    _merge_into(target, obj)
+    return target
+
+
+def create_agent(iri: str, label: str, description: str, out: str | None = None) -> Path:
+    """Create a prov:Agent record — a named holder of perspectives.
+
+    Perspective-agnostic shared identity; lives under instances/shared/
+    (default: agents.ttl), like Practice. Gives ``ant:perspectiveHeldBy`` targets
+    a human label so briefs render a name, not a bare IRI slug.
+    """
+    obj = Agent(iri=iri, label=label, description=description)
+    target = Path(out) if out else SHARED_DIR / "agents.ttl"
+    _merge_into(target, obj)
+    return target
+
+
+def create_glossary_term(
+    iri: str,
+    label: str,
+    description: str,
+    acronym: str | None = None,
+    used_as: str | None = None,
+    category: str | None = None,
+    sources: list[str] | None = None,
+    out: str | None = None,
+) -> Path:
+    """Create a skos:Concept glossary term (shared reference; a reader aid).
+
+    The definition (``description``) must come from a cited source; ``used_as``
+    hooks it to how the reading uses the word. Lives under instances/shared/.
+    """
+    obj = GlossaryTerm(
+        iri=iri, label=label, description=description,
+        acronym=acronym, used_as=used_as, category=category, sources=list(sources or []),
+    )
+    target = Path(out) if out else SHARED_DIR / "glossary.ttl"
     _merge_into(target, obj)
     return target
 

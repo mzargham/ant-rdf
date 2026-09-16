@@ -172,6 +172,50 @@ def query_flips_cmd(as_json: bool = _JSON) -> None:
     _run_query(run_flips, as_json)
 
 
+@query_app.command("traffic")
+def query_traffic_cmd(
+    passage: str = typer.Argument(..., help="OPP actant slug or IRI."),
+    as_json: bool = _JSON,
+) -> None:
+    """Translations that trace to / pass through an obligatory passage point."""
+    from ant_rdf.query import run_traffic
+    _run_query(run_traffic, passage, as_json)
+
+
+@query_app.command("status")
+def query_status_cmd(
+    status: str = typer.Argument(..., help="stabilized | precarious | unravelled | forming"),
+    as_json: bool = _JSON,
+) -> None:
+    """Translations by behavioral status (forming = no ant:hasStatus)."""
+    from ant_rdf.query import run_status
+    _run_query(run_status, status, as_json)
+
+
+@query_app.command("same-program")
+def query_same_program_cmd(
+    of: str | None = typer.Option(None, "--of", help="Only the cluster containing this translation."),
+    as_json: bool = _JSON,
+) -> None:
+    """Clusters of translations linked by ant:readsSameProgramAs."""
+    from ant_rdf.query import run_same_program
+    _run_query(run_same_program, of, as_json)
+
+
+@query_app.command("anti-programs")
+def query_anti_programs_cmd(as_json: bool = _JSON) -> None:
+    """The ant:opposes edges (program of action -> what it runs against)."""
+    from ant_rdf.query import run_anti_programs
+    _run_query(run_anti_programs, as_json)
+
+
+@query_app.command("manifests")
+def query_manifests_cmd(as_json: bool = _JSON) -> None:
+    """The ant:manifestsAs edges (an actant that is also an inscription; C9)."""
+    from ant_rdf.query import run_manifests
+    _run_query(run_manifests, as_json)
+
+
 @query_app.command("search")
 def query_search_cmd(
     text: str = typer.Argument(..., help="Case-insensitive substring."),
@@ -462,6 +506,37 @@ def new_practice(
     from ant_rdf.new_record import create_practice
 
     create_practice(iri=iri, label=label, description=description, out=out)
+
+
+@new_record_app.command("agent")
+def new_agent(
+    iri: str = typer.Option(..., "--iri"),
+    label: str = typer.Option(..., "--label"),
+    description: str = typer.Option(..., "--description"),
+    out: str | None = typer.Option(None, "--out"),
+) -> None:
+    """Create a prov:Agent record (shared; a named holder for ant:perspectiveHeldBy)."""
+    from ant_rdf.new_record import create_agent
+
+    create_agent(iri=iri, label=label, description=description, out=out)
+
+
+@new_record_app.command("glossary-term")
+def new_glossary_term(
+    iri: str = typer.Option(..., "--iri"),
+    label: str = typer.Option(..., "--label"),
+    description: str = typer.Option(..., "--description", help="Concise definition, faithful to a cited source."),
+    acronym: str | None = typer.Option(None, "--acronym"),
+    used_as: str | None = typer.Option(None, "--used-as", help="How this reading uses the word (the hook)."),
+    category: str | None = typer.Option(None, "--category", help="Bucket for grouping in the glossary."),
+    source: list[str] = typer.Option([], "--source", help="Citation (repeatable); may include a URL."),
+    out: str | None = typer.Option(None, "--out"),
+) -> None:
+    """Create a skos:Concept glossary term (shared; a reader aid with a citable definition)."""
+    from ant_rdf.new_record import create_glossary_term
+
+    create_glossary_term(iri=iri, label=label, description=description,
+                         acronym=acronym, used_as=used_as, category=category, sources=source, out=out)
 
 
 @new_record_app.command("interactive")

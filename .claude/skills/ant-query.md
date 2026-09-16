@@ -33,6 +33,33 @@ Curated queries **bake in fidelity**: a role is always reported as a `Characteri
   ```
   Actants that are characterized in two or more grounded perspectives with different roles. The koi case (two perspectives) is the worked example.
 
+- **Traffic through a passage** — "What must clear this OPP?"
+  ```bash
+  uv run ant query traffic <opp-actant-slug>
+  ```
+  Translations that `tracesToPassage` / `passesThrough` an obligatory passage point, with the frame each is authored under.
+
+- **By behavioral status** — "What's precarious? What's still forming?"
+  ```bash
+  uv run ant query status precarious      # or: stabilized | unravelled | forming
+  ```
+  `forming` = translations with **no** `hasStatus` (a deliberate 'not yet assessable' state, not missing data).
+
+- **Same-program clusters** — "One program read across frames."
+  ```bash
+  uv run ant query same-program            # all clusters; --of <translation> for one
+  ```
+
+- **Anti-programs** — "What runs against what?"
+  ```bash
+  uv run ant query anti-programs           # the ant:opposes edges (X opposes Y)
+  ```
+
+- **Manifestations** — "Which inscriptions are also actants?"
+  ```bash
+  uv run ant query manifests               # the ant:manifestsAs edges (C9 / ADR-0007)
+  ```
+
 - **Text search** — "Where is X mentioned?"
   ```bash
   uv run ant query search scallop          # case-insensitive over labels + descriptions
@@ -70,4 +97,5 @@ uv run ant list --iri <IRI>                                       # raw predicat
 
 - **Read-only, always.** `ant query` and `ant list` never write. If the reader wants to change a fact, that is authoring — switch to [ant-mgmt](ant-mgmt.md); **never hand-edit TTL.**
 - **Prefer a curated query over raw SPARQL** when one fits — it encodes the fidelity a bare `SELECT` does not.
-- **Verify against the brief.** A curated query and its brief must agree (e.g. `flips` and the "Where the frames diverge" section of the comparison brief); if they diverge, the briefs are stale — see [ant-refresh](ant-refresh.md).
+- **Verify against the brief.** A curated query and its brief must agree (e.g. `flips` and the "Where the frames diverge" section of the comparison brief; `status precarious` and the durability dashboard's Precarious count); if they diverge, the briefs are stale — see [ant-refresh](ant-refresh.md).
+- **For orientation and interpretation** (which brief answers which question; the pitfalls), hand back to [ant-read](ant-read.md).

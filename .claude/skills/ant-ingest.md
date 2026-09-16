@@ -77,6 +77,12 @@ For each raw material file:
 3. The file is registered as an `ant:Inscription` with sha256-based provenance. The file itself stays at its original location; only the metadata TTL is written.
 4. **Crucially:** characterization (assigning roles within a specific perspective) is a separate step. After registration, ask: "Would you like to characterize this inscription within a specific network and perspective now, or later?" If now, switch to the Characterization step in [ant-mgmt](ant-mgmt.md).
 
+> **Connectivity check at review time:** a candidate translation with no `traces_to_passage` / `reads_same_program_as`, or a candidate program no actant would carry (`has_program`), will land as a disconnected island and draw a Tier-2 warning (`TranslationAnchoredShape` / `ProgramCarriedShape`). Flag it in the review-doc walkthrough and run the AICC connectivity triage from [ant-mgmt](ant-mgmt.md) §"Connectivity nonconformance": intent mismatch (revise the candidate) → missing data (the notes usually name the connection; add the edge, or first the missing actant) → ill-formed (drop the candidate) → waive with the ethnographer's justification.
+
+> **Not a file? Use `new-record inscription` instead.** `ingest upload` is for *uploaded files* (it computes a sha256 source). For material that lives elsewhere and is referenced by URL/citation — a git repository, a hosted service, a published paper — author it with `ant new-record inscription --class {inscription|immutable|fluid} --source <url-or-citation>` (see [ant-mgmt](ant-mgmt.md) §6). Fluid objects (repositories / services that persist by mutation) belong on that path.
+
+> **An inscription may later be recognized as (part of) an actant.** Registration is perspective-agnostic and does not preclude the trace also *acting* — a living repository is both. When that is recognized, record the coexistence on the actant with `edit-record actant --manifests-as <inscription-iri>` (`ant:manifestsAs`; C9 / [ADR-0007](../../adr/0007-inscriptions-can-be-actants-manifests-as.md)). Optional, never forced.
+
 ## Critical rules
 
 - **Never bypass dry-run.** Always show the review document before committing. The dry-run is the seam where the ethnographer validates content per C7.
