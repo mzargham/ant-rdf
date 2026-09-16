@@ -8,7 +8,7 @@
 
 ## Definition
 
-A role characterizing an interaction as TRANSFORMING what it transmits (its outputs cannot be predicted from its inputs). Observer-relative — assigned via ant:Characterization with explicit ant:perPractice and ant:invarianceCriterion. NOT a kind of actant; the same actant can also be characterized as Intermediary under another practice/invariance. See §4.1.1.
+A role characterizing an interaction as TRANSFORMING what it transmits (its outputs cannot be predicted from its inputs). Cybernetically it REGULATES: it varies some dimensions IN ORDER TO PRESERVE the invariant named by ant:invarianceCriterion (requisite variety — the regulator must command variety to hold the essential variable constant). Observer-relative — assigned via ant:Characterization with explicit ant:perPractice and ant:invarianceCriterion. NOT a kind of actant. The SAME actant can be a Mediator on the dimensions it regulates and an Intermediary on the ones it passes through, at the same time; the perspective selects which dimensions are coded. (Compare ant:FluidObject: a mobile that is varied when drawn on.) See §4.1.1 and ADR-0006.
 
 ## Source
 

@@ -206,6 +206,43 @@ def query_sparql_cmd(
 # new-record subcommands (stubs — real impl in new_record.py)
 # ---------------------------------------------------------------------------
 
+# Short tokens accepted by --class / --durability / --status (or pass a full IRI).
+_INSCRIPTION_CLASS_TOKENS = {
+    "inscription": "https://w3id.org/ant#Inscription",
+    "immutable": "https://w3id.org/ant#ImmutableMobile",
+    "immutable-mobile": "https://w3id.org/ant#ImmutableMobile",
+    "fluid": "https://w3id.org/ant#FluidObject",
+    "fluid-object": "https://w3id.org/ant#FluidObject",
+    "ant:Inscription": "https://w3id.org/ant#Inscription",
+    "ant:ImmutableMobile": "https://w3id.org/ant#ImmutableMobile",
+    "ant:FluidObject": "https://w3id.org/ant#FluidObject",
+}
+_DURABILITY_TOKENS = {
+    "material": "https://w3id.org/ant#MaterialDurability",
+    "strategic": "https://w3id.org/ant#StrategicDurability",
+    "discursive": "https://w3id.org/ant#DiscursiveStability",
+}
+_STATUS_TOKENS = {
+    "stabilized": "https://w3id.org/ant#Stabilized",
+    "precarious": "https://w3id.org/ant#Precarious",
+    "unravelled": "https://w3id.org/ant#Unravelled",
+    "unraveled": "https://w3id.org/ant#Unravelled",  # accept US spelling
+}
+
+
+def _expand_token(token: str | None, mapping: dict[str, str], what: str) -> str | None:
+    """Accept a short token (e.g. 'immutable', 'precarious') or a full IRI."""
+    if token is None:
+        return None
+    if token in mapping:
+        return mapping[token]
+    if token.startswith("http"):
+        return token
+    raise typer.BadParameter(
+        f"unknown {what} {token!r}; expected one of {sorted(set(mapping))} or a full IRI"
+    )
+
+
 
 @new_record_app.command("network")
 def new_network(
@@ -235,14 +272,83 @@ def new_actant(
     case: str = typer.Option(..., "--case"),
     perspective: str = typer.Option("_default", "--perspective"),
     participates_in: list[str] = typer.Option([], "--participates-in"),
+    corresponds_to: list[str] = typer.Option([], "--corresponds-to", help="Actant IRIs this actant corresponds to across frames (ant:correspondsTo; symmetric)."),
+    internalizes: list[str] = typer.Option([], "--internalizes", help="Perspective IRIs this (persona) actant internalizes (ant:internalizes)."),
+    inscribes: list[str] = typer.Option([], "--inscribes", help="Inscription IRIs this actant produces (ant:inscribes)."),
+    draws_on: list[str] = typer.Option([], "--draws-on", help="Inscription IRIs this actant consumes / builds on (ant:drawsOn)."),
+    manifests_as: list[str] = typer.Option([], "--manifests-as", help="Inscription IRIs this actant is also present as (ant:manifestsAs; C9 / ADR-0007)."),
+    has_program: list[str] = typer.Option([], "--has-program", help="ProgramOfAction IRIs this actant carries (ant:hasProgram — a program is never standalone)."),
+    enrols: list[str] = typer.Option([], "--enrols", help="Actant IRIs this actant enrols (ant:enrols, binary v1 form; FUTURE_WORK §1.5)."),
     out: str | None = typer.Option(None, "--out"),
 ) -> None:
-    """Create an ant:Actant record."""
+    """Create an ant:Actant record. Use --perspective _shared for a shared actant's
+    frame-neutral identity (ADR-0003)."""
     from ant_rdf.new_record import create_actant
 
     create_actant(
         iri=iri, label=label, description=description, case=case,
-        perspective=perspective, participates_in=participates_in, out=out,
+        perspective=perspective, participates_in=participates_in,
+        corresponds_to=corresponds_to, internalizes=internalizes,
+        inscribes=inscribes, draws_on=draws_on, manifests_as=manifests_as,
+        has_program=has_program, enrols=enrols, out=out,
+    )
+
+
+@new_record_app.command("inscription")
+def new_inscription(
+    iri: str = typer.Option(..., "--iri"),
+    label: str = typer.Option(..., "--label"),
+    description: str = typer.Option(..., "--description"),
+    case: str = typer.Option(..., "--case"),
+    perspective: str = typer.Option("_default", "--perspective"),
+    klass: str = typer.Option(
+        "ant:Inscription", "--class",
+        help="ant:Inscription | ant:ImmutableMobile | ant:FluidObject (or immutable / fluid).",
+    ),
+    source: str | None = typer.Option(
+        None, "--source", help="dcterms:source — a URL, citation, or file hash for the material.",
+    ),
+    out: str | None = typer.Option(None, "--out"),
+) -> None:
+    """Create an ant:Inscription (or ImmutableMobile / FluidObject) record.
+
+    For material referenced by URL/citation (a repository, a paper) rather than
+    an uploaded file — see `ant ingest upload` for file-hash provenance instead.
+    Pick the class by how the thing persists: holds form constant → immutable;
+    persists by controlled mutability (a living repository) → fluid.
+    """
+    from ant_rdf.new_record import create_inscription
+
+    klass_iri = _expand_token(klass, _INSCRIPTION_CLASS_TOKENS, "inscription class") or ""
+    klass_key = "ant:" + klass_iri.rsplit("#", 1)[-1]
+    try:
+        create_inscription(
+            iri=iri, label=label, description=description, case=case,
+            perspective=perspective, klass=klass_key, source=source, out=out,
+        )
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+
+
+@new_record_app.command("program")
+def new_program(
+    iri: str = typer.Option(..., "--iri"),
+    label: str = typer.Option(..., "--label"),
+    description: str = typer.Option(..., "--description"),
+    case: str = typer.Option(..., "--case"),
+    perspective: str = typer.Option("_default", "--perspective"),
+    opposes: list[str] = typer.Option([], "--opposes"),
+    out: str | None = typer.Option(None, "--out"),
+) -> None:
+    """Create an ant:ProgramOfAction (use --opposes to pair a program with its anti-program).
+
+    A program is never standalone: name its carrier with `--has-program` on the actant.
+    """
+    from ant_rdf.new_record import create_program_of_action
+
+    create_program_of_action(
+        iri=iri, label=label, description=description, case=case,
+        perspective=perspective, opposes=opposes, out=out,
     )
 
 
@@ -254,6 +360,11 @@ def new_translation(
     case: str = typer.Option(..., "--case"),
     perspective: str = typer.Option("_default", "--perspective"),
     has_moment: list[str] = typer.Option([], "--has-moment"),
+    reads_same_program_as: list[str] = typer.Option([], "--reads-same-program-as", help="Translation IRIs reading the same program from another frame (ant:readsSameProgramAs; symmetric)."),
+    traces_to_passage: list[str] = typer.Option([], "--traces-to-passage", help="OPP actant IRIs this translation must clear (ant:tracesToPassage)."),
+    durability: str | None = typer.Option(None, "--durability", help="material | strategic | discursive (ant:hasDurability, Law 2008)."),
+    status: str | None = typer.Option(None, "--status", help="stabilized | precarious | unravelled (ant:hasStatus); omit = forming / not yet assessed."),
+    authored_under: str | None = typer.Option(None, "--authored-under", help="Perspective IRI the translation is authored under (ant:authoredUnder; frame provenance, ADR-0004)."),
     out: str | None = typer.Option(None, "--out"),
 ) -> None:
     """Create an ant:Translation record (must have at least one moment — Tier 1)."""
@@ -261,7 +372,13 @@ def new_translation(
 
     create_translation(
         iri=iri, label=label, description=description, case=case,
-        perspective=perspective, has_moment=has_moment, out=out,
+        perspective=perspective, has_moment=has_moment,
+        reads_same_program_as=reads_same_program_as,
+        traces_to_passage=traces_to_passage,
+        has_durability=_expand_token(durability, _DURABILITY_TOKENS, "durability"),
+        has_status=_expand_token(status, _STATUS_TOKENS, "status"),
+        authored_under=authored_under,
+        out=out,
     )
 
 
@@ -361,28 +478,6 @@ def new_record_interactive(
 # edit-record subcommands — in-place field upsert (set-replace provided fields)
 # ---------------------------------------------------------------------------
 
-_INSCRIPTION_CLASS_TOKENS = {
-    "inscription": "https://w3id.org/ant#Inscription",
-    "immutable": "https://w3id.org/ant#ImmutableMobile",
-    "immutable-mobile": "https://w3id.org/ant#ImmutableMobile",
-    "ant:Inscription": "https://w3id.org/ant#Inscription",
-    "ant:ImmutableMobile": "https://w3id.org/ant#ImmutableMobile",
-}
-
-
-def _expand_token(token: str | None, mapping: dict[str, str], what: str) -> str | None:
-    """Accept a short token (e.g. 'immutable') or a full IRI."""
-    if token is None:
-        return None
-    if token in mapping:
-        return mapping[token]
-    if token.startswith("http"):
-        return token
-    raise typer.BadParameter(
-        f"unknown {what} {token!r}; expected one of {sorted(set(mapping))} or a full IRI"
-    )
-
-
 def _run_edit(
     kind: str,
     iri: str,
@@ -414,20 +509,42 @@ def edit_actant(
     label: str | None = typer.Option(None, "--label"),
     description: str | None = typer.Option(None, "--description"),
     participates_in: list[str] = typer.Option([], "--participates-in"),
-    clear_participates_in: bool = typer.Option(
-        False, "--clear-participates-in", help="Remove all ant:participatesIn edges."
-    ),
+    clear_participates_in: bool = typer.Option(False, "--clear-participates-in", help="Remove all ant:participatesIn edges."),
+    corresponds_to: list[str] = typer.Option([], "--corresponds-to"),
+    clear_corresponds_to: bool = typer.Option(False, "--clear-corresponds-to"),
+    internalizes: list[str] = typer.Option([], "--internalizes"),
+    clear_internalizes: bool = typer.Option(False, "--clear-internalizes"),
+    inscribes: list[str] = typer.Option([], "--inscribes", help="Inscription IRIs this actant produces."),
+    clear_inscribes: bool = typer.Option(False, "--clear-inscribes"),
+    draws_on: list[str] = typer.Option([], "--draws-on", help="Inscription IRIs this actant consumes / builds on."),
+    clear_draws_on: bool = typer.Option(False, "--clear-draws-on"),
+    manifests_as: list[str] = typer.Option([], "--manifests-as", help="Inscription IRIs this actant is also present as (C9 / ADR-0007)."),
+    clear_manifests_as: bool = typer.Option(False, "--clear-manifests-as"),
+    has_program: list[str] = typer.Option([], "--has-program", help="ProgramOfAction IRIs this actant carries."),
+    clear_has_program: bool = typer.Option(False, "--clear-has-program"),
+    enrols: list[str] = typer.Option([], "--enrols", help="Actant IRIs this actant enrols (binary v1 form)."),
+    clear_enrols: bool = typer.Option(False, "--clear-enrols"),
 ) -> None:
-    """Edit an ant:Actant in place (set-replace provided fields)."""
+    """Edit an ant:Actant in place (set-replace provided fields; --clear-* empties a multi-valued field)."""
     updates: dict[str, object] = {}
     if label is not None:
         updates["label"] = label
     if description is not None:
         updates["description"] = description
-    if participates_in:
-        updates["participates_in"] = list(participates_in)
-    elif clear_participates_in:
-        updates["participates_in"] = []
+    for key, values, clear in (
+        ("participates_in", participates_in, clear_participates_in),
+        ("corresponds_to", corresponds_to, clear_corresponds_to),
+        ("internalizes", internalizes, clear_internalizes),
+        ("inscribes", inscribes, clear_inscribes),
+        ("draws_on", draws_on, clear_draws_on),
+        ("manifests_as", manifests_as, clear_manifests_as),
+        ("has_program", has_program, clear_has_program),
+        ("enrols", enrols, clear_enrols),
+    ):
+        if values:
+            updates[key] = list(values)
+        elif clear:
+            updates[key] = []
     _run_edit("actant", iri, updates, case=case, perspective=perspective)
 
 
@@ -489,8 +606,21 @@ def edit_translation(
     label: str | None = typer.Option(None, "--label"),
     description: str | None = typer.Option(None, "--description"),
     has_moment: list[str] = typer.Option([], "--has-moment"),
+    reads_same_program_as: list[str] = typer.Option([], "--reads-same-program-as"),
+    clear_reads_same_program_as: bool = typer.Option(False, "--clear-reads-same-program-as"),
+    traces_to_passage: list[str] = typer.Option([], "--traces-to-passage"),
+    clear_traces_to_passage: bool = typer.Option(False, "--clear-traces-to-passage"),
+    durability: str | None = typer.Option(None, "--durability", help="material | strategic | discursive"),
+    clear_durability: bool = typer.Option(False, "--clear-durability", help="Remove ant:hasDurability (how the holding holds is not yet assessable)."),
+    status: str | None = typer.Option(None, "--status", help="stabilized | precarious | unravelled"),
+    clear_status: bool = typer.Option(False, "--clear-status", help="Remove ant:hasStatus — a 'forming / not yet assessed' translation."),
+    authored_under: str | None = typer.Option(None, "--authored-under", help="Perspective IRI the translation is authored under (ADR-0004)."),
 ) -> None:
     """Edit an ant:Translation in place (set-replace provided fields)."""
+    if clear_status and status is not None:
+        raise typer.BadParameter("pass either --status or --clear-status, not both.")
+    if clear_durability and durability is not None:
+        raise typer.BadParameter("pass either --durability or --clear-durability, not both.")
     updates: dict[str, object] = {}
     if label is not None:
         updates["label"] = label
@@ -498,6 +628,24 @@ def edit_translation(
         updates["description"] = description
     if has_moment:
         updates["has_moment"] = list(has_moment)
+    for key, values, clear in (
+        ("reads_same_program_as", reads_same_program_as, clear_reads_same_program_as),
+        ("traces_to_passage", traces_to_passage, clear_traces_to_passage),
+    ):
+        if values:
+            updates[key] = list(values)
+        elif clear:
+            updates[key] = []
+    if clear_durability:
+        updates["has_durability"] = ""
+    elif durability is not None:
+        updates["has_durability"] = _expand_token(durability, _DURABILITY_TOKENS, "durability")
+    if clear_status:
+        updates["has_status"] = ""
+    elif status is not None:
+        updates["has_status"] = _expand_token(status, _STATUS_TOKENS, "status")
+    if authored_under is not None:
+        updates["authored_under"] = authored_under
     _run_edit("translation", iri, updates, case=case, perspective=perspective)
 
 
@@ -564,9 +712,9 @@ def edit_inscription(
     label: str | None = typer.Option(None, "--label"),
     description: str | None = typer.Option(None, "--description"),
     source: str | None = typer.Option(None, "--source", help="dcterms:source — a URL, citation, or file hash."),
-    klass: str | None = typer.Option(None, "--class", help="ant:Inscription | ant:ImmutableMobile (or 'immutable')."),
+    klass: str | None = typer.Option(None, "--class", help="ant:Inscription | ant:ImmutableMobile | ant:FluidObject (or immutable / fluid)."),
 ) -> None:
-    """Edit an ant:Inscription (or ImmutableMobile) in place.
+    """Edit an ant:Inscription (or ImmutableMobile / FluidObject) in place.
 
     Set-replace the provided fields, including the record's --class (rdf:type);
     the CLI path for changing an inscription without remove-and-recreate.

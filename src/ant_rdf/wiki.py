@@ -36,6 +36,7 @@ from rich.console import Console
 from ant_rdf import ANT
 from ant_rdf.compilers._common import (
     description_of,
+    invariance_display,
     label_of,
     local_name,
     slugify,
@@ -403,7 +404,7 @@ def _gather_cases(g: Graph) -> dict[str, dict]:
                 b["perspectives"].add(s)
             elif t == ANT.Characterization:
                 b["characterizations"].add(s)
-            elif t == ANT.Inscription or t == ANT.ImmutableMobile:
+            elif t in (ANT.Inscription, ANT.ImmutableMobile, ANT.FluidObject):
                 b["inscriptions"].add(s)
             elif t == ANT.ProgramOfAction or t == ANT.AntiProgram:
                 b["programs"].add(s)
@@ -717,12 +718,13 @@ def _render_case(g: Graph, slug: str, case: dict) -> str:
             net_cell = (
                 f"[{net_label}]({_case_page(net_slug)})" if net_slug else net_label
             )
+            role_name = local_name(str(role)) if isinstance(role, URIRef) else "?"
             rows.append([
                 target_link,
                 role_link,
                 net_cell,
                 local_name(str(practice)) if practice else "_(unspecified)_",
-                str(invariance) if invariance else "_(unspecified)_",
+                invariance_display(role_name, str(invariance)) if invariance else "_(unspecified)_",
                 desc,
             ])
         lines.append(_md_table(
@@ -897,11 +899,12 @@ def _render_actant(g: Graph, actant: URIRef) -> str:
             net_cell = (
                 f"[{net_label}]({_case_page(net_slug)})" if net_slug else net_label
             )
+            role_name = local_name(str(role)) if isinstance(role, URIRef) else "?"
             rows.append([
                 role_link,
                 net_cell,
                 local_name(str(prac)) if prac else "_(unspecified)_",
-                str(inv) if inv else "_(unspecified)_",
+                invariance_display(role_name, str(inv)) if inv else "_(unspecified)_",
                 d,
             ])
         lines.append(_md_table(

@@ -4,7 +4,7 @@
 
 This file tells Claude (or any LLM agent) how to interact with this repository. It is the working contract between the model, the ethnographer, and the discipline of the docs-as-code paradigm. The repo's expectation: **assertions about the field come from humans; structural correctness comes from the CLI**.
 
-Read [README.md](README.md) first for the architecture, [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) for the philosophical premises (C1–C8), and [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) for the foundational decisions (R1–R10) before authoring or modifying records.
+Read [README.md](README.md) first for the architecture, [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) for the philosophical premises (C1–C9), and [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) for the foundational decisions (R1–R10) before authoring or modifying records.
 
 ## The golden path
 

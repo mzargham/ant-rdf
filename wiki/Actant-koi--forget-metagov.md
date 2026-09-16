@@ -16,7 +16,7 @@ This actant has been characterized in the role(s) below, under specified practic
 
 | Role | Within network | Per practice | Invariance | Description |
 | --- | --- | --- | --- | --- |
-| [Mediator](Concept-Mediator) | [Building the loop in the field](Case-koi) | data-stewardship | club-good-degradation-outsized-footprint | Read through data stewardship and from the observers' frame, the same invocation is a Mediator whose output is wildly disproportionate to its input: by forgetting a large footprint it punched a hole in the shared data set, degrading the club good for everyone. This is what distinguishes it from in-program forget — same role label, different invariance. |
+| [Mediator](Concept-Mediator) | [Building the loop in the field](Case-koi) | data-stewardship | regulates to preserve: club-good-degradation-outsized-footprint | Read through data stewardship and from the observers' frame, the same invocation is a Mediator whose output is wildly disproportionate to its input: by forgetting a large footprint it punched a hole in the shared data set, degrading the club good for everyone. This is what distinguishes it from in-program forget — same role label, different invariance. |
 | [Spokesperson](Concept-Spokesperson) | [Building the loop in the field](Case-koi) | participatory-digital-ethnography | right-to-be-forgotten-advocacy | Read through participatory digital ethnography and from the contributor's own frame, the subversive invocation speaks on behalf of the right-to-be-forgotten — a representational act, not mere execution. |
 
 

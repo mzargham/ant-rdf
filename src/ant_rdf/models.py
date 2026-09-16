@@ -36,6 +36,13 @@ DurabilityKind = Literal[
     "https://w3id.org/ant#DiscursiveStability",
 ]
 
+# A translation's current behavioral standing (ant:TranslationStatus individuals).
+TranslationStatusKind = Literal[
+    "https://w3id.org/ant#Stabilized",
+    "https://w3id.org/ant#Precarious",
+    "https://w3id.org/ant#Unravelled",
+]
+
 
 # ---------------------------------------------------------------------------
 # Base — all model types share these conventions
@@ -80,6 +87,14 @@ class Actant(AntModel):
     case: str
     perspective: str = "_default"
     participates_in: list[str] = Field(default_factory=list)
+    # Cross-frame links (ADR-0002) and inscription edges (ADR-0005 / ADR-0007).
+    corresponds_to: list[str] = Field(default_factory=list)  # ant:correspondsTo
+    internalizes: list[str] = Field(default_factory=list)  # ant:internalizes (persona → Perspective)
+    inscribes: list[str] = Field(default_factory=list)  # ant:inscribes (produces an Inscription)
+    draws_on: list[str] = Field(default_factory=list)  # ant:drawsOn (consumes an Inscription)
+    manifests_as: list[str] = Field(default_factory=list)  # ant:manifestsAs (is also an Inscription; C9)
+    has_program: list[str] = Field(default_factory=list)  # ant:hasProgram (carries a ProgramOfAction)
+    enrols: list[str] = Field(default_factory=list)  # ant:enrols (binary v1 form; FUTURE_WORK §1.5)
 
 
 class Translation(AntModel):
@@ -92,6 +107,12 @@ class Translation(AntModel):
     case: str
     perspective: str = "_default"
     has_moment: list[str] = Field(default_factory=list)
+    # Cross-frame + status/durability (ADR-0002) and frame provenance (ADR-0004).
+    reads_same_program_as: list[str] = Field(default_factory=list)  # ant:readsSameProgramAs
+    traces_to_passage: list[str] = Field(default_factory=list)  # ant:tracesToPassage (→ OPP actant)
+    has_durability: str | None = None  # ant:hasDurability (ant:Durability IRI)
+    has_status: str | None = None  # ant:hasStatus (ant:TranslationStatus IRI)
+    authored_under: str | None = None  # ant:authoredUnder (→ ant:Perspective)
 
 
 class Problematization(AntModel):
@@ -184,6 +205,12 @@ class Inscription(AntModel):
 
 class ImmutableMobile(Inscription):
     """An inscription that holds form constant while circulating (Law 1986)."""
+
+
+class FluidObject(Inscription):
+    """An inscription that persists through controlled mutability — it holds
+    identity and lineage while its content changes, so it can be absorbed,
+    repurposed, or redirected (de Laet & Mol 2000). Sibling of ImmutableMobile."""
 
 
 class ProgramOfAction(AntModel):

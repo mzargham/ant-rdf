@@ -99,8 +99,15 @@ ant:ImmutableMobile
     a owl:Class ;
     rdfs:subClassOf ant:Inscription ;
     rdfs:label "Immutable mobile"@en ;
-    rdfs:comment "An inscription / entity that holds form constant while circulating, enabling long-distance control (Law 1986: Portuguese ships, charts, almanacs). Compare ant:FluidObject (v2; de Laet & Mol 2000) which works by mutability instead."@en ;
+    rdfs:comment "An inscription / entity that holds form constant while circulating, enabling long-distance control (Law 1986: Portuguese ships, charts, almanacs). Compare ant:FluidObject (de Laet & Mol 2000) which works by mutability instead."@en ;
     dcterms:source "Law, J. (1986). On the methods of long-distance control; Latour, B. (1990). Drawing Things Together." .
+
+ant:FluidObject
+    a owl:Class ;
+    rdfs:subClassOf ant:Inscription ;
+    rdfs:label "Fluid object"@en ;
+    rdfs:comment "An inscription whose persistence works through controlled mutability: it holds identity and lineage while its content changes, so it can be absorbed, repurposed, or redirected in ways an immutable mobile cannot. Being drawn on (ant:drawsOn) may alter it; a consumer keeps developing the living object (the varied, Mediator-like pole). A git repository is the paradigm case: a commit hash is an ant:ImmutableMobile snapshot of it, while the living repository is the fluid object. Sibling of ant:ImmutableMobile (not a subclass of it), which instead works by holding form constant. See ADR-0005."@en ;
+    dcterms:source "de Laet, M. & Mol, A. (2000). The Zimbabwe Bush Pump: Mechanics of a Fluid Technology. Social Studies of Science 30(2), 225-263." .
 
 ant:ProgramOfAction
     a owl:Class ;
@@ -133,13 +140,13 @@ ant:AntiProgram
 ant:Mediator
     a owl:Class ;
     rdfs:label "Mediator (role)"@en ;
-    rdfs:comment "A role characterizing an interaction as TRANSFORMING what it transmits (its outputs cannot be predicted from its inputs). Observer-relative — assigned via ant:Characterization with explicit ant:perPractice and ant:invarianceCriterion. NOT a kind of actant; the same actant can also be characterized as Intermediary under another practice/invariance. See §4.1.1."@en ;
+    rdfs:comment "A role characterizing an interaction as TRANSFORMING what it transmits (its outputs cannot be predicted from its inputs). Cybernetically it REGULATES: it varies some dimensions IN ORDER TO PRESERVE the invariant named by ant:invarianceCriterion (requisite variety — the regulator must command variety to hold the essential variable constant). Observer-relative — assigned via ant:Characterization with explicit ant:perPractice and ant:invarianceCriterion. NOT a kind of actant. The SAME actant can be a Mediator on the dimensions it regulates and an Intermediary on the ones it passes through, at the same time; the perspective selects which dimensions are coded. (Compare ant:FluidObject: a mobile that is varied when drawn on.) See §4.1.1 and ADR-0006."@en ;
     dcterms:source "Latour, B. (2005). Reassembling the Social." .
 
 ant:Intermediary
     a owl:Class ;
     rdfs:label "Intermediary (role)"@en ;
-    rdfs:comment "A role characterizing an interaction as TRANSMITTING WITHOUT TRANSFORMATION under a specified invariance. Observer-relative — assigned via ant:Characterization. NOT a kind of actant. NB: Callon 1991 uses 'intermediary' differently (a thing passed between actors); this ontology follows Latour 2005's sense."@en ;
+    rdfs:comment "A role characterizing an interaction as TRANSMITTING WITHOUT TRANSFORMATION: it PRESERVES the invariant named by ant:invarianceCriterion directly, by pass-through, without having to vary other dimensions to hold it. (A Mediator preserves its invariant the hard way, by regulating; an Intermediary preserves its invariant the easy way, by relaying.) Observer-relative — assigned via ant:Characterization. NOT a kind of actant. The same actant can be an Intermediary on the dimensions it passes through and a Mediator on the ones it regulates simultaneously; the perspective selects which dimensions matter for the coding. (Compare ant:ImmutableMobile: a mobile that is unaltered when drawn on.) NB: Callon 1991 uses 'intermediary' differently (a thing passed between actors); this ontology follows Latour 2005's sense. See ADR-0006."@en ;
     dcterms:source "Latour, B. (2005). Reassembling the Social." .
 
 ant:Spokesperson
@@ -237,6 +244,40 @@ ant:DiscursiveStability
     rdfs:label "Discursive stability"@en ;
     rdfs:comment "Stability arising from multi-discursive ordering (Law 1994: managers operating across Enterprise, Bureaucracy, Vocation, Vision; the laboratory needed several modes because each set conditions of possibility for some realities and not others)."@en ;
     dcterms:source "Law, J. (1994). Organizing Modernity; Law, J. (2008)." .
+
+# -----------------------------------------------------------------------------
+# Translation status (behavioral stabilization; ADR-0002)
+# -----------------------------------------------------------------------------
+#
+# A translation's current standing as a behavioral regularity: has the new
+# pattern stabilized, is it still precarious / in progress, or has it
+# unravelled? Distinct from Durability (Law 2008), which is *how* a holding
+# configuration holds (material / strategic / discursive). Both are wired to
+# ant:Translation by ant:hasStatus / ant:hasDurability below.
+
+ant:TranslationStatus
+    a owl:Class ;
+    rdfs:label "Translation status"@en ;
+    rdfs:comment "The current standing of a translation read behaviorally: a translation is 'done' not when permanent but when a new behavioral regularity stabilizes; success is that regularity's durability, failure its unravelling. Enumerated by ant:Stabilized / ant:Precarious / ant:Unravelled. A translation with no status is 'forming / not yet assessed' — a deliberate state, not missing data."@en ;
+    dcterms:source "Callon, M. (1986); Law, J. (2008) (precariousness, C5); Zargham, M. & Ben-Meir, I., Protocols & Institutions (behavioral regularity as stability)." .
+
+ant:Stabilized
+    a ant:TranslationStatus ;
+    rdfs:label "Stabilized"@en ;
+    rdfs:comment "The translation has taken root and held: a durable behavioral regularity."@en ;
+    dcterms:source "Callon, M. (1986)." .
+
+ant:Precarious
+    a ant:TranslationStatus ;
+    rdfs:label "Precarious"@en ;
+    rdfs:comment "In progress or holding-but-strained: the regularity has not durably stabilized and could unravel."@en ;
+    dcterms:source "Callon, M. (1986); Law, J. (2008) (precariousness, C5)." .
+
+ant:Unravelled
+    a ant:TranslationStatus ;
+    rdfs:label "Unravelled"@en ;
+    rdfs:comment "Failed to stabilize (or came apart): the program did not take root as a durable regularity."@en ;
+    dcterms:source "Callon, M. (1986); Law, J. (2008)." .
 
 
 # =============================================================================
@@ -359,6 +400,88 @@ ant:isPunctualizationOf
     rdfs:range ant:Network ;
     dcterms:source "Latour, B. (2005); Law, J. (2008)." .
 
+ant:drawsOn
+    a owl:ObjectProperty ;
+    rdfs:label "draws on"@en ;
+    rdfs:comment "An actant draws on (consumes, builds upon) an inscription it did not necessarily produce; the consuming complement of ant:inscribes. Drawing on an ant:FluidObject may alter it (the consumer keeps developing the living object), whereas drawing on an ant:ImmutableMobile leaves it unaltered (it is referenced, not changed) — the same invariance/variance distinction that separates a Mediator from an Intermediary, here on the material trace itself. See ADR-0005."@en ;
+    rdfs:domain ant:Actant ;
+    rdfs:range ant:Inscription ;
+    dcterms:source "Synthesized for the Latourian inscription cluster (Latour, B. (1990). Drawing Things Together); de Laet, M. & Mol, A. (2000) for the fluid/immutable variance." .
+
+ant:manifestsAs
+    a owl:ObjectProperty ;
+    rdfs:label "manifests as"@en ;
+    rdfs:comment "An actant is manifested as (present in the field as) an inscription: an optional, non-forced link recording that a named material trace is also a live actant — the same worldly thing read in two registers (C9). Unlike ant:inscribes (produces a separate trace) and ant:drawsOn (consumes one), this relates an actant to ITSELF in the other register. The shift from immutable mobile to fluid object is what confers agency: a frozen document merely circulates, whereas a living repository acts, so the same repository is both an inscription and an actant. The inscription is typically an ant:FluidObject but the range is ant:Inscription (not enforced). The textbook case is an open-source project, at once a community that governs and acts and a codebase tightly coupled to it. Recover the reverse reading (this inscription is also an actant) by querying the subjects of ant:manifestsAs. The two registers are non-disjoint; the relation is never inferred, only asserted. See ADR-0007."@en ;
+    rdfs:domain ant:Actant ;
+    rdfs:range ant:Inscription ;
+    dcterms:source "de Laet, M. & Mol, A. (2000) (the living fluid object acts); Latour, B. (1987). Science in Action (inscriptions act at a distance); Law, J. (2008) generalized symmetry (objects are actors); CISA, Open Source Software Security: Principles and Practices — the C4 framework (Codebase, Community, Conduct, Configuration)." .
+
+# Cross-frame linking + translation status/durability (ADR-0002, ADR-0004)
+#
+# A multi-perspective case reads one field site through several observer
+# frames that share actant IRIs. These predicates make cross-frame
+# correspondences queryable instead of prose-only, wire the Durability tree
+# and TranslationStatus to Translation, and give a Translation graph-derivable
+# frame provenance (the analogue of a Characterization's withinNetwork /
+# perPractice). Symmetric predicates are authored once; consumers query both
+# directions, since no reasoner runs at verify time.
+
+ant:readsSameProgramAs
+    a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:label "reads same program as"@en ;
+    rdfs:comment "Links two ant:Translation records that read the same underlying program from different perspective-frames — one program seen several ways. Symmetric."@en ;
+    rdfs:domain ant:Translation ;
+    rdfs:range ant:Translation ;
+    dcterms:source "Synthesized for cross-frame perspectival analysis (ADR-0002); cf. Mol, A. (2002). The Body Multiple — one object multiply enacted." .
+
+ant:correspondsTo
+    a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:label "corresponds to"@en ;
+    rdfs:comment "Cross-frame correspondence between actants that name the same or a tightly-coupled referent read differently by frame. Weaker than identity; symmetric. Cf. skos:closeMatch."@en ;
+    rdfs:domain ant:Actant ;
+    rdfs:range ant:Actant ;
+    dcterms:source "Synthesized (ADR-0002); cf. SKOS mapping relations (W3C, 2009)." .
+
+ant:internalizes
+    a owl:ObjectProperty ;
+    rdfs:label "internalizes"@en ;
+    rdfs:comment "A persona actant internalizes the perspective-frame it stands for: in a reflexive reading where one observer holds several frames at once, each frame may be represented as an internalized persona linked to the frame's ant:Perspective record."@en ;
+    rdfs:domain ant:Actant ;
+    rdfs:range ant:Perspective ;
+    dcterms:source "Synthesized for reflexive multi-perspective readings (ADR-0002)." .
+
+ant:tracesToPassage
+    a owl:ObjectProperty ;
+    rdfs:label "traces to passage"@en ;
+    rdfs:comment "A translation (a commitment / program of action) traces to an obligatory passage point it must clear, named by the actant that is characterized as an OPP (possibly in another frame). Complements ant:passesThrough (whose subject is an Actant)."@en ;
+    rdfs:domain ant:Translation ;
+    rdfs:range ant:Actant ;
+    dcterms:source "Callon, M. (1986), obligatory passage point; ADR-0002." .
+
+ant:hasDurability
+    a owl:ObjectProperty ;
+    rdfs:label "has durability"@en ;
+    rdfs:comment "Wires the ant:Durability tree (Material / Strategic / Discursive; Law 2008) to a translation: how the holding configuration this translation effects is made durable."@en ;
+    rdfs:domain ant:Translation ;
+    rdfs:range ant:Durability ;
+    dcterms:source "Law, J. (2008); ADR-0002." .
+
+ant:hasStatus
+    a owl:ObjectProperty ;
+    rdfs:label "has status"@en ;
+    rdfs:comment "The translation's current behavioral standing: an ant:TranslationStatus (Stabilized / Precarious / Unravelled). Absence means 'forming / not yet assessed'."@en ;
+    rdfs:domain ant:Translation ;
+    rdfs:range ant:TranslationStatus ;
+    dcterms:source "Callon, M. (1986); ADR-0002." .
+
+ant:authoredUnder
+    a owl:ObjectProperty ;
+    rdfs:label "authored under"@en ;
+    rdfs:comment "The perspective (observer-frame) a Translation is authored under / enacted within — the translation analogue of a Characterization's withinNetwork / perPractice. It makes a translation's frame derivable from the graph rather than only from file routing, so cross-perspective compilers and per-frame briefs can be reproduced from the union graph alone."@en ;
+    rdfs:domain ant:Translation ;
+    rdfs:range ant:Perspective ;
+    dcterms:source "Synthesized per ADR-0004 (graph-derivable translation frame provenance)." .
+
 # Characterization properties
 
 ant:characterizes
@@ -387,7 +510,7 @@ ant:perPractice
 ant:invarianceCriterion
     a owl:DatatypeProperty ;
     rdfs:label "invariance criterion"@en ;
-    rdfs:comment "What is being tracked as preserved (Intermediary) or transformed (Mediator) under this Characterization. v1: free-text string. v1.1: candidate reification to ant:Invariance class."@en ;
+    rdfs:comment "Names the INVARIANT this Characterization tracks: what is held constant (the regulation goal). It is what is PRESERVED regardless of role; the role says HOW: an Intermediary preserves it by pass-through, a Mediator preserves it by regulating (varying OTHER dimensions to keep this invariant — requisite variety). So the reading is 'passes through X' (Intermediary) or 'regulates to preserve X' (Mediator); X is the invariant in both, never the thing varied. An actant may carry two Characterizations at once (Mediator on the dimensions it regulates, Intermediary on those it passes through); the perspective selects which are coded. v1: free-text string. v1.1: candidate reification to ant:Invariance class (structured dimensions). See ADR-0006."@en ;
     rdfs:domain ant:Characterization ;
     rdfs:range xsd:string ;
     dcterms:source "Synthesized per plan §4.1.1." .

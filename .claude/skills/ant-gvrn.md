@@ -70,6 +70,7 @@ The custom `_check_crossrefs` in `verify.py` flags dangling IRIs in `ant:` cross
 
 - **Bypass `--no-verify` on git commit.** Ontology changes go through CI; don't suggest workarounds.
 - **Disjointness assertions on the role classes.** `ant:Mediator` and `ant:Intermediary` are NOT `owl:disjointWith` — they are simultaneously assignable via different Characterizations under different practices (R3). The same applies to `ant:ProvAgent` / `ant:ProvInfluencer`.
+- **Disjointness between `ant:Actant` and `ant:Inscription`.** Refuse. C9 / ADR-0007: the trace register and the actor register are non-disjoint; coexistence is asserted with `ant:manifestsAs`, never forced or forbidden.
 - **Subclass `ant:Actant` under `prov:Agent`.** Never. Per R2, that typing is observer-relative and assigned via Characterization, not globally.
 - **Subclasses splitting Actant by human/non-human.** Refuse. C2 generalized symmetry forbids exactly that asymmetry.
 - **AIME modes-of-existence in v1.** Per R7, deferred to v2 extension module `ant-aime.ttl`.
@@ -83,4 +84,4 @@ When asked to review changes to `ontology/`:
 3. Run the full test suite: `uv run pytest`.
 4. Run `uv run ant verify` against `instances/` to confirm existing data still validates.
 5. Run `uv run ant wiki` to regenerate the Concepts pages; diff to confirm the new terms appear with their definitions and sources.
-6. If the change touches a commitment (C1–C8) or a decision (R1–R10), confirm that the relevant document is updated in the same PR.
+6. If the change touches a commitment (C1–C9) or a decision (R1–R10), confirm that the relevant document is updated in the same PR.

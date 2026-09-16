@@ -105,6 +105,24 @@ def many_iris(g: Graph, subject: URIRef, predicate: URIRef) -> list[URIRef]:
     return sorted(o for o in g.objects(subject, predicate) if isinstance(o, URIRef))
 
 
+def invariance_display(role: str, inv: str) -> str:
+    """Render an ant:invarianceCriterion through its role (ADR-0006).
+
+    The criterion names the invariant the characterization is about. The two
+    roles hold it in structurally different ways: an Intermediary **passes it
+    through** (transmits that dimension-set unchanged), whereas a Mediator
+    **regulates to preserve** it — varies *other* dimensions in order to keep
+    this invariant (requisite variety). Other roles show the criterion as is.
+    """
+    if not inv:
+        return ""
+    if role == "Mediator":
+        return f"regulates to preserve: {inv}"
+    if role == "Intermediary":
+        return f"passes through: {inv}"
+    return inv
+
+
 def md_table(headers: list[str], rows: Iterable[list[str]]) -> str:
     """Render a GitHub-flavored markdown table.
 

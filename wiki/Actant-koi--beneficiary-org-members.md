@@ -17,7 +17,7 @@ This actant has been characterized in the role(s) below, under specified practic
 
 | Role | Within network | Per practice | Invariance | Description |
 | --- | --- | --- | --- | --- |
-| [Intermediary](Concept-Intermediary) | [KOI as constitutive infrastructure](Case-koi) | protocol-design | protocol-endpoint | Read through protocol design, members of beneficiary organizations are an Intermediary: protocol endpoints whose resources and relationships the infrastructure organizes. |
-| [Mediator](Concept-Mediator) | [Building the loop in the field](Case-koi) | participatory-digital-ethnography | situated-enactment-of-the-loop | Read through participatory digital ethnography, members of beneficiary organizations are a Mediator: their situated practice is what actually enacts — or fails to enact — the loop. |
+| [Intermediary](Concept-Intermediary) | [KOI as constitutive infrastructure](Case-koi) | protocol-design | passes through: protocol-endpoint | Read through protocol design, members of beneficiary organizations are an Intermediary: protocol endpoints whose resources and relationships the infrastructure organizes. |
+| [Mediator](Concept-Mediator) | [Building the loop in the field](Case-koi) | participatory-digital-ethnography | regulates to preserve: situated-enactment-of-the-loop | Read through participatory digital ethnography, members of beneficiary organizations are a Mediator: their situated practice is what actually enacts — or fails to enact — the loop. |
 
 

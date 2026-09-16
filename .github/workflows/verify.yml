@@ -4,8 +4,9 @@ name: verify
 on:
   push:
     branches: [main]
+  # Every PR, whatever its base — stacked PRs (a wave branched off the
+  # previous wave) must be gated too.
   pull_request:
-    branches: [main]
 
 # One run per ref at a time; a newer push cancels the stale one.
 concurrency:
