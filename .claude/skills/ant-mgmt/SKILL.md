@@ -108,9 +108,14 @@ mismatch appear later in a brief:
 > even though we're labelling it 'the MIRA workshop'. Flag it if that's confusing."
 
 If the ethnographer wants the identifier to read as the network rather than the
-frame, that is a real request — but it needs an explicit Network→Perspective edge
-in the ontology first (there is none today). Record it as future work and keep the
-convention; do not hand-pick a mismatched slug.
+frame, that is a real request and a known limitation — but do **not** hand-pick a
+mismatched slug, and do not propose a new predicate to carry the pairing.
+[ADR-0001](../../../adr/0001-perspective-isolation-named-graphs.md) already decided
+this: the slug-matching convention retires when perspectives become named graphs
+(perspective IRI = graph IRI, R8a), at which point the network declared in a
+frame's graph simply *is* that frame's network. Its Consequences section says to
+keep the convention until then. Name the ADR, say it's scheduled work rather than
+an oversight, and keep the convention.
 
 ### 3. Actants (iterate)
 
