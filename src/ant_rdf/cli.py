@@ -572,13 +572,16 @@ def _run_edit(
     if not updates:
         console.print("[yellow]No fields provided to edit; nothing changed.[/]")
         raise typer.Exit(code=1)
+    # edit_record consumes extra-type toggles (e.g. black_box) out of `updates`,
+    # so snapshot the field names before the call to report them faithfully.
+    edited = sorted(updates)
     try:
         path = edit_record(kind, iri, updates, case=case, perspective=perspective)
     except EditError as exc:
         console.print(f"[red]edit-record {kind}:[/] {exc}")
         raise typer.Exit(code=1) from exc
     console.print(
-        f"[green]edited[/] {iri} in {path} (fields: {', '.join(sorted(updates))})"
+        f"[green]edited[/] {iri} in {path} (fields: {', '.join(edited)})"
     )
 
 
@@ -605,8 +608,13 @@ def edit_actant(
     clear_has_program: bool = typer.Option(False, "--clear-has-program"),
     enrols: list[str] = typer.Option([], "--enrols", help="Actant IRIs this actant enrols (binary v1 form)."),
     clear_enrols: bool = typer.Option(False, "--clear-enrols"),
+    black_box: bool = typer.Option(False, "--black-box", help="Also type this actant ant:BlackBox — a punctualization, a network stable enough to read as one actant."),
+    clear_black_box: bool = typer.Option(False, "--clear-black-box", help="Remove the ant:BlackBox type, re-opening the punctualization."),
 ) -> None:
     """Edit an ant:Actant in place (set-replace provided fields; --clear-* empties a multi-valued field)."""
+    if black_box and clear_black_box:
+        console.print("[red]edit-record actant:[/] --black-box and --clear-black-box are mutually exclusive.")
+        raise typer.Exit(code=1)
     updates: dict[str, object] = {}
     if label is not None:
         updates["label"] = label
@@ -626,6 +634,8 @@ def edit_actant(
             updates[key] = list(values)
         elif clear:
             updates[key] = []
+    if black_box or clear_black_box:
+        updates["black_box"] = black_box
     _run_edit("actant", iri, updates, case=case, perspective=perspective)
 
 

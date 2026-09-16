@@ -97,6 +97,11 @@ Hyperlinked traversal of the canonical RDF in `instances/`. Every actant, transl
 - [Pulling a thread: from discovery to (attempted) retention](Translation-pi-learning--main) _(case: [pi-learning](Case-pi-learning))_
 - [The Callon-1986 translation chain](Translation-scallops--main) _(case: [scallops](Case-scallops))_
 
+## Inscriptions
+
+- [Ethnographic Praxis - 2026 - Rennie - Building the Loop  The Role of Ethnography in Artificial Organisational Intelligence (1).pdf](Inscription-koi--6ac74fe69edb-Ethnographic-Praxis---2026---Rennie---Building-the-Loop--The-Role-of-Ethnography-in-Artificial-Organisational-Intelligence--1--pdf) _(Inscription; case: [koi](Case-koi))_
+- [KOI lineage, doctrine, status and direction.md](Inscription-koi--c67fa234ea60-KOI-lineage--doctrine--status-and-direction-md) _(Inscription; case: [koi](Case-koi))_
+
 ## Perspectives
 
 - [hotel-keys::_default](Perspective-hotel-keys--_default)

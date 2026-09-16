@@ -130,6 +130,10 @@ When: after a real case generates enough actants that manual characterization is
 
 **Still out of scope: scope-aware filtering.** `ant scope new` remains a stub (act 1 of the four acts, ADR-0000 R5); `ant compile … --scope <iri>` filtering waits on the named-graph lift (section 1.2).
 
+**Still out of scope: an explicit Network→Perspective edge.** `network_for_perspective` and `perspective_for_network` (`compilers/_common.py`) pair a frame with its network by **tail-slug match** (`perspectives/<x>` ↔ `network/<x>`), falling back to the lone network / lone grounded perspective when a case has exactly one. The convention works, but it forces the network's identifier to carry the *perspective's* slug, so a frame phrased as a reading ("MIRA as organised effort") yields a network IRI that disagrees with the network's own label ("the MIRA workshop") — reported from first contemporary use of the catechism (PR #7 review, 2026-08). It also means a multi-frame case whose slugs drift silently loses its frame pairing rather than failing loudly.
+
+*What:* an explicit predicate (e.g. `ant:networkUnderPerspective`, domain `ant:Network`, range `ant:Perspective`) authored at `new-record network` time, with the two resolver functions reading the edge and treating the tail-slug match as a deprecated fallback; plus a Tier-2 shape warning when a network has no perspective edge and no tail match. *Why:* frees network identifiers to read as networks, and converts a silent mis-pairing into a visible warning. *When:* before a case needs a network slug that differs from its frame — until then the convention is recorded in the `ant-mgmt` catechism, which now states and confirms the slug when it mints it rather than choosing silently.
+
 ### 1.8 Test suite
 
 **Partially landed.** `tests/` now exists and CI gates on it (`uv run pytest -x`, no longer soft-failed). Fixtures are synthetic (`https://w3id.org/ant/test`) or the public cases; nothing under `instances/` is written by a test.

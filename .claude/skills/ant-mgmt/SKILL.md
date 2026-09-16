@@ -28,13 +28,38 @@ You are helping an ethnographer translate their plain-language description of a 
 
 Ask once:
 
-> "We can do this three ways: (a) you describe the case to me in conversation and I run the CLI as we go; (b) you give me existing notes (markdown with a YAML `ant:` block) and I run `ant ingest notes` to propose records you review before commit; (c) you have raw files (PDFs, photos, recordings) you'd like to register first, then characterize later. Which fits how you're working today?"
+> "We can do this three ways: (a) you describe the case to me in conversation and I run the CLI as we go; (b) you give me existing notes (markdown whose YAML frontmatter nests plural blocks — `actants:`, `networks:`, … — under one top-level `ant:` mapping) and I run `ant ingest notes` to propose records you review before commit; (c) you have raw files (PDFs, photos, recordings) you'd like to register first, then characterize later. Which fits how you're working today?"
+
+If they offer notes, **check the shape before promising the ingest path**: the blocks must sit under a top-level `ant:` key, not at the document root, and prose outside the frontmatter is ignored entirely (C8). Notes with root-level keys need reshaping to [docs/notes-format.md](../../../docs/notes-format.md) first — say so plainly rather than attempting the ingest and failing at commit on unknown keys. Authoring via the catechism is a perfectly good alternative; don't push ingest on notes that don't already fit.
 
 (b) → [ant-ingest](../ant-ingest/SKILL.md). (c) → `ant ingest upload` per file, then return here for characterization.
 
 ## Procedure — the catechism
 
 Ask one question, wait for the answer, run the CLI, then move on. **Do not batch.**
+
+### Slugs are the ethnographer's to approve
+
+`--iri` is required on every `new-record` and is never auto-derived, so **you are
+choosing an identifier on the ethnographer's behalf every time.** That is a naming
+decision, not a technical one, and it is permanent in a way a label is not: labels
+are editable, IRIs are what everything else points at.
+
+So, before each `new-record`, **state the slug you intend to use and why, and let
+them correct it**:
+
+> "I'll mint this as `…/actant/mira-schema` — derived from the label 'the MIRA
+> schema'. Say the word if you'd rather it were something else."
+
+One line, in the same breath as the command — not a separate round-trip. Rules:
+
+- Derive the slug from **the record's own label**, kebab-cased, not from a
+  neighbouring record's slug. The one deliberate exception is the network — see
+  step 2 below, where the convention and the reason for it are spelled out.
+- If the case already has authored IRIs, **list the existing ones first**
+  (`ant list --case <slug>`) and match their style rather than inventing a
+  parallel scheme. Never mint a slug that collides with an existing record.
+- If they supply an IRI, use theirs verbatim — do not "tidy" it.
 
 ### 0. Prerequisites — who is reading, from which practice
 
@@ -63,7 +88,29 @@ uv run ant new-record network --case <slug> --perspective <perspective> \
     --label "..." --description "..."
 ```
 
-By repo convention the network's slug equals the perspective's (`perspectives/<x>` ↔ `network/<x>`); a single-frame case may use `network` / `_default`.
+**The network is the one record whose slug is not derived from its own label.** By
+repo convention the network's slug equals the *perspective's* (`perspectives/<x>` ↔
+`network/<x>`); a single-frame case may use `network` / `_default`.
+
+This is load-bearing, not cosmetic: `network_for_perspective` /
+`perspective_for_network` in `compilers/_common.py` resolve the frame↔network pair
+by **tail-slug match**, falling back to the lone network only when the case has
+exactly one. Give a multi-frame case a network slug that doesn't match its
+perspective and that case's briefs silently lose their frame.
+
+Because the slug will therefore *disagree with the label* whenever the perspective
+is phrased as a reading ("MIRA as organised effort" → `network/mira-as-organised-effort`
+labelled "the MIRA workshop"), **say so when you mint it** rather than letting the
+mismatch appear later in a brief:
+
+> "The network carries the perspective's slug, not its own label — that's how the
+> compilers pair a frame with its network. So this is `…/network/mira-as-organised-effort`
+> even though we're labelling it 'the MIRA workshop'. Flag it if that's confusing."
+
+If the ethnographer wants the identifier to read as the network rather than the
+frame, that is a real request — but it needs an explicit Network→Perspective edge
+in the ontology first (there is none today). Record it as future work and keep the
+convention; do not hand-pick a mismatched slug.
 
 ### 3. Actants (iterate)
 

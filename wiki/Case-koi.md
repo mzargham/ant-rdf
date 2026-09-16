@@ -84,9 +84,9 @@ Each row records an analyst's claim *within a context*: the (target, network, pr
 
 ## Inscriptions / immutable mobiles
 
-- **Ethnographic Praxis - 2026 - Rennie - Building the Loop  The Role of Ethnography in Artificial Organisational Intelligence (1).pdf** — source: `sha256:6ac74fe69edb48d52895eebe4b5803237e258287d204f3464a90c8dbadec50eb`
+- **[Ethnographic Praxis - 2026 - Rennie - Building the Loop  The Role of Ethnography in Artificial Organisational Intelligence (1).pdf](Inscription-koi--6ac74fe69edb-Ethnographic-Praxis---2026---Rennie---Building-the-Loop--The-Role-of-Ethnography-in-Artificial-Organisational-Intelligence--1--pdf)** _(Inscription)_ — source: `sha256:6ac74fe69edb48d52895eebe4b5803237e258287d204f3464a90c8dbadec50eb`
   > Raw upload registered via `ant ingest upload`. Original path at ingestion time: /Users/z/Downloads/Ethnographic Praxis - 2026 - Rennie - Building the Loop  The Role of Ethnography in Artificial Organisational Intelligence (1).pdf. Perspecti…
-- **KOI lineage, doctrine, status and direction.md** — source: `sha256:c67fa234ea60bf270d47f1da7d91de5edd90d391e641669e867672661cb8ec34`
+- **[KOI lineage, doctrine, status and direction.md](Inscription-koi--c67fa234ea60-KOI-lineage--doctrine--status-and-direction-md)** _(Inscription)_ — source: `sha256:c67fa234ea60bf270d47f1da7d91de5edd90d391e641669e867672661cb8ec34`
   > Raw upload registered via `ant ingest upload`. Original path at ingestion time: /Users/z/Downloads/KOI lineage, doctrine, status and direction.md. Perspective-agnostic — characterize via `ant new-record characterization` to attach a role wi…
 
 ## Perspectives

@@ -341,6 +341,29 @@ def _concept_page(term: str) -> str:
     return f"Concept-{slugify(term)}"
 
 
+def _inscription_page(i: URIRef) -> str:
+    return f"Inscription-{_disambiguated_slug(str(i))}"
+
+
+# Inscription type labels, most-specific first. No RDFS reasoner runs, so a node
+# typed only ant:FluidObject is NOT also ant:Inscription — read the rdf:type set
+# directly and pick the most specific class present.
+_INSCRIPTION_TYPE_LABEL: list[tuple[URIRef, str]] = [
+    (ANT.FluidObject, "Fluid object"),
+    (ANT.ImmutableMobile, "Immutable mobile"),
+    (ANT.Inscription, "Inscription"),
+]
+
+
+def _inscription_type_label(g: Graph, i: URIRef) -> str:
+    """Most-specific inscription-type label from the node's rdf:type set."""
+    types = set(g.objects(i, RDF.type))
+    for cls, label in _INSCRIPTION_TYPE_LABEL:
+        if cls in types:
+            return label
+    return "Inscription"
+
+
 # ---------------------------------------------------------------------------
 # Gather
 # ---------------------------------------------------------------------------
@@ -519,6 +542,17 @@ def run_wiki(output_dir: str | None = None) -> None:
             _write_wiki_page(out / f"Translation-{stem}.md", _render_translation(g, t))
             pages_written += 1
 
+    # Inscriptions — flat with Inscription- prefix
+    seen_i_pages: set[str] = set()
+    for slug in sorted(cases):
+        for i in sorted(cases[slug]["inscriptions"]):
+            stem = _disambiguated_slug(str(i))
+            if stem in seen_i_pages:
+                continue
+            seen_i_pages.add(stem)
+            _write_wiki_page(out / f"Inscription-{stem}.md", _render_inscription(g, i))
+            pages_written += 1
+
     # Perspectives — flat with Perspective- prefix
     seen_p_pages: set[str] = set()
     for p in perspectives:
@@ -610,6 +644,18 @@ def _render_home(
     else:
         lines.append("_No translations recorded yet._")
     lines.append("")
+
+    # Inscriptions
+    all_inscriptions = [i for slug in cases for i in cases[slug]["inscriptions"]]
+    if all_inscriptions:
+        lines += ["## Inscriptions", ""]
+        for i in sorted(all_inscriptions):
+            slug = _case_slug_of(str(i)) or "?"
+            lines.append(
+                f"- [{label_of(g, i)}]({_inscription_page(i)}) "
+                f"_({_inscription_type_label(g, i)}; case: [{slug}](Case-{slug}))_"
+            )
+        lines.append("")
 
     # Perspectives (disambiguated by case prefix)
     lines += ["## Perspectives", ""]
@@ -753,7 +799,11 @@ def _render_case(g: Graph, slug: str, case: dict) -> str:
         for i in inscriptions:
             src = list(g.objects(i, DCTERMS.source))
             src_str = f" — source: `{src[0]}`" if src else ""
-            lines.append(f"- **{label_of(g, i)}**{src_str}")
+            type_label = _inscription_type_label(g, i)
+            lines.append(
+                f"- **[{label_of(g, i)}]({_inscription_page(i)})** "
+                f"_({type_label})_{src_str}"
+            )
             d = description_of(g, i)
             if d:
                 lines.append(f"  > {d[:240]}{'…' if len(d) > 240 else ''}")
@@ -781,6 +831,83 @@ def _render_case(g: Graph, slug: str, case: dict) -> str:
             lines.append(f"- [{display}]({_perspective_page(p)})")
         lines.append("")
 
+    return "\n".join(lines) + "\n"
+
+
+# ---------------------------------------------------------------------------
+# Render — Inscription
+# ---------------------------------------------------------------------------
+
+
+def _inscription_ref(g: Graph, o: URIRef) -> str:
+    """Best-effort link/text for a referenced object: link to the actant page
+    when it is typed ant:Actant, otherwise plain ``label_of`` text."""
+    if not isinstance(o, URIRef):
+        return str(o)
+    if ANT.Actant in set(g.objects(o, RDF.type)):
+        return f"[{label_of(g, o)}]({_actant_page(o)})"
+    return label_of(g, o)
+
+
+def _render_inscription(g: Graph, i: URIRef) -> str:
+    case_slug = _case_slug_of(str(i))
+    breadcrumb = "[← Home](Home)"
+    if case_slug:
+        breadcrumb += f" · [Case: {case_slug}]({_case_page(case_slug)})"
+    lines = [
+        f"# Inscription: {label_of(g, i)}",
+        "",
+        breadcrumb,
+        "",
+        f"<!-- {i} -->",
+        "",
+        f"**Type:** {_inscription_type_label(g, i)}",
+        "",
+    ]
+
+    src = list(g.objects(i, DCTERMS.source))
+    if src:
+        lines += [f"**Source:** {src[0]}", ""]
+
+    lines += [description_of(g, i) or "_(no description)_", ""]
+
+    # Produced by: actant --ant:inscribes--> this inscription.
+    produced_by = sorted(s for s in g.subjects(ANT.inscribes, i) if isinstance(s, URIRef))
+    if produced_by:
+        lines += ["## Produced by", ""]
+        lines += [f"- {_inscription_ref(g, a)}" for a in produced_by]
+        lines.append("")
+
+    # Drawn on by: actant --ant:drawsOn--> this inscription.
+    drawn_on_by = sorted(s for s in g.subjects(ANT.drawsOn, i) if isinstance(s, URIRef))
+    if drawn_on_by:
+        lines += ["## Drawn on by", ""]
+        lines += [f"- {_inscription_ref(g, a)}" for a in drawn_on_by]
+        lines.append("")
+
+    # Also an actant: actant --ant:manifestsAs--> this inscription (C9 / ADR-0007).
+    manifested_from = sorted(
+        s for s in g.subjects(ANT.manifestsAs, i) if isinstance(s, URIRef)
+    )
+    if manifested_from:
+        lines += [
+            "## Also an actant",
+            "",
+            "This inscription is also an actant (`ant:manifestsAs`; the same worldly "
+            "thing read in two registers, C9 / ADR-0007):",
+            "",
+        ]
+        lines += [f"- {_inscription_ref(g, a)}" for a in manifested_from]
+        lines.append("")
+
+    lines += [
+        "---",
+        "",
+        "_An **immutable mobile** is unaltered when drawn on — it travels and "
+        "holds its form (intermediary-like). A **fluid object** may be altered "
+        "by those who draw on it — it persists by mutation (mediator-like)._",
+        "",
+    ]
     return "\n".join(lines) + "\n"
 
 
@@ -930,12 +1057,37 @@ def _render_actant(g: Graph, actant: URIRef) -> str:
                 lines.append(f"- [{label_of(g, o)}]({_actant_page(o)})")
             lines.append("")
 
-    # Inscriptions produced
-    inscr = sorted(o for o in g.objects(actant, ANT.inscribes) if isinstance(o, URIRef))
-    if inscr:
-        lines += ["## Inscriptions this actant produces", ""]
-        for i in inscr:
-            lines.append(f"- {label_of(g, i)}")
+    # Inscriptions produced / drawn on
+    def _inscription_bullet(i: URIRef) -> str:
+        return (
+            f"- [{label_of(g, i)}]({_inscription_page(i)}) "
+            f"_({_inscription_type_label(g, i)})_"
+        )
+
+    produces = sorted(o for o in g.objects(actant, ANT.inscribes) if isinstance(o, URIRef))
+    draws_on = sorted(o for o in g.objects(actant, ANT.drawsOn) if isinstance(o, URIRef))
+    if produces or draws_on:
+        lines += ["## Inscriptions", ""]
+        if produces:
+            lines.append("**Produces:**")
+            lines += [_inscription_bullet(i) for i in produces]
+            lines.append("")
+        if draws_on:
+            lines.append("**Draws on:**")
+            lines += [_inscription_bullet(i) for i in draws_on]
+            lines.append("")
+
+    # Also an inscription (ant:manifestsAs; C9 / ADR-0007)
+    manifests = sorted(o for o in g.objects(actant, ANT.manifestsAs) if isinstance(o, URIRef))
+    if manifests:
+        lines += [
+            "## Manifested as (also inscriptions)",
+            "",
+            "This actant is also present in the field as the following inscription(s) "
+            "(`ant:manifestsAs`; the same worldly thing read in two registers, C9 / ADR-0007):",
+            "",
+        ]
+        lines += [_inscription_bullet(i) for i in manifests]
         lines.append("")
 
     # Programs carried

@@ -131,6 +131,8 @@ Edit an ant:Actant in place (set-replace provided fields; --clear-* empties a mu
 - `--clear-has-program`
 - `--enrols` — Actant IRIs this actant enrols (binary v1 form).
 - `--clear-enrols`
+- `--black-box` — Also type this actant ant:BlackBox — a punctualization, a network stable enough to read as one actant.
+- `--clear-black-box` — Remove the ant:BlackBox type, re-opening the punctualization.
 
 ### `ant edit-record characterization`
 

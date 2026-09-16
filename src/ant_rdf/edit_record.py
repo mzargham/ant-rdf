@@ -123,6 +123,13 @@ def _kind_file(
     return _file_for_kind(case, perspective, kind)
 
 
+# Actant flags that toggle an EXTRA rdf:type (added alongside ant:Actant, not a
+# set-replace predicate). E.g. --black-box marks an actant as an ant:BlackBox: a
+# punctualization, a network stabilized enough to be read as a single actant.
+# Kept out of _EDIT_SPEC because the base ant:Actant type must survive the edit.
+_TYPE_FLAGS: dict[str, URIRef] = {"black_box": ANT.BlackBox}
+
+
 def _coerce(value: str, mode: str) -> URIRef | Literal:
     return URIRef(value) if mode == IRI else Literal(value)
 
@@ -148,12 +155,15 @@ def edit_record(
             f"edit-record does not support kind {kind!r}; supported: {supported_kinds()}"
         )
     spec = _EDIT_SPEC[kind]
+    # Extra-type toggles (e.g. black_box) add/remove an rdf:type without touching
+    # the base type; they are not set-replace predicates in _EDIT_SPEC.
+    type_flags = {k: bool(updates.pop(k)) for k in list(updates) if k in _TYPE_FLAGS}
     unknown = [f for f in updates if f not in spec]
     if unknown:
         raise EditError(
             f"{kind} has no editable field(s) {unknown}; editable: {editable_fields(kind)}"
         )
-    if not updates:
+    if not updates and not type_flags:
         raise EditError("no fields to edit were provided.")
 
     path = _kind_file(kind, case, perspective, target)
@@ -167,6 +177,10 @@ def edit_record(
     if (s, RDF.type, None) not in g:
         raise EditError(f"no record {iri} found in {path}")
 
+    for flag, on in type_flags.items():
+        g.remove((s, RDF.type, _TYPE_FLAGS[flag]))
+        if on:
+            g.add((s, RDF.type, _TYPE_FLAGS[flag]))
     for flag, value in updates.items():
         pred, mode, _multi = spec[flag]
         g.remove((s, pred, None))
