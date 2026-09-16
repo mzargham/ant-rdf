@@ -8,7 +8,7 @@ their source.
 The dispatch table at the bottom maps every Pydantic model class to its
 ``_add_*`` helper. Adding a new model requires (a) the model class,
 (b) the ``_add_*`` helper, (c) the dispatch entry — all in the same commit
-(atomicity rule per plan §4 RIME-inheritance).
+(the atomicity rule inherited from RIME-product-docs; see abstract.md, Technical lineage).
 """
 
 from __future__ import annotations

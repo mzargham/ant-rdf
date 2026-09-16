@@ -46,12 +46,12 @@ _URL = re.compile(r"(https?://\S+)")
 # ontology keeps its annotations. These patterns are internal-ref-specific so they
 # never touch real citations like "(Callon 1986)".
 _INTERNAL_REF = re.compile(
-    r"\s*\(\s*per\s+[RC]\d[a-z]?[^)]*\)"      # (per C2), (per R6, see §4.1.2), (per R9a)
-    r"|\s*\(\s*(?:see\s+)?§[\d.]+[^)]*\)"     # (§4.x), (see §4.x)
-    r"|\s*See §[\d.]+\.?"                     # See §4.1.1.
+    r"\s*\(\s*per\s+[RC]\d[a-z]?[^)]*\)"      # (per C2), (per R6), (per R9a)
+    r"|\s*\(\s*(?:see\s+)?\u00a7[\d.]+[^)]*\)"     # legacy section refs in parentheses
+    r"|\s*See \u00a7[\d.]+\.?"                     # legacy "See <section>."
     r"|\s*See R\d+[a-z]?\.?"                  # See R4.
-    r"|\s*\b(?:See\s+)?plan §[\d.]+\.?"       # plan §4.7 / See plan §4.7
-    r"|\s*§[\d.]+"                            # bare §4.3
+    r"|\s*\b(?:See\s+)?plan \u00a7[\d.]+\.?"       # legacy "plan <section>"
+    r"|\s*\u00a7[\d.]+"                            # legacy bare section ref
     r"|\s*\b(?:See\s+)?ADR-\d+\b\.?"          # ADR-0002. / See ADR-0006.
 )
 _SYNTH_NOTE = re.compile(r"^\s*Synthesized[^;,.]*[;,.]\s*", re.IGNORECASE)

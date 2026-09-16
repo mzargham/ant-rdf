@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: CC0-1.0
 #
 # ant-rdf — SHACL shapes (Tier 2: should-conform, waivable)
-# Severity: sh:Warning  (per plan §4.6)
+# Severity: sh:Warning  (per ADR-0000 R9b)
 #
 # These shapes encode ANALYTICAL HYGIENE — constraints that should not be
 # violated silently but may be overridden via ant:ConstraintWaiver with a
 # stated justification. The "should but not must" middle band.
 #
-# Per plan §4.6 / R9b: CI default is non-strict — warnings surface in the log
+# Per R9b (ADR-0000): CI default is non-strict — warnings surface in the log
 # but do not break builds. Teams that want stricter gating run `ant verify --strict`.
 #
 # IMPLEMENTATION NOTE: sh:severity must be placed on the *property shape*
@@ -34,7 +34,7 @@ ant:CharacterizationPracticeShape
         sh:path ant:perPractice ;
         sh:minCount 1 ;
         sh:severity sh:Warning ;
-        sh:message "Characterization without an explicit practice/observer obscures the observer-frame (§4.1.1). Waive with justification if intentional (e.g., 'Provisional characterization pending practice identification')." ;
+        sh:message "Characterization without an explicit practice/observer obscures the observer-frame (R3, ADR-0000). Waive with justification if intentional (e.g., 'Provisional characterization pending practice identification')." ;
     ] .
 
 ant:CharacterizationInvarianceShape
@@ -121,7 +121,7 @@ ant:InscriptionSourceShape
 # =============================================================================
 # Bare role typing — discourage direct Mediator/Intermediary class assertions
 # =============================================================================
-# Per §4.1.1, Mediator/Intermediary are roles assigned via Characterization,
+# Per R3, Mediator/Intermediary are roles assigned via Characterization,
 # not classes of Actant. A bare `:x a ant:Mediator` (where :x is also an
 # Actant) is technically allowed but pre-perspectival; we warn and suggest
 # migrating into a Characterization.
@@ -156,7 +156,7 @@ ant:BareIntermediaryPatternShape
 #
 # Extension is free but must stay topologically wired: a record these shapes
 # warn on is a floating island nothing else in the graph draws. Triage in
-# order (the AICC nonconformance triage in the ant-mgmt skill): intent
+# order (the connectivity triage in the ant-mgmt skill and docs/facilitation.md): intent
 # mismatch (revise the record) -> missing data (author the connecting claim,
 # or first the missing actant) -> ill-formed (remove-record) -> waive with an
 # ethnographer-supplied justification. Never jump straight to the waiver.
@@ -177,7 +177,7 @@ ant:TranslationAnchoredShape
         [ sh:property [ sh:path ant:readsSameProgramAs ; sh:minCount 1 ] ]
         [ sh:property [ sh:path [ sh:inversePath ant:readsSameProgramAs ] ; sh:minCount 1 ] ]
     ) ;
-    sh:message "Translation anchors to nothing the graph draws: no ant:tracesToPassage (a passage it must clear) and no ant:readsSameProgramAs (a cross-frame reading of the same program). Run the AICC triage: revise the record if the intent is different (edit-record translation), author the connecting claim (--traces-to-passage / --reads-same-program-as), discard if ill-formed (remove-record), or waive with justification." .
+    sh:message "Translation anchors to nothing the graph draws: no ant:tracesToPassage (a passage it must clear) and no ant:readsSameProgramAs (a cross-frame reading of the same program). Run the connectivity triage: revise the record if the intent is different (edit-record translation), author the connecting claim (--traces-to-passage / --reads-same-program-as), discard if ill-formed (remove-record), or waive with justification." .
 
 ant:ProgramCarriedShape
     a sh:NodeShape ;

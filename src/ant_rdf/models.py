@@ -5,7 +5,7 @@ Atomicity rule (RIME convention): every OWL class in the ontology mirrors here;
 every controlled-vocab individual mirrors as a ``Literal[...]`` type alias.
 Both must be updated in the same commit.
 
-v1 inventory mirrors plan §4.1 spine + the v1 Law/Latour additions and the
+v1 inventory mirrors the v1 class inventory (ONTOLOGICAL_COMMITMENTS.md; ADR-0000 R1–R6) + the v1 Law/Latour additions and the
 non-spine essentials (Perspective, Characterization, ConstraintWaiver).
 """
 
@@ -20,7 +20,7 @@ from pydantic import BaseModel, ConfigDict, Field
 # ---------------------------------------------------------------------------
 
 # Roles assignable via Characterization (Latour 2005 mediator/intermediary
-# plus the dual PROV alignment per §4.3).
+# plus the dual PROV alignment per ADR-0000 R2).
 RoleIri = Literal[
     "https://w3id.org/ant#Mediator",
     "https://w3id.org/ant#Intermediary",
@@ -65,7 +65,7 @@ class AntModel(BaseModel):
 
 
 class Network(AntModel):
-    """An analyst's named summary of associations (act-4 documentation; §4.7).
+    """An analyst's named summary of associations (act-4 documentation; ADR-0000 R5).
 
     A Network is NOT a container; it is the analyst's *commitment to a reading*.
     Multiple Networks may live in the same scope under different perspectives.
@@ -81,7 +81,7 @@ class Actant(AntModel):
     """A human or non-human entity participating in a web of relations.
 
     Methodological category for the analyst, not an ontological commitment
-    about the world (per plan C3).
+    about the world (C3).
     """
 
     case: str
@@ -94,7 +94,7 @@ class Actant(AntModel):
     draws_on: list[str] = Field(default_factory=list)  # ant:drawsOn (consumes an Inscription)
     manifests_as: list[str] = Field(default_factory=list)  # ant:manifestsAs (is also an Inscription; C9)
     has_program: list[str] = Field(default_factory=list)  # ant:hasProgram (carries a ProgramOfAction)
-    enrols: list[str] = Field(default_factory=list)  # ant:enrols (binary v1 form; FUTURE_WORK §1.5)
+    enrols: list[str] = Field(default_factory=list)  # ant:enrols (binary v1 form; FUTURE_WORK.md, reified relations)
 
 
 class Translation(AntModel):
@@ -147,7 +147,7 @@ class Mobilization(AntModel):
 
 
 # ---------------------------------------------------------------------------
-# Perspective + Characterization (§4.1.1, §4.5)
+# Perspective + Characterization (ADR-0000 R3, R9a; C6)
 # ---------------------------------------------------------------------------
 
 
@@ -164,7 +164,7 @@ class Practice(AntModel):
     """A patterned, situated doing that enacts a reality (Mol; Law).
 
     Practices ground perspectives and are the value of ant:perPractice on
-    Characterizations, making the observer-frame explicit (§4.1.1). Practices
+    Characterizations, making the observer-frame explicit (R3). Practices
     are perspective-agnostic shared vocabulary: they live under
     instances/shared/, not under a case/perspective.
     """
@@ -197,7 +197,7 @@ class Characterization(BaseModel):
     """Reified n-ary role assignment with (network, practice, invariance) context.
 
     Lets the same actant be simultaneously characterized as Mediator under
-    one practice and Intermediary under another (§4.1.1).
+    one practice and Intermediary under another (R3).
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -245,7 +245,7 @@ class ProgramOfAction(AntModel):
 
 
 # ---------------------------------------------------------------------------
-# Four-acts artifacts (§4.7)
+# Four-acts artifacts (ADR-0000 R5)
 # ---------------------------------------------------------------------------
 
 
@@ -280,7 +280,7 @@ class AnalysisReport(AntModel):
 
 
 class ConstraintWaiver(BaseModel):
-    """Append-only acknowledgement of a Tier-2 SHACL warning (§4.6).
+    """Append-only acknowledgement of a Tier-2 SHACL warning (R9b).
 
     Tier-1 violations are NOT waivable; ``ant waive add`` rejects attempts
     to waive a Violation-severity shape.

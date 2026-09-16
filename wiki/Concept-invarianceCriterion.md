@@ -12,5 +12,5 @@ Names the INVARIANT this Characterization tracks: what is held constant (the reg
 
 ## Source
 
-Synthesized per plan §4.1.1.
+Synthesized for this vocabulary; ADR-0000 R3 (observer-relative roles via Characterization).
 

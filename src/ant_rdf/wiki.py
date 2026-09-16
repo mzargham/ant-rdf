@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Wiki page generator — the loop-closing artifact for ethnographers (§6.1).
+"""Wiki page generator — the loop-closing artifact for ethnographers.
 
 Produces a hyperlinked, GitHub-Pages-compatible Markdown wiki under ``wiki/``.
 Per the user's note, this is expected to evolve to fit ethnographer use —
@@ -10,12 +10,12 @@ Pages produced:
 - ``Home.md`` — landing: cases (with embedded summary), perspectives,
   actants grouped by case, translations, concept glossary
 - ``Case-<slug>.md`` — RICH case page: network description, translations
-  inline, characterization table (§4.1.1 surface), actants, perspectives,
+  inline, characterization table (the R3 surface), actants, perspectives,
   inscriptions, programs of action
 - ``Translation-<slug>.md`` — the four Callon moments rendered narratively
   (reuses the TranslationTrace logic)
 - ``Actant-<case>--<slug>.md`` — per-actant: description, characterizations
-  targeting this actant (the §4.1.1 surface again), enrols-relations,
+  targeting this actant (the R3 surface again), enrols-relations,
   inscriptions produced, programs of action carried
 - ``Perspective-<case>--<slug>.md`` — disambiguated by case prefix to
   avoid collisions when two cases both have a ``_default`` perspective
@@ -121,12 +121,14 @@ reviewable Markdown briefs and this hyperlinked wiki; a Python CLI authors \
 records, callable directly or via an LLM-mediated catechism.
 
 The move worth naming up front is reflexive: **`ant-rdf` is itself an \
-assemblage of the kind material-semiotic analysis is built to interrogate** \
-— ethnographers, toolchain, LLM mediator, deterministic Turtle, SHACL, this \
-wiki, and the cases studied are all actants whose webs of relations produce \
-what gets attributed downstream to "the ethnographer's reading." The toolkit \
-is therefore a **prosthesis**, not a neutral instrument, and the project \
-treats it that way.
+assemblage of the kind material-semiotic analysis is built to interrogate**, \
+so the toolkit is a **prosthesis**, not a neutral instrument — the full \
+reading is on the [About](About.md) page. New to the vocabulary? The \
+[primer](https://github.com/mzargham/ant-rdf/blob/main/docs/primer.md) \
+defines every term and reads the scallops case record by record. The \
+deliverable for each case is its compiled briefs in \
+[briefs/](https://github.com/mzargham/ant-rdf/tree/main/briefs/); this wiki \
+is the whole-graph traversal.
 
 **Read further (positioning and lineage pages):**
 
@@ -688,13 +690,13 @@ def _render_case(g: Graph, slug: str, case: dict) -> str:
                     ]
             lines += [f"_See the full trace: [{label_of(g, t)}]({_translation_page(t)})_", ""]
 
-    # Characterizations — the §4.1.1 surface (this is the whole point!)
+    # Characterizations — the R3 surface (this is the whole point!)
     case_chars = sorted(case["characterizations"])
     if case_chars:
         lines += [
             "## Characterizations (observer-relative role assignments)",
             "",
-            "Each row records an analyst's claim *within a context*: the (target, network, practice, invariance) tuple grounds the role assignment. The same actant may appear with different roles across rows — that's not contradiction, it's [§4.1.1 observer-relativity](Concept-Characterization).",
+            "Each row records an analyst's claim *within a context*: the (target, network, practice, invariance) tuple grounds the role assignment. The same actant may appear with different roles across rows — that's not contradiction, it's [observer-relativity](Concept-Characterization) (R3).",
             "",
         ]
         rows = []
@@ -874,13 +876,13 @@ def _render_actant(g: Graph, actant: URIRef) -> str:
         lines.append("_(no networks listed)_")
     lines.append("")
 
-    # Characterizations targeting this actant — the §4.1.1 surface
+    # Characterizations targeting this actant — the R3 surface
     chars = sorted(c for c in g.subjects(ANT.characterizes, actant) if isinstance(c, URIRef))
     if chars:
         lines += [
             "## Characterizations of this actant",
             "",
-            "This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [§4.1.1 observer-relativity](Concept-Characterization), not contradiction.",
+            "This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [observer-relativity](Concept-Characterization) (R3), not contradiction.",
             "",
         ]
         rows = []

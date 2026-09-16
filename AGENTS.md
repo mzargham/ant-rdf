@@ -2,11 +2,11 @@
 
 # AGENTS.md — navigating & interpreting this repo
 
-This file is the **reader's / navigator's** contract: how to find and correctly interpret what the graph already says. It is the companion to [CLAUDE.md](CLAUDE.md), which owns **authoring** (writing to the graph). When in doubt: **reading is this file + the `ant-query` / `ant-refresh` skills; authoring is CLAUDE.md + `ant-mgmt` / `ant-ingest` / `ant-gvrn`.**
+This file is the **reader's / navigator's** contract: how to find and correctly interpret what the graph already says. It is the companion to [CLAUDE.md](CLAUDE.md), which owns **authoring** (writing to the graph). It is the single home of the router table and the interpretive pitfalls below; the `ant-read` skill applies them and links here rather than restating them. New to the vocabulary? [docs/primer.md](docs/primer.md) first. A human running a session: [docs/facilitation.md](docs/facilitation.md).
 
 ## What this repo is
 
-A docs-as-code toolkit for Actor-Network-Theory / material-semiotic readings of a field site: an OWL vocabulary with SHACL shapes, an `ant` CLI that authors validated RDF, and deterministic compilers that render the RDF as Markdown briefs and a wiki. The **deliverable for any case is its compiled briefs in `briefs/`**, rendered from `instances/cases/<case>/`. The canonical worked example is the Callon 1986 scallops case; the koi case shows one field site read through two perspectives. See [README.md](README.md) for the fuller framing.
+A docs-as-code toolkit for Actor-Network-Theory / material-semiotic readings of a field site: an OWL vocabulary with SHACL shapes, an `ant` CLI that authors validated RDF, and deterministic compilers that render the RDF as Markdown briefs and a wiki. The **deliverable for any case is its compiled briefs in `briefs/`**, rendered from `instances/cases/<case>/`. Four public cases: the Callon 1986 scallops case is the canonical worked example (one perspective); koi is one field site read through two named perspectives (three perspective records, counting the `_default` stub); hotel-keys and pi-learning are single-frame. See [README.md](README.md).
 
 ## Read this first
 
@@ -33,7 +33,7 @@ For a case with a grounded perspective, start at its reading guide (`briefs/koi-
 | Where is a word mentioned? | — | `ant query search <text>` |
 | What exactly does one record say? | `wiki/Actant-<case>--<slug>.md` | `ant query show <slug>` |
 
-The cross-frame briefs exist only for cases with two or more grounded perspectives; `ant refresh <case>` compiles exactly the set the case supports.
+Which briefs a case has depends on its perspectives: every case has its network brief(s) and the catalog; the reader set (guide, synopsis, positionality, glossary, opp-map, inscriptions, durability, coverage, tensions) needs at least one perspective grounded in a practice; the cross-frame briefs (comparison, actants-across-frames, same-program-trace) need two or more named perspectives. `ant refresh <case> --plan` prints exactly the set; the rules are in [docs/toolchain.md](docs/toolchain.md#documentkinds--what-ant-compile-and-ant-refresh-produce).
 
 ## The mental model
 
@@ -52,7 +52,7 @@ The cross-frame briefs exist only for cases with two or more grounded perspectiv
 
 ## Read-only CLI cheatsheet
 
-Everything here is read-only (never writes triples). See the [`ant-query`](.claude/skills/ant-query.md) skill for the recipe book.
+Everything here is read-only (never writes triples). See the [`ant-query`](.claude/skills/ant-query/SKILL.md) skill for the recipe book.
 
 ```bash
 uv run ant query roles larvae-collectors   # an actant's roles, frame by frame (via Characterization)
@@ -64,7 +64,7 @@ uv run ant query anti-programs             # the ant:opposes edges
 uv run ant query manifests                 # actant/inscription coexistence (C9)
 uv run ant query search scallop            # text search over labels + descriptions
 uv run ant query show fishermen            # fidelity-aware record view
-uv run ant query sparql "SELECT ..."       # escape hatch
+uv run ant query sparql "SELECT ..."       # escape hatch  (every query subcommand takes --json)
 uv run ant list --kind Actant --case koi --perspective architectural   # scoped census
 uv run ant compile koi PerspectiveComparison   # preview one brief on stdout
 uv run ant verify                          # SHACL Tier-1/2 + cross-refs
@@ -72,10 +72,10 @@ uv run ant verify                          # SHACL Tier-1/2 + cross-refs
 
 ## The skills
 
-- **Reading (this file's companions):** [`ant-read`](.claude/skills/ant-read.md) (route a question + interpret), [`ant-query`](.claude/skills/ant-query.md) (graph-fact recipes), [`ant-refresh`](.claude/skills/ant-refresh.md) (regenerate briefs/wiki).
-- **Authoring (see CLAUDE.md):** [`ant-mgmt`](.claude/skills/ant-mgmt.md) (catechism), [`ant-ingest`](.claude/skills/ant-ingest.md) (notes/uploads), [`ant-gvrn`](.claude/skills/ant-gvrn.md) (ontology governance).
+- **Reading (this file's companions):** [`ant-read`](.claude/skills/ant-read/SKILL.md) (route a question + interpret), [`ant-query`](.claude/skills/ant-query/SKILL.md) (graph-fact recipes), [`ant-refresh`](.claude/skills/ant-refresh/SKILL.md) (regenerate briefs/wiki).
+- **Authoring (see CLAUDE.md):** [`ant-mgmt`](.claude/skills/ant-mgmt/SKILL.md) (catechism), [`ant-ingest`](.claude/skills/ant-ingest/SKILL.md) (notes/uploads), [`ant-gvrn`](.claude/skills/ant-gvrn/SKILL.md) (ontology governance).
 
 ## Handoffs
 
 - **To change the graph** → [CLAUDE.md](CLAUDE.md) and the authoring skills. **TTL is never hand-edited; briefs are never hand-edited** — both change only through the CLI, then `ant refresh <case>`.
-- **Theory & constraints** → [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) (C1–C9), [adr/0000-foundational-decisions.md](adr/0000-foundational-decisions.md) (R1–R10).
+- **Theory & constraints** → [docs/primer.md](docs/primer.md) (the concepts), [ONTOLOGICAL_COMMITMENTS.md](ONTOLOGICAL_COMMITMENTS.md) (C1–C9), [adr/README.md](adr/README.md) (R1–R10 with R8a/R9a/R9b, and ADR-0001…0007).

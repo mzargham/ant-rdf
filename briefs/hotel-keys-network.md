@@ -39,9 +39,9 @@ Latour's classical demonstration that technologies act — the heavy fob enrols 
 
 | Target | Role | Per practice | Invariance | Description |
 | --- | --- | --- | --- | --- |
-| Weighted brass fob | Intermediary | room-occupancy | passes through: weight-as-weight | From the guest's room-occupancy practice, the fob just transmits its physical mass without further transformation — uncomfortable, but not productive of meaning. Demonstrates §4.1.1 observer-relativity in the Latour 1991 case. |
+| Weighted brass fob | Intermediary | room-occupancy | passes through: weight-as-weight | From the guest's room-occupancy practice, the fob just transmits its physical mass without further transformation — uncomfortable, but not productive of meaning. Demonstrates observer-relativity (R3) in the Latour 1991 case. |
 | Weighted brass fob | Mediator | hotel-administration | regulates to preserve: behavioural-compliance-outcome | From the hotel-administration practice, the fob transforms what it transmits — the manager's polite request becomes physical compliance. Outputs (returned keys) cannot be predicted from inputs (a metal weight). |
-| Weighted brass fob | ObligatoryPassagePoint | hotel-administration | key-circulation | Within the hotel-administration practice, every guest's key-disposition decision now passes through the fob — they cannot ignore the weight. Manual OPP assignment per §4.1.2; v2 rule-based tagging could derive this from network topology. |
+| Weighted brass fob | ObligatoryPassagePoint | hotel-administration | key-circulation | Within the hotel-administration practice, every guest's key-disposition decision now passes through the fob — they cannot ignore the weight. Manual OPP assignment (R6); rule-based tagging could derive this from network topology later. |
 | Hotel manager | Spokesperson | hotel-administration | key-return-policy | The manager speaks for the hotel's interest in key returns, originally via the sign and later via the delegate that is the fob. |
 
 

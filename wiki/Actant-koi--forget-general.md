@@ -12,7 +12,7 @@ Routine exercise of the forget FUN signal: the affordance doing what the program
 
 ## Characterizations of this actant
 
-This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [§4.1.1 observer-relativity](Concept-Characterization), not contradiction.
+This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [observer-relativity](Concept-Characterization) (R3), not contradiction.
 
 | Role | Within network | Per practice | Invariance | Description |
 | --- | --- | --- | --- | --- |

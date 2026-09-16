@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Compiler registry: DocumentKind → compile function (per plan §6).
+"""Compiler registry: DocumentKind → compile function (see docs/toolchain.md, DocumentKinds).
 
 Each compiler module exposes a ``compile_(dataset, subject=None) -> str``
 that produces deterministic Markdown.

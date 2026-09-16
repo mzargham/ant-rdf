@@ -2,7 +2,7 @@
 
 `ant-rdf` is a docs-as-code semantic-web vocabulary and authoring toolkit for **actor-network / material-semiotic analysis**, synthesising Callon, Latour, Law, and Mol. Records are RDF (canonical); compilers render reviewable Markdown briefs and this hyperlinked wiki; a Python CLI authors records, callable directly or via an LLM-mediated catechism.
 
-The move worth naming up front is reflexive: **`ant-rdf` is itself an assemblage of the kind material-semiotic analysis is built to interrogate** — ethnographers, toolchain, LLM mediator, deterministic Turtle, SHACL, this wiki, and the cases studied are all actants whose webs of relations produce what gets attributed downstream to "the ethnographer's reading." The toolkit is therefore a **prosthesis**, not a neutral instrument, and the project treats it that way.
+The move worth naming up front is reflexive: **`ant-rdf` is itself an assemblage of the kind material-semiotic analysis is built to interrogate**, so the toolkit is a **prosthesis**, not a neutral instrument — the full reading is on the [About](About) page. New to the vocabulary? The [primer](https://github.com/mzargham/ant-rdf/blob/main/docs/primer.md) defines every term and reads the scallops case record by record. The deliverable for each case is its compiled briefs in [briefs/](https://github.com/mzargham/ant-rdf/tree/main/briefs/); this wiki is the whole-graph traversal.
 
 **Read further (positioning and lineage pages):**
 

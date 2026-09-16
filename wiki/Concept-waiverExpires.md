@@ -12,5 +12,5 @@ Optional ISO-date after which the waiver lapses and the warning resurfaces. Most
 
 ## Source
 
-Synthesized per plan §4.6.
+Synthesized for this vocabulary; ADR-0000 R9b (tri-severity waivers).
 

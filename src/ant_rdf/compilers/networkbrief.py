@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """NetworkBrief compiler — renders one Network as a Markdown brief.
 
-Deterministic output (sorted IRIs). Per §6, the brief shows:
+Deterministic output (sorted IRIs). The brief shows:
 - Network name, narrative description
 - Participating actants (table)
 - Translations within this network's case (with their moments)
