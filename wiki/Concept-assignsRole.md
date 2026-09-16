@@ -12,5 +12,5 @@ The role being assigned by this Characterization — typically one of ant:Mediat
 
 ## Source
 
-Synthesized per plan §4.1.1.
+Synthesized for this vocabulary; ADR-0000 R3 (observer-relative roles via Characterization).
 

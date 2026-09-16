@@ -12,5 +12,5 @@ The analyst / team holding this perspective. Recommended range: prov:Agent (kept
 
 ## Source
 
-Synthesized per plan §4.5.
+Synthesized for this vocabulary; ADR-0000 R9a (perspective metadata) and C6 (quad-readiness).
 

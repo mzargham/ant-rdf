@@ -13,11 +13,11 @@ The researchers who supply the requirements and conceptual framing the protocol 
 
 ## Characterizations of this actant
 
-This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [§4.1.1 observer-relativity](Concept-Characterization), not contradiction.
+This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [observer-relativity](Concept-Characterization) (R3), not contradiction.
 
 | Role | Within network | Per practice | Invariance | Description |
 | --- | --- | --- | --- | --- |
-| [Mediator](Concept-Mediator) | [KOI as constitutive infrastructure](Case-koi) | protocol-design | doctrine-formulation | Read through protocol design, the research collaborators are a Mediator: they do not preserve an invariance but are material to the formulation of the doctrine itself, as evidenced by its intellectual lineage. They transform what the paradigm is. |
-| [Mediator](Concept-Mediator) | [Building the loop in the field](Case-koi) | participatory-digital-ethnography | framing-the-object-of-study | Read through participatory digital ethnography, the research collaborators are a Mediator: as co-authors their framing constitutes the object of study rather than transmitting it unchanged. |
+| [Mediator](Concept-Mediator) | [KOI as constitutive infrastructure](Case-koi) | protocol-design | regulates to preserve: doctrine-formulation | Read through protocol design, the research collaborators are a Mediator: they do not preserve an invariance but are material to the formulation of the doctrine itself, as evidenced by its intellectual lineage. They transform what the paradigm is. |
+| [Mediator](Concept-Mediator) | [Building the loop in the field](Case-koi) | participatory-digital-ethnography | regulates to preserve: framing-the-object-of-study | Read through participatory digital ethnography, the research collaborators are a Mediator: as co-authors their framing constitutes the object of study rather than transmitting it unchanged. |
 
 

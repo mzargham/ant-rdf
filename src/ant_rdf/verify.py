@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
-"""SHACL validation + cross-reference resolution + tri-severity output (§4.6).
+"""SHACL validation + cross-reference resolution + tri-severity output (C7 / R9b).
 
-Three constraint tiers (per plan §4.6):
+Three constraint tiers (per C7 / ADR-0000 R9b):
 
 * **Tier 1 — Violations** (load-bearing). Break by default; never waivable.
 * **Tier 2 — Warnings** (should-conform). Surface, but waivable via
@@ -51,6 +51,13 @@ _CROSSREF_PROPERTIES: tuple[URIRef, ...] = (
     ANT.enrols,
     ANT.translates,
     ANT.inscribes,
+    ANT.drawsOn,
+    ANT.manifestsAs,
+    ANT.correspondsTo,
+    ANT.internalizes,
+    ANT.tracesToPassage,
+    ANT.readsSameProgramAs,
+    ANT.authoredUnder,
     ANT.hasProgram,
     ANT.opposes,
     ANT.waivesForTarget,

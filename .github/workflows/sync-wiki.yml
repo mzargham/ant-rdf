@@ -2,11 +2,10 @@
 #
 # Push the in-repo wiki/ directory to the GitHub Wiki repo
 # (<repo>.wiki.git) on every change to main. The Wiki repo uses Gollum,
-# which renders Markdown pages and supports subdirectories — our existing
-# wiki/Cases/, wiki/Actants/, etc. structure works as-is.
-#
-# Internal Markdown links of the form [label](Cases/foo.md) resolve in
-# Gollum by filesystem path; we keep them as authored by wiki.py.
+# which renders Markdown pages; wiki.py writes a FLAT layout (Case-<slug>.md,
+# Actant-<case>--<slug>.md, Concept-<Term>.md, …) because Gollum does not
+# route subdirectories, and strips `.md` from internal link targets so they
+# resolve as page names.
 
 name: sync-wiki
 

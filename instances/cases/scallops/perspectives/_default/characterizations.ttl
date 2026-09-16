@@ -10,7 +10,7 @@
     ant:withinNetwork <https://w3id.org/ant/cases/scallops/network> .
 
 <https://w3id.org/ant/cases/scallops/char/collectors-as-mediator> a ant:Characterization ;
-    dcterms:description "From the fishermen's seasonal-labor practice, the same collectors transform what they transmit — they reframe stretches of bay as off-limits, restructuring the rhythm of fishing work. Demonstrates §4.1.1: the same actant simultaneously Intermediary and Mediator under different observer-frames." ;
+    dcterms:description "From the fishermen's seasonal-labor practice, the same collectors transform what they transmit — they reframe stretches of bay as off-limits, restructuring the rhythm of fishing work. Demonstrates observer-relativity (R3): the same actant simultaneously Intermediary and Mediator under different observer-frames." ;
     ant:assignsRole ant:Mediator ;
     ant:characterizes <https://w3id.org/ant/cases/scallops/actant/larvae-collectors> ;
     ant:invarianceCriterion "rhythms-of-bay-work" ;
@@ -18,7 +18,7 @@
     ant:withinNetwork <https://w3id.org/ant/cases/scallops/network> .
 
 <https://w3id.org/ant/cases/scallops/char/researchers-as-opp> a ant:Characterization ;
-    dcterms:description "Within the funding/credit network, every actant must pass through the researchers (who control the experimental design and the publication-rights). Manual OPP assignment per §4.1.2 — v2 will also support rule-based assignment from topology." ;
+    dcterms:description "Within the funding/credit network, every actant must pass through the researchers (who control the experimental design and the publication-rights). Manual OPP assignment (R6); rule-based assignment from topology is a later possibility." ;
     ant:assignsRole ant:ObligatoryPassagePoint ;
     ant:characterizes <https://w3id.org/ant/cases/scallops/actant/researchers> ;
     ant:invarianceCriterion "resource-allocation-routing" ;

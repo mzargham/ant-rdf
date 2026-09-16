@@ -204,3 +204,82 @@ def test_remove_missing_subject_raises(tmp_path):
     scan = build_dataset(_actant("z"))
     with pytest.raises(EditError):
         remove_record(f"{T}/actant/nope", case="test", perspective="p", target=p, scan=scan)
+
+
+# --- extra-type toggles (black_box) and set-replace back-fill ---------------
+
+
+def test_edit_actant_black_box_adds_and_clears_type(tmp_path):
+    # --black-box adds ant:BlackBox ALONGSIDE ant:Actant (a punctualization);
+    # --clear-black-box removes it again. The base type must survive both.
+    p = _write(tmp_path / "actants.ttl", _actant("z"))
+    s = URIRef(Z)
+
+    edit_record("actant", Z, {"black_box": True}, target=p)
+    g = _reload(p)
+    types = set(g.objects(s, RDF.type))
+    assert ANT.BlackBox in types
+    assert ANT.Actant in types
+
+    edit_record("actant", Z, {"black_box": False}, target=p)
+    g = _reload(p)
+    types = set(g.objects(s, RDF.type))
+    assert ANT.BlackBox not in types
+    assert ANT.Actant in types
+
+
+def test_black_box_toggle_is_idempotent_and_leaves_fields_alone(tmp_path):
+    p = _write(tmp_path / "actants.ttl", _actant("z", "keep me", [f"{T}/network/a"]))
+    edit_record("actant", Z, {"black_box": True}, target=p)
+    edit_record("actant", Z, {"black_box": True}, target=p)
+    g = _reload(p)
+    s = URIRef(Z)
+    # exactly one BlackBox type triple, not two
+    assert list(g.objects(s, RDF.type)).count(ANT.BlackBox) == 1
+    # unrelated fields untouched by a type-only edit
+    assert [str(d) for d in g.objects(s, DCTERMS.description)] == ["keep me"]
+    assert str(next(g.objects(s, ANT.participatesIn))) == f"{T}/network/a"
+
+
+def test_black_box_only_edit_is_not_rejected_as_empty(tmp_path):
+    # A type-toggle is a real edit even though it touches no _EDIT_SPEC field.
+    p = _write(tmp_path / "actants.ttl", _actant("z"))
+    edit_record("actant", Z, {"black_box": True}, target=p)
+    assert ANT.BlackBox in set(_reload(p).objects(URIRef(Z), RDF.type))
+
+
+def test_edit_actant_manifests_as_set_replace(tmp_path):
+    a = _actant("z")
+    a.manifests_as = [f"{T}/inscription/old"]
+    p = _write(tmp_path / "actants.ttl", a)
+    edit_record("actant", Z, {"manifests_as": [f"{T}/inscription/new"]}, target=p)
+    g = _reload(p)
+    assert {str(o) for o in g.objects(URIRef(Z), ANT.manifestsAs)} == {
+        f"{T}/inscription/new"
+    }
+
+
+def test_edit_actant_has_program_and_enrols_set_replace(tmp_path):
+    a = _actant("z")
+    a.has_program = [f"{T}/program/old"]
+    a.enrols = [f"{T}/actant/old"]
+    p = _write(tmp_path / "actants.ttl", a)
+    edit_record(
+        "actant",
+        Z,
+        {"has_program": [f"{T}/program/new"], "enrols": [f"{T}/actant/new"]},
+        target=p,
+    )
+    g = _reload(p)
+    s = URIRef(Z)
+    assert {str(o) for o in g.objects(s, ANT.hasProgram)} == {f"{T}/program/new"}
+    assert {str(o) for o in g.objects(s, ANT.enrols)} == {f"{T}/actant/new"}
+
+
+def test_edit_empty_string_clears_scalar_field(tmp_path):
+    # The scalar counterpart of the --clear-* list path.
+    p = _write(tmp_path / "actants.ttl", _actant("z", "some description"))
+    edit_record("actant", Z, {"description": ""}, target=p)
+    g = _reload(p)
+    assert list(g.objects(URIRef(Z), DCTERMS.description)) == []
+    assert str(next(g.objects(URIRef(Z), RDFS.label))) == "Z"

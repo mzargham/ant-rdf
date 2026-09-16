@@ -55,7 +55,7 @@ def test_link_integrity(tmp_path: Path) -> None:
     for md in sorted(files):
         text = (tmp_path / md).read_text(encoding="utf-8")
         for tgt in _internal_targets(text):
-            if f"{tgt}.md" not in files and tgt not in files:
+            if not tgt or (f"{tgt}.md" not in files and tgt not in files):
                 dangling.append((md, tgt))
 
     assert not dangling, f"dangling internal wiki links: {dangling}"
@@ -77,3 +77,49 @@ def test_determinism(tmp_path: Path) -> None:
         assert (a / name).read_bytes() == (b / name).read_bytes(), (
             f"non-deterministic content for {name}"
         )
+
+
+def test_inscription_pages_exist_and_are_linked(tmp_path: Path) -> None:
+    """Every gathered inscription gets its own page, and the pages that mention
+    it link there rather than naming it in plain text."""
+    run_wiki(output_dir=str(tmp_path))
+    files = _md_files(tmp_path)
+    inscription_pages = {f for f in files if f.startswith("Inscription-")}
+    assert inscription_pages, "expected at least one Inscription- page"
+
+    # Each page states its type and carries the immutable-mobile / fluid-object gloss.
+    for name in inscription_pages:
+        body = (tmp_path / name).read_text()
+        assert body.startswith("# Inscription: ")
+        assert "**Type:**" in body
+        assert "immutable mobile" in body
+
+    # The koi case page links to an inscription page rather than bolding a bare label.
+    case_body = (tmp_path / "Case-koi.md").read_text()
+    linked = [t for t in _internal_targets(case_body) if t.startswith("Inscription-")]
+    assert linked, "Case-koi.md should link to its inscription pages"
+
+
+def test_inscription_type_label_is_most_specific(tmp_path: Path) -> None:
+    """No RDFS reasoner runs, so the label comes from the rdf:type set directly.
+    A node typed ImmutableMobile must not render as the generic 'Inscription'."""
+    from rdflib import Graph, URIRef
+    from rdflib.namespace import RDF
+
+    from ant_rdf import ANT
+    from ant_rdf.wiki import _inscription_type_label
+
+    s = URIRef("https://w3id.org/ant/test/inscription/x")
+
+    def _typed(*classes) -> Graph:
+        g = Graph()
+        for c in classes:
+            g.add((s, RDF.type, c))
+        return g
+
+    # ImmutableMobile wins over the generic Inscription it is also typed as.
+    assert _inscription_type_label(_typed(ANT.Inscription, ANT.ImmutableMobile), s) == "Immutable mobile"
+    assert _inscription_type_label(_typed(ANT.FluidObject), s) == "Fluid object"
+    assert _inscription_type_label(_typed(ANT.Inscription), s) == "Inscription"
+    # An untyped node still gets a sensible default rather than raising.
+    assert _inscription_type_label(Graph(), s) == "Inscription"

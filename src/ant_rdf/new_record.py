@@ -6,7 +6,7 @@ content is out-of-scope here (per C7). Per C8, the same ``create_*`` helpers
 are reachable from the catechism skill, direct CLI invocation, and (via
 ``ingest.py``) note-import — one mechanism, multiple front-ends.
 
-File layout per §4.5 quad-readiness:
+File layout (quad-ready per C6 / ADR-0000 R8):
 
     instances/cases/<case>/perspectives/<perspective>/<kind>s.ttl
 
@@ -22,12 +22,18 @@ from pathlib import Path
 from ant_rdf.graph import CASES_DIR, SHARED_DIR, new_dataset
 from ant_rdf.models import (
     Actant,
+    Agent,
     AntModel,
     Characterization,
+    FluidObject,
+    GlossaryTerm,
+    ImmutableMobile,
+    Inscription,
     Network,
     Perspective,
     Practice,
     Problematization,
+    ProgramOfAction,
     Translation,
 )
 from ant_rdf.serialize import add, write_turtle
@@ -37,7 +43,18 @@ from ant_rdf.serialize import add, write_turtle
 # ---------------------------------------------------------------------------
 
 
+# Reserved perspective token: the frame-neutral shared home for a case.
+# Records authored under this slug land in ``instances/cases/<case>/shared/``,
+# which sits *outside* ``perspectives/`` so every perspective-scoped compile and
+# the whole-case load both include it, and it declares no ant:Perspective node
+# of its own. This is where a shared actant's frame-invariant identity lives
+# (one physical triple), per ADR-0003.
+SHARED_PERSPECTIVE = "_shared"
+
+
 def _perspective_dir(case: str, perspective: str) -> Path:
+    if perspective == SHARED_PERSPECTIVE:
+        return CASES_DIR / case / "shared"
     return CASES_DIR / case / "perspectives" / perspective
 
 
@@ -64,7 +81,12 @@ def _ensure_perspective_record(case: str, perspective: str) -> None:
     For the special ``_default`` slug, the stub uses a synthesized IRI and
     a placeholder holder; the ethnographer should run ``ant new-record
     perspective`` to record actual metadata when they have it.
+
+    The reserved ``_shared`` home is not an observer frame, so it gets no
+    ``_perspective.ttl`` stub (ADR-0003).
     """
+    if perspective == SHARED_PERSPECTIVE:
+        return
     pdir = _perspective_dir(case, perspective)
     perspective_file = pdir / "_perspective.ttl"
     if perspective_file.exists():
@@ -122,14 +144,69 @@ def create_actant(
     case: str,
     perspective: str = "_default",
     participates_in: list[str] | None = None,
+    corresponds_to: list[str] | None = None,
+    internalizes: list[str] | None = None,
+    inscribes: list[str] | None = None,
+    draws_on: list[str] | None = None,
+    manifests_as: list[str] | None = None,
+    has_program: list[str] | None = None,
+    enrols: list[str] | None = None,
     out: str | None = None,
 ) -> Path:
     _ensure_perspective_record(case, perspective)
     obj = Actant(
         iri=iri, label=label, description=description, case=case,
         perspective=perspective, participates_in=list(participates_in or []),
+        corresponds_to=list(corresponds_to or []),
+        internalizes=list(internalizes or []),
+        inscribes=list(inscribes or []),
+        draws_on=list(draws_on or []),
+        manifests_as=list(manifests_as or []),
+        has_program=list(has_program or []),
+        enrols=list(enrols or []),
     )
     target = Path(out) if out else _file_for_kind(case, perspective, "actant")
+    _merge_into(target, obj)
+    return target
+
+
+# Inscription classes selectable via ``--class`` on ``new-record inscription``.
+_INSCRIPTION_CLASSES: dict[str, type[Inscription]] = {
+    "ant:Inscription": Inscription,
+    "ant:ImmutableMobile": ImmutableMobile,
+    "ant:FluidObject": FluidObject,
+}
+
+
+def create_inscription(
+    iri: str,
+    label: str,
+    description: str,
+    case: str,
+    perspective: str = "_default",
+    klass: str = "ant:Inscription",
+    source: str | None = None,
+    out: str | None = None,
+) -> Path:
+    """Create an ant:Inscription (or a subclass — ImmutableMobile / FluidObject).
+
+    Unlike ``ant ingest upload`` (which registers a *file* with a sha256 hash),
+    this authors an inscription whose ``source`` may be a URL or citation for
+    material that lives elsewhere (a repository, a published paper).
+    """
+    _ensure_perspective_record(case, perspective)
+    try:
+        model = _INSCRIPTION_CLASSES[klass]
+    except KeyError as exc:
+        raise ValueError(
+            f"Unknown inscription class {klass!r}; "
+            f"choose one of {sorted(_INSCRIPTION_CLASSES)}."
+        ) from exc
+    obj = model(
+        iri=iri, label=label, description=description, case=case,
+        perspective=perspective, source=source,
+    )
+    target = Path(out) if out else _file_for_kind(case, perspective, "inscription")
     _merge_into(target, obj)
     return target
 
@@ -141,12 +218,21 @@ def create_translation(
     case: str,
     perspective: str = "_default",
     has_moment: list[str] | None = None,
+    reads_same_program_as: list[str] | None = None,
+    traces_to_passage: list[str] | None = None,
+    has_durability: str | None = None,
+    has_status: str | None = None,
+    authored_under: str | None = None,
     out: str | None = None,
 ) -> Path:
     _ensure_perspective_record(case, perspective)
     obj = Translation(
         iri=iri, label=label, description=description, case=case,
         perspective=perspective, has_moment=list(has_moment or []),
+        reads_same_program_as=list(reads_same_program_as or []),
+        traces_to_passage=list(traces_to_passage or []),
+        has_durability=has_durability, has_status=has_status,
+        authored_under=authored_under,
     )
     target = Path(out) if out else _file_for_kind(case, perspective, "translation")
     _merge_into(target, obj)
@@ -213,7 +299,7 @@ def create_characterization(
     invariance: str | None = None,
     description: str | None = None,
 ) -> Path:
-    """Create an ant:Characterization (§4.1.1)."""
+    """Create an ant:Characterization (ADR-0000 R3)."""
     _ensure_perspective_record(case, perspective)
     obj = Characterization(
         iri=iri,
@@ -260,6 +346,67 @@ def create_moment(
         iri=iri, label=label, description=description, case=case, perspective=perspective,
     )
     target = Path(out) if out else _file_for_kind(case, perspective, "moment")
+    _merge_into(target, obj)
+    return target
+
+
+def create_agent(iri: str, label: str, description: str, out: str | None = None) -> Path:
+    """Create a prov:Agent record — a named holder of perspectives.
+
+    Perspective-agnostic shared identity; lives under instances/shared/
+    (default: agents.ttl), like Practice. Gives ``ant:perspectiveHeldBy`` targets
+    a human label so briefs render a name, not a bare IRI slug.
+    """
+    obj = Agent(iri=iri, label=label, description=description)
+    target = Path(out) if out else SHARED_DIR / "agents.ttl"
+    _merge_into(target, obj)
+    return target
+
+
+def create_glossary_term(
+    iri: str,
+    label: str,
+    description: str,
+    acronym: str | None = None,
+    used_as: str | None = None,
+    category: str | None = None,
+    sources: list[str] | None = None,
+    out: str | None = None,
+) -> Path:
+    """Create a skos:Concept glossary term (shared reference; a reader aid).
+
+    The definition (``description``) must come from a cited source; ``used_as``
+    hooks it to how the reading uses the word. Lives under instances/shared/.
+    """
+    obj = GlossaryTerm(
+        iri=iri, label=label, description=description,
+        acronym=acronym, used_as=used_as, category=category, sources=list(sources or []),
+    )
+    target = Path(out) if out else SHARED_DIR / "glossary.ttl"
+    _merge_into(target, obj)
+    return target
+
+
+def create_program_of_action(
+    iri: str,
+    label: str,
+    description: str,
+    case: str,
+    perspective: str = "_default",
+    opposes: list[str] | None = None,
+    out: str | None = None,
+) -> Path:
+    """Create an ant:ProgramOfAction (pair with an anti-program via ``opposes``).
+
+    A program is never standalone: name its carrier with
+    ``new-record actant --has-program`` / ``edit-record actant --has-program``.
+    """
+    _ensure_perspective_record(case, perspective)
+    obj = ProgramOfAction(
+        iri=iri, label=label, description=description, case=case,
+        perspective=perspective, opposes=list(opposes or []),
+    )
+    target = Path(out) if out else _file_for_kind(case, perspective, "program")
     _merge_into(target, obj)
     return target
 

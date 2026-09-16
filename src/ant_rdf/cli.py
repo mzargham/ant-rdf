@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """``ant`` CLI — Typer app exposing record authoring, validation, compilation, and wiki.
 
-Subcommands (per plan §5):
+Subcommands:
 
 * ``ant new-record <kind> ...``    — create a record (flag-driven)
 * ``ant new-record interactive``    — walk-me-through (conversational)
@@ -15,7 +15,7 @@ Subcommands (per plan §5):
 * ``ant list``                      — census of records (scopeable by case/perspective)
 * ``ant query <subcommand>``        — read-only navigation (roles, flips, show, …)
 * ``ant ontology validate``         — governance helper
-* ``ant scope new``                 — declare a scope (act 1, §4.7; v1.1 stub)
+* ``ant scope new``                 — declare a scope (act 1 of the four acts, ADR-0000 R5; stub)
 * ``ant analyze list-methods``      — analytical methods (act 3 stub, v2)
 * ``ant wiki``                      — generate wiki pages
 
@@ -30,6 +30,7 @@ import typer
 from rich.console import Console
 
 from ant_rdf import __version__
+from ant_rdf.compilers import REGISTRY as _KINDS
 
 app = typer.Typer(
     name="ant",
@@ -45,11 +46,11 @@ console = Console()
 
 new_record_app = typer.Typer(help="Create a record (flag-driven or interactive).")
 edit_record_app = typer.Typer(help="Mutate an existing record.")
-ingest_app = typer.Typer(help="Non-conversational ingestion: notes, transcripts, uploads.")
+ingest_app = typer.Typer(help="Non-conversational ingestion: YAML-frontmatter notes and raw-material uploads.")
 ontology_app = typer.Typer(help="Ontology governance helpers.")
 waive_app = typer.Typer(help="Record or audit Tier-2 SHACL waivers.")
-scope_app = typer.Typer(help="Scope-selection (act 1 of the four acts; §4.7).")
-analyze_app = typer.Typer(help="Analysis (act 3 of the four acts; v1 stub).")
+scope_app = typer.Typer(help="Scope selection (act 1 of the four acts, ADR-0000 R5). Stub — not implemented.")
+analyze_app = typer.Typer(help="Analysis (act 3 of the four acts, ADR-0000 R5). Stub — no methods yet.")
 query_app = typer.Typer(
     help="Read-only graph queries for navigating the field (see the ant-query skill)."
 )
@@ -82,7 +83,7 @@ def verify(
     lint: bool = typer.Option(False, "--lint", help="Also report Tier-3 advisory shapes."),
     no_waivers: bool = typer.Option(False, "--no-waivers", help="Ignore waivers; raw warnings."),
 ) -> None:
-    """SHACL + cross-reference validation with tri-severity output (§4.6)."""
+    """SHACL + cross-reference validation with tri-severity output (C7 / R9b)."""
     from ant_rdf.verify import run_verify
 
     code = run_verify(graph=graph, strict=strict, lint=lint, no_waivers=no_waivers)
@@ -92,8 +93,8 @@ def verify(
 @app.command()
 def compile(
     file: str = typer.Argument(..., help="Source TTL file (or case slug)."),
-    document_kind: str = typer.Argument(..., help="DocumentKind (e.g., NetworkBrief)."),
-    output: str | None = typer.Option(None, "-o", "--output", help="Output Markdown path."),
+    document_kind: str = typer.Argument(..., help="DocumentKind — one of: " + ", ".join(sorted(_KINDS)) + "."),
+    output: str | None = typer.Option(None, "-o", "--output", help="Output Markdown path (omit to print to stdout). CaseCatalog always writes to briefs/case-catalog.md."),
     perspective: str | None = typer.Option(
         None, "--perspective", help="Render from a specific perspective (default: merge-all)."
     ),
@@ -132,11 +133,16 @@ def refresh(
     case: str = typer.Argument(..., help="Case slug whose brief set to regenerate (e.g. 'koi')."),
     wiki: bool = typer.Option(False, "--wiki", help="Also regenerate the wiki/."),
     verify: bool = typer.Option(False, "--verify", help="Also run `ant verify` at the end."),
+    plan: bool = typer.Option(False, "--plan", help="Print what would be written and exit (no files touched)."),
 ) -> None:
     """Regenerate a case's whole canonical brief set (one command instead of
     one `ant compile` per brief). Briefs are derived — never hand-edit them."""
-    from ant_rdf.compilers import refresh_case
+    from ant_rdf.compilers import refresh_case, refresh_plan
 
+    if plan:
+        for kind, output, persp in refresh_plan(case):
+            console.print(f"  {kind:<26} → {output}" + (f"  (--perspective {persp})" if persp else ""))
+        return
     refresh_case(case, do_wiki=wiki, do_verify=verify)
 
 
@@ -170,6 +176,50 @@ def query_flips_cmd(as_json: bool = _JSON) -> None:
     """Actants read as different roles by different frames."""
     from ant_rdf.query import run_flips
     _run_query(run_flips, as_json)
+
+
+@query_app.command("traffic")
+def query_traffic_cmd(
+    passage: str = typer.Argument(..., help="OPP actant slug or IRI."),
+    as_json: bool = _JSON,
+) -> None:
+    """Translations that trace to / pass through an obligatory passage point."""
+    from ant_rdf.query import run_traffic
+    _run_query(run_traffic, passage, as_json)
+
+
+@query_app.command("status")
+def query_status_cmd(
+    status: str = typer.Argument(..., help="stabilized | precarious | unravelled | forming"),
+    as_json: bool = _JSON,
+) -> None:
+    """Translations by behavioral status (forming = no ant:hasStatus)."""
+    from ant_rdf.query import run_status
+    _run_query(run_status, status, as_json)
+
+
+@query_app.command("same-program")
+def query_same_program_cmd(
+    of: str | None = typer.Option(None, "--of", help="Only the cluster containing this translation."),
+    as_json: bool = _JSON,
+) -> None:
+    """Clusters of translations linked by ant:readsSameProgramAs."""
+    from ant_rdf.query import run_same_program
+    _run_query(run_same_program, of, as_json)
+
+
+@query_app.command("anti-programs")
+def query_anti_programs_cmd(as_json: bool = _JSON) -> None:
+    """The ant:opposes edges (program of action -> what it runs against)."""
+    from ant_rdf.query import run_anti_programs
+    _run_query(run_anti_programs, as_json)
+
+
+@query_app.command("manifests")
+def query_manifests_cmd(as_json: bool = _JSON) -> None:
+    """The ant:manifestsAs edges (an actant that is also an inscription; C9)."""
+    from ant_rdf.query import run_manifests
+    _run_query(run_manifests, as_json)
 
 
 @query_app.command("search")
@@ -206,6 +256,43 @@ def query_sparql_cmd(
 # new-record subcommands (stubs — real impl in new_record.py)
 # ---------------------------------------------------------------------------
 
+# Short tokens accepted by --class / --durability / --status (or pass a full IRI).
+_INSCRIPTION_CLASS_TOKENS = {
+    "inscription": "https://w3id.org/ant#Inscription",
+    "immutable": "https://w3id.org/ant#ImmutableMobile",
+    "immutable-mobile": "https://w3id.org/ant#ImmutableMobile",
+    "fluid": "https://w3id.org/ant#FluidObject",
+    "fluid-object": "https://w3id.org/ant#FluidObject",
+    "ant:Inscription": "https://w3id.org/ant#Inscription",
+    "ant:ImmutableMobile": "https://w3id.org/ant#ImmutableMobile",
+    "ant:FluidObject": "https://w3id.org/ant#FluidObject",
+}
+_DURABILITY_TOKENS = {
+    "material": "https://w3id.org/ant#MaterialDurability",
+    "strategic": "https://w3id.org/ant#StrategicDurability",
+    "discursive": "https://w3id.org/ant#DiscursiveStability",
+}
+_STATUS_TOKENS = {
+    "stabilized": "https://w3id.org/ant#Stabilized",
+    "precarious": "https://w3id.org/ant#Precarious",
+    "unravelled": "https://w3id.org/ant#Unravelled",
+    "unraveled": "https://w3id.org/ant#Unravelled",  # accept US spelling
+}
+
+
+def _expand_token(token: str | None, mapping: dict[str, str], what: str) -> str | None:
+    """Accept a short token (e.g. 'immutable', 'precarious') or a full IRI."""
+    if token is None:
+        return None
+    if token in mapping:
+        return mapping[token]
+    if token.startswith("http"):
+        return token
+    raise typer.BadParameter(
+        f"unknown {what} {token!r}; expected one of {sorted(set(mapping))} or a full IRI"
+    )
+
+
 
 @new_record_app.command("network")
 def new_network(
@@ -218,7 +305,7 @@ def new_network(
     from_construct: str | None = typer.Option(None, "--from-construct"),
     out: str | None = typer.Option(None, "--out"),
 ) -> None:
-    """Create an ant:Network record (act-4: documentation of an analyst-named summary)."""
+    """Create an ant:Network record (an analyst-named summary; act 4 of the four acts, ADR-0000 R5)."""
     from ant_rdf.new_record import create_network
 
     create_network(
@@ -235,14 +322,83 @@ def new_actant(
     case: str = typer.Option(..., "--case"),
     perspective: str = typer.Option("_default", "--perspective"),
     participates_in: list[str] = typer.Option([], "--participates-in"),
+    corresponds_to: list[str] = typer.Option([], "--corresponds-to", help="Actant IRIs this actant corresponds to across frames (ant:correspondsTo; symmetric)."),
+    internalizes: list[str] = typer.Option([], "--internalizes", help="Perspective IRIs this (persona) actant internalizes (ant:internalizes)."),
+    inscribes: list[str] = typer.Option([], "--inscribes", help="Inscription IRIs this actant produces (ant:inscribes)."),
+    draws_on: list[str] = typer.Option([], "--draws-on", help="Inscription IRIs this actant consumes / builds on (ant:drawsOn)."),
+    manifests_as: list[str] = typer.Option([], "--manifests-as", help="Inscription IRIs this actant is also present as (ant:manifestsAs; C9 / ADR-0007)."),
+    has_program: list[str] = typer.Option([], "--has-program", help="ProgramOfAction IRIs this actant carries (ant:hasProgram — a program is never standalone)."),
+    enrols: list[str] = typer.Option([], "--enrols", help="Actant IRIs this actant enrols (ant:enrols, binary v1 form; see FUTURE_WORK.md, reified relations)."),
     out: str | None = typer.Option(None, "--out"),
 ) -> None:
-    """Create an ant:Actant record."""
+    """Create an ant:Actant record. Use --perspective _shared for a shared actant's
+    frame-neutral identity (ADR-0003)."""
     from ant_rdf.new_record import create_actant
 
     create_actant(
         iri=iri, label=label, description=description, case=case,
-        perspective=perspective, participates_in=participates_in, out=out,
+        perspective=perspective, participates_in=participates_in,
+        corresponds_to=corresponds_to, internalizes=internalizes,
+        inscribes=inscribes, draws_on=draws_on, manifests_as=manifests_as,
+        has_program=has_program, enrols=enrols, out=out,
+    )
+
+
+@new_record_app.command("inscription")
+def new_inscription(
+    iri: str = typer.Option(..., "--iri"),
+    label: str = typer.Option(..., "--label"),
+    description: str = typer.Option(..., "--description"),
+    case: str = typer.Option(..., "--case"),
+    perspective: str = typer.Option("_default", "--perspective"),
+    klass: str = typer.Option(
+        "ant:Inscription", "--class",
+        help="ant:Inscription | ant:ImmutableMobile | ant:FluidObject (or immutable / fluid).",
+    ),
+    source: str | None = typer.Option(
+        None, "--source", help="dcterms:source — a URL, citation, or file hash for the material.",
+    ),
+    out: str | None = typer.Option(None, "--out"),
+) -> None:
+    """Create an ant:Inscription (or ImmutableMobile / FluidObject) record.
+
+    For material referenced by URL/citation (a repository, a paper) rather than
+    an uploaded file — see `ant ingest upload` for file-hash provenance instead.
+    Pick the class by how the thing persists: holds form constant → immutable;
+    persists by controlled mutability (a living repository) → fluid.
+    """
+    from ant_rdf.new_record import create_inscription
+
+    klass_iri = _expand_token(klass, _INSCRIPTION_CLASS_TOKENS, "inscription class") or ""
+    klass_key = "ant:" + klass_iri.rsplit("#", 1)[-1]
+    try:
+        create_inscription(
+            iri=iri, label=label, description=description, case=case,
+            perspective=perspective, klass=klass_key, source=source, out=out,
+        )
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+
+
+@new_record_app.command("program")
+def new_program(
+    iri: str = typer.Option(..., "--iri"),
+    label: str = typer.Option(..., "--label"),
+    description: str = typer.Option(..., "--description"),
+    case: str = typer.Option(..., "--case"),
+    perspective: str = typer.Option("_default", "--perspective"),
+    opposes: list[str] = typer.Option([], "--opposes"),
+    out: str | None = typer.Option(None, "--out"),
+) -> None:
+    """Create an ant:ProgramOfAction (use --opposes to pair a program with its anti-program).
+
+    A program is never standalone: name its carrier with `--has-program` on the actant.
+    """
+    from ant_rdf.new_record import create_program_of_action
+
+    create_program_of_action(
+        iri=iri, label=label, description=description, case=case,
+        perspective=perspective, opposes=opposes, out=out,
     )
 
 
@@ -254,6 +410,11 @@ def new_translation(
     case: str = typer.Option(..., "--case"),
     perspective: str = typer.Option("_default", "--perspective"),
     has_moment: list[str] = typer.Option([], "--has-moment"),
+    reads_same_program_as: list[str] = typer.Option([], "--reads-same-program-as", help="Translation IRIs reading the same program from another frame (ant:readsSameProgramAs; symmetric)."),
+    traces_to_passage: list[str] = typer.Option([], "--traces-to-passage", help="OPP actant IRIs this translation must clear (ant:tracesToPassage)."),
+    durability: str | None = typer.Option(None, "--durability", help="material | strategic | discursive (ant:hasDurability, Law 2008)."),
+    status: str | None = typer.Option(None, "--status", help="stabilized | precarious | unravelled (ant:hasStatus); omit = forming / not yet assessed."),
+    authored_under: str | None = typer.Option(None, "--authored-under", help="Perspective IRI the translation is authored under (ant:authoredUnder; frame provenance, ADR-0004)."),
     out: str | None = typer.Option(None, "--out"),
 ) -> None:
     """Create an ant:Translation record (must have at least one moment — Tier 1)."""
@@ -261,7 +422,13 @@ def new_translation(
 
     create_translation(
         iri=iri, label=label, description=description, case=case,
-        perspective=perspective, has_moment=has_moment, out=out,
+        perspective=perspective, has_moment=has_moment,
+        reads_same_program_as=reads_same_program_as,
+        traces_to_passage=traces_to_passage,
+        has_durability=_expand_token(durability, _DURABILITY_TOKENS, "durability"),
+        has_status=_expand_token(status, _STATUS_TOKENS, "status"),
+        authored_under=authored_under,
+        out=out,
     )
 
 
@@ -324,7 +491,7 @@ def new_characterization(
     perspective: str = typer.Option("_default", "--perspective"),
     description: str | None = typer.Option(None, "--description"),
 ) -> None:
-    """Create an ant:Characterization (reified context-bound role assignment; §4.1.1)."""
+    """Create an ant:Characterization (a reified, context-bound role assignment; ADR-0000 R3)."""
     from ant_rdf.new_record import create_characterization
 
     create_characterization(
@@ -347,6 +514,37 @@ def new_practice(
     create_practice(iri=iri, label=label, description=description, out=out)
 
 
+@new_record_app.command("agent")
+def new_agent(
+    iri: str = typer.Option(..., "--iri"),
+    label: str = typer.Option(..., "--label"),
+    description: str = typer.Option(..., "--description"),
+    out: str | None = typer.Option(None, "--out"),
+) -> None:
+    """Create a prov:Agent record (shared; a named holder for ant:perspectiveHeldBy)."""
+    from ant_rdf.new_record import create_agent
+
+    create_agent(iri=iri, label=label, description=description, out=out)
+
+
+@new_record_app.command("glossary-term")
+def new_glossary_term(
+    iri: str = typer.Option(..., "--iri"),
+    label: str = typer.Option(..., "--label"),
+    description: str = typer.Option(..., "--description", help="Concise definition, faithful to a cited source."),
+    acronym: str | None = typer.Option(None, "--acronym"),
+    used_as: str | None = typer.Option(None, "--used-as", help="How this reading uses the word (the hook)."),
+    category: str | None = typer.Option(None, "--category", help="Bucket for grouping in the glossary."),
+    source: list[str] = typer.Option([], "--source", help="Citation (repeatable); may include a URL."),
+    out: str | None = typer.Option(None, "--out"),
+) -> None:
+    """Create a skos:Concept glossary term (shared; a reader aid with a citable definition)."""
+    from ant_rdf.new_record import create_glossary_term
+
+    create_glossary_term(iri=iri, label=label, description=description,
+                         acronym=acronym, used_as=used_as, category=category, sources=source, out=out)
+
+
 @new_record_app.command("interactive")
 def new_record_interactive(
     kind: str = typer.Argument(..., help="Record kind (network, actant, translation, perspective, characterization)."),
@@ -361,28 +559,6 @@ def new_record_interactive(
 # edit-record subcommands — in-place field upsert (set-replace provided fields)
 # ---------------------------------------------------------------------------
 
-_INSCRIPTION_CLASS_TOKENS = {
-    "inscription": "https://w3id.org/ant#Inscription",
-    "immutable": "https://w3id.org/ant#ImmutableMobile",
-    "immutable-mobile": "https://w3id.org/ant#ImmutableMobile",
-    "ant:Inscription": "https://w3id.org/ant#Inscription",
-    "ant:ImmutableMobile": "https://w3id.org/ant#ImmutableMobile",
-}
-
-
-def _expand_token(token: str | None, mapping: dict[str, str], what: str) -> str | None:
-    """Accept a short token (e.g. 'immutable') or a full IRI."""
-    if token is None:
-        return None
-    if token in mapping:
-        return mapping[token]
-    if token.startswith("http"):
-        return token
-    raise typer.BadParameter(
-        f"unknown {what} {token!r}; expected one of {sorted(set(mapping))} or a full IRI"
-    )
-
-
 def _run_edit(
     kind: str,
     iri: str,
@@ -396,13 +572,16 @@ def _run_edit(
     if not updates:
         console.print("[yellow]No fields provided to edit; nothing changed.[/]")
         raise typer.Exit(code=1)
+    # edit_record consumes extra-type toggles (e.g. black_box) out of `updates`,
+    # so snapshot the field names before the call to report them faithfully.
+    edited = sorted(updates)
     try:
         path = edit_record(kind, iri, updates, case=case, perspective=perspective)
     except EditError as exc:
         console.print(f"[red]edit-record {kind}:[/] {exc}")
         raise typer.Exit(code=1) from exc
     console.print(
-        f"[green]edited[/] {iri} in {path} (fields: {', '.join(sorted(updates))})"
+        f"[green]edited[/] {iri} in {path} (fields: {', '.join(edited)})"
     )
 
 
@@ -414,20 +593,49 @@ def edit_actant(
     label: str | None = typer.Option(None, "--label"),
     description: str | None = typer.Option(None, "--description"),
     participates_in: list[str] = typer.Option([], "--participates-in"),
-    clear_participates_in: bool = typer.Option(
-        False, "--clear-participates-in", help="Remove all ant:participatesIn edges."
-    ),
+    clear_participates_in: bool = typer.Option(False, "--clear-participates-in", help="Remove all ant:participatesIn edges."),
+    corresponds_to: list[str] = typer.Option([], "--corresponds-to"),
+    clear_corresponds_to: bool = typer.Option(False, "--clear-corresponds-to"),
+    internalizes: list[str] = typer.Option([], "--internalizes"),
+    clear_internalizes: bool = typer.Option(False, "--clear-internalizes"),
+    inscribes: list[str] = typer.Option([], "--inscribes", help="Inscription IRIs this actant produces."),
+    clear_inscribes: bool = typer.Option(False, "--clear-inscribes"),
+    draws_on: list[str] = typer.Option([], "--draws-on", help="Inscription IRIs this actant consumes / builds on."),
+    clear_draws_on: bool = typer.Option(False, "--clear-draws-on"),
+    manifests_as: list[str] = typer.Option([], "--manifests-as", help="Inscription IRIs this actant is also present as (C9 / ADR-0007)."),
+    clear_manifests_as: bool = typer.Option(False, "--clear-manifests-as"),
+    has_program: list[str] = typer.Option([], "--has-program", help="ProgramOfAction IRIs this actant carries."),
+    clear_has_program: bool = typer.Option(False, "--clear-has-program"),
+    enrols: list[str] = typer.Option([], "--enrols", help="Actant IRIs this actant enrols (binary v1 form)."),
+    clear_enrols: bool = typer.Option(False, "--clear-enrols"),
+    black_box: bool = typer.Option(False, "--black-box", help="Also type this actant ant:BlackBox — a punctualization, a network stable enough to read as one actant."),
+    clear_black_box: bool = typer.Option(False, "--clear-black-box", help="Remove the ant:BlackBox type, re-opening the punctualization."),
 ) -> None:
-    """Edit an ant:Actant in place (set-replace provided fields)."""
+    """Edit an ant:Actant in place (set-replace provided fields; --clear-* empties a multi-valued field)."""
+    if black_box and clear_black_box:
+        console.print("[red]edit-record actant:[/] --black-box and --clear-black-box are mutually exclusive.")
+        raise typer.Exit(code=1)
     updates: dict[str, object] = {}
     if label is not None:
         updates["label"] = label
     if description is not None:
         updates["description"] = description
-    if participates_in:
-        updates["participates_in"] = list(participates_in)
-    elif clear_participates_in:
-        updates["participates_in"] = []
+    for key, values, clear in (
+        ("participates_in", participates_in, clear_participates_in),
+        ("corresponds_to", corresponds_to, clear_corresponds_to),
+        ("internalizes", internalizes, clear_internalizes),
+        ("inscribes", inscribes, clear_inscribes),
+        ("draws_on", draws_on, clear_draws_on),
+        ("manifests_as", manifests_as, clear_manifests_as),
+        ("has_program", has_program, clear_has_program),
+        ("enrols", enrols, clear_enrols),
+    ):
+        if values:
+            updates[key] = list(values)
+        elif clear:
+            updates[key] = []
+    if black_box or clear_black_box:
+        updates["black_box"] = black_box
     _run_edit("actant", iri, updates, case=case, perspective=perspective)
 
 
@@ -489,8 +697,21 @@ def edit_translation(
     label: str | None = typer.Option(None, "--label"),
     description: str | None = typer.Option(None, "--description"),
     has_moment: list[str] = typer.Option([], "--has-moment"),
+    reads_same_program_as: list[str] = typer.Option([], "--reads-same-program-as"),
+    clear_reads_same_program_as: bool = typer.Option(False, "--clear-reads-same-program-as"),
+    traces_to_passage: list[str] = typer.Option([], "--traces-to-passage"),
+    clear_traces_to_passage: bool = typer.Option(False, "--clear-traces-to-passage"),
+    durability: str | None = typer.Option(None, "--durability", help="material | strategic | discursive"),
+    clear_durability: bool = typer.Option(False, "--clear-durability", help="Remove ant:hasDurability (how the holding holds is not yet assessable)."),
+    status: str | None = typer.Option(None, "--status", help="stabilized | precarious | unravelled"),
+    clear_status: bool = typer.Option(False, "--clear-status", help="Remove ant:hasStatus — a 'forming / not yet assessed' translation."),
+    authored_under: str | None = typer.Option(None, "--authored-under", help="Perspective IRI the translation is authored under (ADR-0004)."),
 ) -> None:
     """Edit an ant:Translation in place (set-replace provided fields)."""
+    if clear_status and status is not None:
+        raise typer.BadParameter("pass either --status or --clear-status, not both.")
+    if clear_durability and durability is not None:
+        raise typer.BadParameter("pass either --durability or --clear-durability, not both.")
     updates: dict[str, object] = {}
     if label is not None:
         updates["label"] = label
@@ -498,6 +719,24 @@ def edit_translation(
         updates["description"] = description
     if has_moment:
         updates["has_moment"] = list(has_moment)
+    for key, values, clear in (
+        ("reads_same_program_as", reads_same_program_as, clear_reads_same_program_as),
+        ("traces_to_passage", traces_to_passage, clear_traces_to_passage),
+    ):
+        if values:
+            updates[key] = list(values)
+        elif clear:
+            updates[key] = []
+    if clear_durability:
+        updates["has_durability"] = ""
+    elif durability is not None:
+        updates["has_durability"] = _expand_token(durability, _DURABILITY_TOKENS, "durability")
+    if clear_status:
+        updates["has_status"] = ""
+    elif status is not None:
+        updates["has_status"] = _expand_token(status, _STATUS_TOKENS, "status")
+    if authored_under is not None:
+        updates["authored_under"] = authored_under
     _run_edit("translation", iri, updates, case=case, perspective=perspective)
 
 
@@ -564,9 +803,9 @@ def edit_inscription(
     label: str | None = typer.Option(None, "--label"),
     description: str | None = typer.Option(None, "--description"),
     source: str | None = typer.Option(None, "--source", help="dcterms:source — a URL, citation, or file hash."),
-    klass: str | None = typer.Option(None, "--class", help="ant:Inscription | ant:ImmutableMobile (or 'immutable')."),
+    klass: str | None = typer.Option(None, "--class", help="ant:Inscription | ant:ImmutableMobile | ant:FluidObject (or immutable / fluid)."),
 ) -> None:
-    """Edit an ant:Inscription (or ImmutableMobile) in place.
+    """Edit an ant:Inscription (or ImmutableMobile / FluidObject) in place.
 
     Set-replace the provided fields, including the record's --class (rdf:type);
     the CLI path for changing an inscription without remove-and-recreate.
@@ -698,7 +937,7 @@ def ontology_validate() -> None:
 
 
 # ---------------------------------------------------------------------------
-# scope / analyze subcommands (the four acts, §4.7)
+# scope / analyze subcommands (the four acts, ADR-0000 R5) — stubs
 # ---------------------------------------------------------------------------
 
 
@@ -709,8 +948,13 @@ def scope_new(
     perspective: list[str] = typer.Option([], "--perspective"),
     filter_: list[str] = typer.Option([], "--filter"),
 ) -> None:
-    """Declare an ant:Scope (act 1)."""
-    raise NotImplementedError("ant scope new — to be implemented in src/ant_rdf/scope.py (v1.1)")
+    """Declare an ant:Scope (act 1 of the four acts). STUB — not implemented yet."""
+    console.print(
+        "[yellow]ant scope new is a stub:[/yellow] scope selection (act 1, ADR-0000 R5) is not "
+        "implemented yet. Compile per case with `ant compile <case> <DocumentKind>` or "
+        "`ant refresh <case>`; see FUTURE_WORK.md."
+    )
+    raise typer.Exit(code=1)
 
 
 @analyze_app.command("list-methods")

@@ -2,7 +2,7 @@
 
 `ant-rdf` is a docs-as-code semantic-web vocabulary and authoring toolkit for **actor-network / material-semiotic analysis**, synthesising Callon, Latour, Law, and Mol. Records are RDF (canonical); compilers render reviewable Markdown briefs and this hyperlinked wiki; a Python CLI authors records, callable directly or via an LLM-mediated catechism.
 
-The move worth naming up front is reflexive: **`ant-rdf` is itself an assemblage of the kind material-semiotic analysis is built to interrogate** — ethnographers, toolchain, LLM mediator, deterministic Turtle, SHACL, this wiki, and the cases studied are all actants whose webs of relations produce what gets attributed downstream to "the ethnographer's reading." The toolkit is therefore a **prosthesis**, not a neutral instrument, and the project treats it that way.
+The move worth naming up front is reflexive: **`ant-rdf` is itself an assemblage of the kind material-semiotic analysis is built to interrogate**, so the toolkit is a **prosthesis**, not a neutral instrument — the full reading is on the [About](About) page. New to the vocabulary? The [primer](https://github.com/mzargham/ant-rdf/blob/main/docs/primer.md) defines every term and reads the scallops case record by record. The deliverable for each case is its compiled briefs in [briefs/](https://github.com/mzargham/ant-rdf/tree/main/briefs/); this wiki is the whole-graph traversal.
 
 **Read further (positioning and lineage pages):**
 
@@ -97,6 +97,11 @@ Hyperlinked traversal of the canonical RDF in `instances/`. Every actant, transl
 - [Pulling a thread: from discovery to (attempted) retention](Translation-pi-learning--main) _(case: [pi-learning](Case-pi-learning))_
 - [The Callon-1986 translation chain](Translation-scallops--main) _(case: [scallops](Case-scallops))_
 
+## Inscriptions
+
+- [Ethnographic Praxis - 2026 - Rennie - Building the Loop  The Role of Ethnography in Artificial Organisational Intelligence (1).pdf](Inscription-koi--6ac74fe69edb-Ethnographic-Praxis---2026---Rennie---Building-the-Loop--The-Role-of-Ethnography-in-Artificial-Organisational-Intelligence--1--pdf) _(Inscription; case: [koi](Case-koi))_
+- [KOI lineage, doctrine, status and direction.md](Inscription-koi--c67fa234ea60-KOI-lineage--doctrine--status-and-direction-md) _(Inscription; case: [koi](Case-koi))_
+
 ## Perspectives
 
 - [hotel-keys::_default](Perspective-hotel-keys--_default)
@@ -122,6 +127,7 @@ Every term below renders as a page with `rdfs:comment` and `dcterms:source` to a
 - [DiscursiveStability](Concept-DiscursiveStability)
 - [Durability](Concept-Durability)
 - [Enrolment](Concept-Enrolment)
+- [FluidObject](Concept-FluidObject)
 - [ImmutableMobile](Concept-ImmutableMobile)
 - [Inscription](Concept-Inscription)
 - [Interessement](Concept-Interessement)
@@ -142,17 +148,25 @@ Every term below renders as a page with `rdfs:comment` and `dcterms:source` to a
 - [Spokesperson](Concept-Spokesperson)
 - [StrategicDurability](Concept-StrategicDurability)
 - [Translation](Concept-Translation)
+- [TranslationStatus](Concept-TranslationStatus)
 
 **Properties**
 
 - [assignsRole](Concept-assignsRole)
+- [authoredUnder](Concept-authoredUnder)
 - [characterizes](Concept-characterizes)
+- [correspondsTo](Concept-correspondsTo)
+- [drawsOn](Concept-drawsOn)
 - [enrols](Concept-enrols)
+- [hasDurability](Concept-hasDurability)
 - [hasMoment](Concept-hasMoment)
 - [hasProgram](Concept-hasProgram)
+- [hasStatus](Concept-hasStatus)
 - [inscribes](Concept-inscribes)
+- [internalizes](Concept-internalizes)
 - [invarianceCriterion](Concept-invarianceCriterion)
 - [isPunctualizationOf](Concept-isPunctualizationOf)
+- [manifestsAs](Concept-manifestsAs)
 - [opposes](Concept-opposes)
 - [participatesIn](Concept-participatesIn)
 - [passesThrough](Concept-passesThrough)
@@ -160,7 +174,9 @@ Every term below renders as a page with `rdfs:comment` and `dcterms:source` to a
 - [perspectiveGroundedIn](Concept-perspectiveGroundedIn)
 - [perspectiveHeldBy](Concept-perspectiveHeldBy)
 - [perspectiveTracksInvariance](Concept-perspectiveTracksInvariance)
+- [readsSameProgramAs](Concept-readsSameProgramAs)
 - [speaksFor](Concept-speaksFor)
+- [tracesToPassage](Concept-tracesToPassage)
 - [translates](Concept-translates)
 - [waivedBy](Concept-waivedBy)
 - [waiverExpires](Concept-waiverExpires)

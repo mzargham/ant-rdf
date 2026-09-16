@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Graph loading + SPARQL helpers — single choke point for all RDF construction.
 
-Uses rdflib's quad-capable ``Dataset`` from day one (per plan §4.5 move #4) so
+Uses rdflib's quad-capable ``Dataset`` from day one (per C6 quad-readiness) so
 the v1→v2 lift to named graphs is mechanical: change the ``publicID`` argument
 on parse, nothing else.
 

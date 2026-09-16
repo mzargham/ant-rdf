@@ -2,6 +2,13 @@
 
 <!-- compiled from https://w3id.org/ant/cases/koi/network/architectural -->
 
+## Positionality
+
+_This is one frame's reading (Architectural (chief engineer)), not a neutral account._
+
+- **Held by:** mzargham
+- **Grounding practice:** Protocol design
+
 ## Description
 
 The assemblage as the doctrine frames it: scoped-authority knowledge organization (ASoT/MOSA), subnets and coordinator nodes, the six functions of identification, RIDs and FUN signals (new/update/forget), and per-relationship discipline. Held together by protocol design; explicitly anti-SSoT and anti-walled-garden. Silent on the human governance acts that the ethnographic frame foregrounds. Durability (Law 2008): the paradigm must be distinguished from its instances, and is made durable by the existence, persistence, and use of those instances — which must carry meaningful variance alongside visible similarity, making KOI a pattern language to be understood as such. Because the experience, practice, and feel of KOI-paradigm systems supersedes any implementation's particulars, the configuration holds discursively and strategically; but material durability plays a very large, possibly the largest, part — once that materiality is understood not as any single artifact but as the plural instantiations themselves. Contested / unraveling: the principal threat is the draw of homogenization as a desired outcome. The paradigm values requisite variety, but variety is under constant threat from standardization and optimization toward mono-objectives, so defending variation — especially in computational systems — requires persistent, active advocacy. Decommissioning is not itself an unraveling: the doctrine holds a living-systems / lifecycle model in which any individual instantiation comes into being out of need and eventually evolves or is decommissioned rather than persisting artificially; a well-timed, graceful decommissioning and replacement by a new fit-for-function system is on-program, not off-program.
@@ -42,13 +49,15 @@ The translation by which beneficiary organizations and implementers are enrolled
 
 | Target | Role | Per practice | Invariance | Description |
 | --- | --- | --- | --- | --- |
-| Members of beneficiary organizations | Intermediary | protocol-design | protocol-endpoint | Read through protocol design, members of beneficiary organizations are an Intermediary: protocol endpoints whose resources and relationships the infrastructure organizes. |
+| Members of beneficiary organizations | Intermediary | protocol-design | passes through: protocol-endpoint | Read through protocol design, members of beneficiary organizations are an Intermediary: protocol endpoints whose resources and relationships the infrastructure organizes. |
 | Chief engineer | Spokesperson | protocol-design | paradigm-doctrine-fidelity | Read through protocol design, the chief engineer speaks publicly for the KOI paradigm as written in the doctrine — pushing for understanding, appreciation, and adoption of the paradigm rather than any technical substrate or particular instantiation. The spokesperson role emerges through the mobilization moment. |
-| Forget invocation (in-program) | Intermediary | protocol-design | constitutive-layer-held-invariant | Read through protocol design, a routine forget invocation is an Intermediary: it mutates the data — which the system is designed to permit — but does not change the rules or systems that afford that power, so it does not confuse the operative and constitutive layers. The forget signal is carried through faithfully; what is held invariant is the constitutive layer itself. |
-| Integration teams | Mediator | protocol-design | site-adaptation-of-protocol | Read through protocol design, integration teams are a Mediator: adapting and deploying KOI at a specific field site transforms the protocol in the act of making it run. |
-| Research collaborators | Mediator | protocol-design | doctrine-formulation | Read through protocol design, the research collaborators are a Mediator: they do not preserve an invariance but are material to the formulation of the doctrine itself, as evidenced by its intellectual lineage. They transform what the paradigm is. |
+| Forget invocation (in-program) | Intermediary | protocol-design | passes through: constitutive-layer-held-invariant | Read through protocol design, a routine forget invocation is an Intermediary: it mutates the data — which the system is designed to permit — but does not change the rules or systems that afford that power, so it does not confuse the operative and constitutive layers. The forget signal is carried through faithfully; what is held invariant is the constitutive layer itself. |
+| Integration teams | Mediator | protocol-design | regulates to preserve: site-adaptation-of-protocol | Read through protocol design, integration teams are a Mediator: adapting and deploying KOI at a specific field site transforms the protocol in the act of making it run. |
+| Research collaborators | Mediator | protocol-design | regulates to preserve: doctrine-formulation | Read through protocol design, the research collaborators are a Mediator: they do not preserve an invariance but are material to the formulation of the doctrine itself, as evidenced by its intellectual lineage. They transform what the paradigm is. |
 
+
+<!-- generated by ant-rdf; see https://w3id.org/ant/cases/koi/network/architectural -->
 
 ---
 
-<!-- generated by ant-rdf; see https://w3id.org/ant/cases/koi/network/architectural -->
+**See also:** [Reading guide](koi-guide.md) · [Synopsis](koi-synopsis.md) · [Positionality](koi-positionality.md) · [Glossary](koi-glossary.md)

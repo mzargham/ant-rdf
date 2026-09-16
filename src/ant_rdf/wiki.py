@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Wiki page generator — the loop-closing artifact for ethnographers (§6.1).
+"""Wiki page generator — the loop-closing artifact for ethnographers.
 
 Produces a hyperlinked, GitHub-Pages-compatible Markdown wiki under ``wiki/``.
 Per the user's note, this is expected to evolve to fit ethnographer use —
@@ -10,12 +10,12 @@ Pages produced:
 - ``Home.md`` — landing: cases (with embedded summary), perspectives,
   actants grouped by case, translations, concept glossary
 - ``Case-<slug>.md`` — RICH case page: network description, translations
-  inline, characterization table (§4.1.1 surface), actants, perspectives,
+  inline, characterization table (the R3 surface), actants, perspectives,
   inscriptions, programs of action
 - ``Translation-<slug>.md`` — the four Callon moments rendered narratively
   (reuses the TranslationTrace logic)
 - ``Actant-<case>--<slug>.md`` — per-actant: description, characterizations
-  targeting this actant (the §4.1.1 surface again), enrols-relations,
+  targeting this actant (the R3 surface again), enrols-relations,
   inscriptions produced, programs of action carried
 - ``Perspective-<case>--<slug>.md`` — disambiguated by case prefix to
   avoid collisions when two cases both have a ``_default`` perspective
@@ -36,6 +36,7 @@ from rich.console import Console
 from ant_rdf import ANT
 from ant_rdf.compilers._common import (
     description_of,
+    invariance_display,
     label_of,
     local_name,
     slugify,
@@ -120,12 +121,14 @@ reviewable Markdown briefs and this hyperlinked wiki; a Python CLI authors \
 records, callable directly or via an LLM-mediated catechism.
 
 The move worth naming up front is reflexive: **`ant-rdf` is itself an \
-assemblage of the kind material-semiotic analysis is built to interrogate** \
-— ethnographers, toolchain, LLM mediator, deterministic Turtle, SHACL, this \
-wiki, and the cases studied are all actants whose webs of relations produce \
-what gets attributed downstream to "the ethnographer's reading." The toolkit \
-is therefore a **prosthesis**, not a neutral instrument, and the project \
-treats it that way.
+assemblage of the kind material-semiotic analysis is built to interrogate**, \
+so the toolkit is a **prosthesis**, not a neutral instrument — the full \
+reading is on the [About](About.md) page. New to the vocabulary? The \
+[primer](https://github.com/mzargham/ant-rdf/blob/main/docs/primer.md) \
+defines every term and reads the scallops case record by record. The \
+deliverable for each case is its compiled briefs in \
+[briefs/](https://github.com/mzargham/ant-rdf/tree/main/briefs/); this wiki \
+is the whole-graph traversal.
 
 **Read further (positioning and lineage pages):**
 
@@ -338,6 +341,29 @@ def _concept_page(term: str) -> str:
     return f"Concept-{slugify(term)}"
 
 
+def _inscription_page(i: URIRef) -> str:
+    return f"Inscription-{_disambiguated_slug(str(i))}"
+
+
+# Inscription type labels, most-specific first. No RDFS reasoner runs, so a node
+# typed only ant:FluidObject is NOT also ant:Inscription — read the rdf:type set
+# directly and pick the most specific class present.
+_INSCRIPTION_TYPE_LABEL: list[tuple[URIRef, str]] = [
+    (ANT.FluidObject, "Fluid object"),
+    (ANT.ImmutableMobile, "Immutable mobile"),
+    (ANT.Inscription, "Inscription"),
+]
+
+
+def _inscription_type_label(g: Graph, i: URIRef) -> str:
+    """Most-specific inscription-type label from the node's rdf:type set."""
+    types = set(g.objects(i, RDF.type))
+    for cls, label in _INSCRIPTION_TYPE_LABEL:
+        if cls in types:
+            return label
+    return "Inscription"
+
+
 # ---------------------------------------------------------------------------
 # Gather
 # ---------------------------------------------------------------------------
@@ -403,7 +429,7 @@ def _gather_cases(g: Graph) -> dict[str, dict]:
                 b["perspectives"].add(s)
             elif t == ANT.Characterization:
                 b["characterizations"].add(s)
-            elif t == ANT.Inscription or t == ANT.ImmutableMobile:
+            elif t in (ANT.Inscription, ANT.ImmutableMobile, ANT.FluidObject):
                 b["inscriptions"].add(s)
             elif t == ANT.ProgramOfAction or t == ANT.AntiProgram:
                 b["programs"].add(s)
@@ -516,6 +542,17 @@ def run_wiki(output_dir: str | None = None) -> None:
             _write_wiki_page(out / f"Translation-{stem}.md", _render_translation(g, t))
             pages_written += 1
 
+    # Inscriptions — flat with Inscription- prefix
+    seen_i_pages: set[str] = set()
+    for slug in sorted(cases):
+        for i in sorted(cases[slug]["inscriptions"]):
+            stem = _disambiguated_slug(str(i))
+            if stem in seen_i_pages:
+                continue
+            seen_i_pages.add(stem)
+            _write_wiki_page(out / f"Inscription-{stem}.md", _render_inscription(g, i))
+            pages_written += 1
+
     # Perspectives — flat with Perspective- prefix
     seen_p_pages: set[str] = set()
     for p in perspectives:
@@ -608,6 +645,18 @@ def _render_home(
         lines.append("_No translations recorded yet._")
     lines.append("")
 
+    # Inscriptions
+    all_inscriptions = [i for slug in cases for i in cases[slug]["inscriptions"]]
+    if all_inscriptions:
+        lines += ["## Inscriptions", ""]
+        for i in sorted(all_inscriptions):
+            slug = _case_slug_of(str(i)) or "?"
+            lines.append(
+                f"- [{label_of(g, i)}]({_inscription_page(i)}) "
+                f"_({_inscription_type_label(g, i)}; case: [{slug}](Case-{slug}))_"
+            )
+        lines.append("")
+
     # Perspectives (disambiguated by case prefix)
     lines += ["## Perspectives", ""]
     if perspectives:
@@ -687,13 +736,13 @@ def _render_case(g: Graph, slug: str, case: dict) -> str:
                     ]
             lines += [f"_See the full trace: [{label_of(g, t)}]({_translation_page(t)})_", ""]
 
-    # Characterizations — the §4.1.1 surface (this is the whole point!)
+    # Characterizations — the R3 surface (this is the whole point!)
     case_chars = sorted(case["characterizations"])
     if case_chars:
         lines += [
             "## Characterizations (observer-relative role assignments)",
             "",
-            "Each row records an analyst's claim *within a context*: the (target, network, practice, invariance) tuple grounds the role assignment. The same actant may appear with different roles across rows — that's not contradiction, it's [§4.1.1 observer-relativity](Concept-Characterization).",
+            "Each row records an analyst's claim *within a context*: the (target, network, practice, invariance) tuple grounds the role assignment. The same actant may appear with different roles across rows — that's not contradiction, it's [observer-relativity](Concept-Characterization) (R3).",
             "",
         ]
         rows = []
@@ -717,12 +766,13 @@ def _render_case(g: Graph, slug: str, case: dict) -> str:
             net_cell = (
                 f"[{net_label}]({_case_page(net_slug)})" if net_slug else net_label
             )
+            role_name = local_name(str(role)) if isinstance(role, URIRef) else "?"
             rows.append([
                 target_link,
                 role_link,
                 net_cell,
                 local_name(str(practice)) if practice else "_(unspecified)_",
-                str(invariance) if invariance else "_(unspecified)_",
+                invariance_display(role_name, str(invariance)) if invariance else "_(unspecified)_",
                 desc,
             ])
         lines.append(_md_table(
@@ -749,7 +799,11 @@ def _render_case(g: Graph, slug: str, case: dict) -> str:
         for i in inscriptions:
             src = list(g.objects(i, DCTERMS.source))
             src_str = f" — source: `{src[0]}`" if src else ""
-            lines.append(f"- **{label_of(g, i)}**{src_str}")
+            type_label = _inscription_type_label(g, i)
+            lines.append(
+                f"- **[{label_of(g, i)}]({_inscription_page(i)})** "
+                f"_({type_label})_{src_str}"
+            )
             d = description_of(g, i)
             if d:
                 lines.append(f"  > {d[:240]}{'…' if len(d) > 240 else ''}")
@@ -777,6 +831,83 @@ def _render_case(g: Graph, slug: str, case: dict) -> str:
             lines.append(f"- [{display}]({_perspective_page(p)})")
         lines.append("")
 
+    return "\n".join(lines) + "\n"
+
+
+# ---------------------------------------------------------------------------
+# Render — Inscription
+# ---------------------------------------------------------------------------
+
+
+def _inscription_ref(g: Graph, o: URIRef) -> str:
+    """Best-effort link/text for a referenced object: link to the actant page
+    when it is typed ant:Actant, otherwise plain ``label_of`` text."""
+    if not isinstance(o, URIRef):
+        return str(o)
+    if ANT.Actant in set(g.objects(o, RDF.type)):
+        return f"[{label_of(g, o)}]({_actant_page(o)})"
+    return label_of(g, o)
+
+
+def _render_inscription(g: Graph, i: URIRef) -> str:
+    case_slug = _case_slug_of(str(i))
+    breadcrumb = "[← Home](Home)"
+    if case_slug:
+        breadcrumb += f" · [Case: {case_slug}]({_case_page(case_slug)})"
+    lines = [
+        f"# Inscription: {label_of(g, i)}",
+        "",
+        breadcrumb,
+        "",
+        f"<!-- {i} -->",
+        "",
+        f"**Type:** {_inscription_type_label(g, i)}",
+        "",
+    ]
+
+    src = list(g.objects(i, DCTERMS.source))
+    if src:
+        lines += [f"**Source:** {src[0]}", ""]
+
+    lines += [description_of(g, i) or "_(no description)_", ""]
+
+    # Produced by: actant --ant:inscribes--> this inscription.
+    produced_by = sorted(s for s in g.subjects(ANT.inscribes, i) if isinstance(s, URIRef))
+    if produced_by:
+        lines += ["## Produced by", ""]
+        lines += [f"- {_inscription_ref(g, a)}" for a in produced_by]
+        lines.append("")
+
+    # Drawn on by: actant --ant:drawsOn--> this inscription.
+    drawn_on_by = sorted(s for s in g.subjects(ANT.drawsOn, i) if isinstance(s, URIRef))
+    if drawn_on_by:
+        lines += ["## Drawn on by", ""]
+        lines += [f"- {_inscription_ref(g, a)}" for a in drawn_on_by]
+        lines.append("")
+
+    # Also an actant: actant --ant:manifestsAs--> this inscription (C9 / ADR-0007).
+    manifested_from = sorted(
+        s for s in g.subjects(ANT.manifestsAs, i) if isinstance(s, URIRef)
+    )
+    if manifested_from:
+        lines += [
+            "## Also an actant",
+            "",
+            "This inscription is also an actant (`ant:manifestsAs`; the same worldly "
+            "thing read in two registers, C9 / ADR-0007):",
+            "",
+        ]
+        lines += [f"- {_inscription_ref(g, a)}" for a in manifested_from]
+        lines.append("")
+
+    lines += [
+        "---",
+        "",
+        "_An **immutable mobile** is unaltered when drawn on — it travels and "
+        "holds its form (intermediary-like). A **fluid object** may be altered "
+        "by those who draw on it — it persists by mutation (mediator-like)._",
+        "",
+    ]
     return "\n".join(lines) + "\n"
 
 
@@ -872,13 +1003,13 @@ def _render_actant(g: Graph, actant: URIRef) -> str:
         lines.append("_(no networks listed)_")
     lines.append("")
 
-    # Characterizations targeting this actant — the §4.1.1 surface
+    # Characterizations targeting this actant — the R3 surface
     chars = sorted(c for c in g.subjects(ANT.characterizes, actant) if isinstance(c, URIRef))
     if chars:
         lines += [
             "## Characterizations of this actant",
             "",
-            "This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [§4.1.1 observer-relativity](Concept-Characterization), not contradiction.",
+            "This actant has been characterized in the role(s) below, under specified practices and invariance criteria. Where multiple rows appear with different roles, that's [observer-relativity](Concept-Characterization) (R3), not contradiction.",
             "",
         ]
         rows = []
@@ -897,11 +1028,12 @@ def _render_actant(g: Graph, actant: URIRef) -> str:
             net_cell = (
                 f"[{net_label}]({_case_page(net_slug)})" if net_slug else net_label
             )
+            role_name = local_name(str(role)) if isinstance(role, URIRef) else "?"
             rows.append([
                 role_link,
                 net_cell,
                 local_name(str(prac)) if prac else "_(unspecified)_",
-                str(inv) if inv else "_(unspecified)_",
+                invariance_display(role_name, str(inv)) if inv else "_(unspecified)_",
                 d,
             ])
         lines.append(_md_table(
@@ -925,12 +1057,37 @@ def _render_actant(g: Graph, actant: URIRef) -> str:
                 lines.append(f"- [{label_of(g, o)}]({_actant_page(o)})")
             lines.append("")
 
-    # Inscriptions produced
-    inscr = sorted(o for o in g.objects(actant, ANT.inscribes) if isinstance(o, URIRef))
-    if inscr:
-        lines += ["## Inscriptions this actant produces", ""]
-        for i in inscr:
-            lines.append(f"- {label_of(g, i)}")
+    # Inscriptions produced / drawn on
+    def _inscription_bullet(i: URIRef) -> str:
+        return (
+            f"- [{label_of(g, i)}]({_inscription_page(i)}) "
+            f"_({_inscription_type_label(g, i)})_"
+        )
+
+    produces = sorted(o for o in g.objects(actant, ANT.inscribes) if isinstance(o, URIRef))
+    draws_on = sorted(o for o in g.objects(actant, ANT.drawsOn) if isinstance(o, URIRef))
+    if produces or draws_on:
+        lines += ["## Inscriptions", ""]
+        if produces:
+            lines.append("**Produces:**")
+            lines += [_inscription_bullet(i) for i in produces]
+            lines.append("")
+        if draws_on:
+            lines.append("**Draws on:**")
+            lines += [_inscription_bullet(i) for i in draws_on]
+            lines.append("")
+
+    # Also an inscription (ant:manifestsAs; C9 / ADR-0007)
+    manifests = sorted(o for o in g.objects(actant, ANT.manifestsAs) if isinstance(o, URIRef))
+    if manifests:
+        lines += [
+            "## Manifested as (also inscriptions)",
+            "",
+            "This actant is also present in the field as the following inscription(s) "
+            "(`ant:manifestsAs`; the same worldly thing read in two registers, C9 / ADR-0007):",
+            "",
+        ]
+        lines += [_inscription_bullet(i) for i in manifests]
         lines.append("")
 
     # Programs carried

@@ -12,5 +12,5 @@ An invariance this perspective cares about (free-text string in v1).
 
 ## Source
 
-Synthesized per plan §4.5.
+Synthesized for this vocabulary; ADR-0000 R9a (perspective metadata) and C6 (quad-readiness).
 

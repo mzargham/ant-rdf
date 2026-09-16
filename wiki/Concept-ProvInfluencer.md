@@ -12,5 +12,5 @@ A role characterizing the target actant *under this perspective* as a prov:Influ
 
 ## Source
 
-Synthesized per §4.3 dual-availability alignment; W3C PROV-O.
+Synthesized for this vocabulary (ADR-0000 R2, dual PROV alignment); W3C PROV-O.
 

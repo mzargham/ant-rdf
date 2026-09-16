@@ -8,9 +8,9 @@
 
 ## Definition
 
-Act-3 artifact: a reified record of a computation/derivation performed against a scope — method, query/rule, results, provenance. v1 ships the data shape; the computational engine is v2 (rule-based tagging, centrality computation, etc.). See §4.7.
+Act-3 artifact: a reified record of a computation/derivation performed against a scope — method, query/rule, results, provenance. v1 ships the data shape; the computational engine is v2 (rule-based tagging, centrality computation, etc.). See ADR-0000 R5.
 
 ## Source
 
-Synthesized per plan §4.7.
+Synthesized for this vocabulary; ADR-0000 R5 (the four acts).
 

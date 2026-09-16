@@ -8,7 +8,7 @@ their source.
 The dispatch table at the bottom maps every Pydantic model class to its
 ``_add_*`` helper. Adding a new model requires (a) the model class,
 (b) the ``_add_*`` helper, (c) the dispatch entry — all in the same commit
-(atomicity rule per plan §4 RIME-inheritance).
+(the atomicity rule inherited from RIME-product-docs; see abstract.md, Technical lineage).
 """
 
 from __future__ import annotations
@@ -25,12 +25,15 @@ from ant_rdf import ANT
 from ant_rdf.graph import new_dataset
 from ant_rdf.models import (
     Actant,
+    Agent,
     Analysis,
     AnalysisReport,
     AntModel,
     Characterization,
     ConstraintWaiver,
     Enrolment,
+    FluidObject,
+    GlossaryTerm,
     ImmutableMobile,
     Inscription,
     Interessement,
@@ -82,6 +85,20 @@ def _add_actant(g: Graph, obj: Actant) -> URIRef:
     _add_base(g, s, obj, _ant("Actant"))
     for net_iri in sorted(obj.participates_in):
         g.add((s, _ant("participatesIn"), _iri(net_iri)))
+    for other in sorted(obj.corresponds_to):
+        g.add((s, _ant("correspondsTo"), _iri(other)))
+    for persp in sorted(obj.internalizes):
+        g.add((s, _ant("internalizes"), _iri(persp)))
+    for insc in sorted(obj.inscribes):
+        g.add((s, _ant("inscribes"), _iri(insc)))
+    for insc in sorted(obj.draws_on):
+        g.add((s, _ant("drawsOn"), _iri(insc)))
+    for insc in sorted(obj.manifests_as):
+        g.add((s, _ant("manifestsAs"), _iri(insc)))
+    for prog in sorted(obj.has_program):
+        g.add((s, _ant("hasProgram"), _iri(prog)))
+    for other in sorted(obj.enrols):
+        g.add((s, _ant("enrols"), _iri(other)))
     return s
 
 
@@ -150,6 +167,14 @@ def _add_immutable_mobile(g: Graph, obj: ImmutableMobile) -> URIRef:
     return s
 
 
+def _add_fluid_object(g: Graph, obj: FluidObject) -> URIRef:
+    s = _iri(obj.iri)
+    _add_base(g, s, obj, _ant("FluidObject"))
+    if obj.source:
+        g.add((s, DCTERMS.source, _lit(obj.source)))
+    return s
+
+
 def _add_inscription(g: Graph, obj: Inscription) -> URIRef:
     s = _iri(obj.iri)
     _add_base(g, s, obj, _ant("Inscription"))
@@ -197,6 +222,29 @@ def _add_practice(g: Graph, obj: Practice) -> URIRef:
     return s
 
 
+def _add_agent(g: Graph, obj: Agent) -> URIRef:
+    s = _iri(obj.iri)
+    _add_base(g, s, obj, URIRef("http://www.w3.org/ns/prov#Agent"))
+    return s
+
+
+_SKOS = "http://www.w3.org/2004/02/skos/core#"
+
+
+def _add_glossary_term(g: Graph, obj: GlossaryTerm) -> URIRef:
+    s = _iri(obj.iri)
+    _add_base(g, s, obj, URIRef(_SKOS + "Concept"))
+    if obj.acronym:
+        g.add((s, URIRef(_SKOS + "altLabel"), Literal(obj.acronym)))
+    if obj.used_as:
+        g.add((s, URIRef(_SKOS + "scopeNote"), Literal(obj.used_as)))
+    if obj.category:
+        g.add((s, DCTERMS.subject, Literal(obj.category)))
+    for src in obj.sources:
+        g.add((s, DCTERMS.source, Literal(src)))
+    return s
+
+
 def _add_problematization(g: Graph, obj: Problematization) -> URIRef:
     s = _iri(obj.iri)
     _add_base(g, s, obj, _ant("Problematization"))
@@ -228,6 +276,16 @@ def _add_translation(g: Graph, obj: Translation) -> URIRef:
     _add_base(g, s, obj, _ant("Translation"))
     for moment_iri in sorted(obj.has_moment):
         g.add((s, _ant("hasMoment"), _iri(moment_iri)))
+    for other in sorted(obj.reads_same_program_as):
+        g.add((s, _ant("readsSameProgramAs"), _iri(other)))
+    for opp in sorted(obj.traces_to_passage):
+        g.add((s, _ant("tracesToPassage"), _iri(opp)))
+    if obj.has_durability:
+        g.add((s, _ant("hasDurability"), _iri(obj.has_durability)))
+    if obj.has_status:
+        g.add((s, _ant("hasStatus"), _iri(obj.has_status)))
+    if obj.authored_under:
+        g.add((s, _ant("authoredUnder"), _iri(obj.authored_under)))
     return s
 
 
@@ -237,11 +295,14 @@ def _add_translation(g: Graph, obj: Translation) -> URIRef:
 
 _DISPATCH: dict[type, Callable[[Graph, Any], URIRef]] = {
     Actant: _add_actant,
+    Agent: _add_agent,
+    GlossaryTerm: _add_glossary_term,
     Analysis: _add_analysis,
     AnalysisReport: _add_analysis_report,
     Characterization: _add_characterization,
     ConstraintWaiver: _add_constraint_waiver,
     Enrolment: _add_enrolment,
+    FluidObject: _add_fluid_object,
     ImmutableMobile: _add_immutable_mobile,
     Inscription: _add_inscription,
     Interessement: _add_interessement,

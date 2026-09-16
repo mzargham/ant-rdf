@@ -5,7 +5,7 @@ Atomicity rule (RIME convention): every OWL class in the ontology mirrors here;
 every controlled-vocab individual mirrors as a ``Literal[...]`` type alias.
 Both must be updated in the same commit.
 
-v1 inventory mirrors plan §4.1 spine + the v1 Law/Latour additions and the
+v1 inventory mirrors the v1 class inventory (ONTOLOGICAL_COMMITMENTS.md; ADR-0000 R1–R6) + the v1 Law/Latour additions and the
 non-spine essentials (Perspective, Characterization, ConstraintWaiver).
 """
 
@@ -20,7 +20,7 @@ from pydantic import BaseModel, ConfigDict, Field
 # ---------------------------------------------------------------------------
 
 # Roles assignable via Characterization (Latour 2005 mediator/intermediary
-# plus the dual PROV alignment per §4.3).
+# plus the dual PROV alignment per ADR-0000 R2).
 RoleIri = Literal[
     "https://w3id.org/ant#Mediator",
     "https://w3id.org/ant#Intermediary",
@@ -34,6 +34,13 @@ DurabilityKind = Literal[
     "https://w3id.org/ant#MaterialDurability",
     "https://w3id.org/ant#StrategicDurability",
     "https://w3id.org/ant#DiscursiveStability",
+]
+
+# A translation's current behavioral standing (ant:TranslationStatus individuals).
+TranslationStatusKind = Literal[
+    "https://w3id.org/ant#Stabilized",
+    "https://w3id.org/ant#Precarious",
+    "https://w3id.org/ant#Unravelled",
 ]
 
 
@@ -58,7 +65,7 @@ class AntModel(BaseModel):
 
 
 class Network(AntModel):
-    """An analyst's named summary of associations (act-4 documentation; §4.7).
+    """An analyst's named summary of associations (act-4 documentation; ADR-0000 R5).
 
     A Network is NOT a container; it is the analyst's *commitment to a reading*.
     Multiple Networks may live in the same scope under different perspectives.
@@ -74,12 +81,20 @@ class Actant(AntModel):
     """A human or non-human entity participating in a web of relations.
 
     Methodological category for the analyst, not an ontological commitment
-    about the world (per plan C3).
+    about the world (C3).
     """
 
     case: str
     perspective: str = "_default"
     participates_in: list[str] = Field(default_factory=list)
+    # Cross-frame links (ADR-0002) and inscription edges (ADR-0005 / ADR-0007).
+    corresponds_to: list[str] = Field(default_factory=list)  # ant:correspondsTo
+    internalizes: list[str] = Field(default_factory=list)  # ant:internalizes (persona → Perspective)
+    inscribes: list[str] = Field(default_factory=list)  # ant:inscribes (produces an Inscription)
+    draws_on: list[str] = Field(default_factory=list)  # ant:drawsOn (consumes an Inscription)
+    manifests_as: list[str] = Field(default_factory=list)  # ant:manifestsAs (is also an Inscription; C9)
+    has_program: list[str] = Field(default_factory=list)  # ant:hasProgram (carries a ProgramOfAction)
+    enrols: list[str] = Field(default_factory=list)  # ant:enrols (binary v1 form; FUTURE_WORK.md, reified relations)
 
 
 class Translation(AntModel):
@@ -92,6 +107,12 @@ class Translation(AntModel):
     case: str
     perspective: str = "_default"
     has_moment: list[str] = Field(default_factory=list)
+    # Cross-frame + status/durability (ADR-0002) and frame provenance (ADR-0004).
+    reads_same_program_as: list[str] = Field(default_factory=list)  # ant:readsSameProgramAs
+    traces_to_passage: list[str] = Field(default_factory=list)  # ant:tracesToPassage (→ OPP actant)
+    has_durability: str | None = None  # ant:hasDurability (ant:Durability IRI)
+    has_status: str | None = None  # ant:hasStatus (ant:TranslationStatus IRI)
+    authored_under: str | None = None  # ant:authoredUnder (→ ant:Perspective)
 
 
 class Problematization(AntModel):
@@ -126,7 +147,7 @@ class Mobilization(AntModel):
 
 
 # ---------------------------------------------------------------------------
-# Perspective + Characterization (§4.1.1, §4.5)
+# Perspective + Characterization (ADR-0000 R3, R9a; C6)
 # ---------------------------------------------------------------------------
 
 
@@ -143,17 +164,40 @@ class Practice(AntModel):
     """A patterned, situated doing that enacts a reality (Mol; Law).
 
     Practices ground perspectives and are the value of ant:perPractice on
-    Characterizations, making the observer-frame explicit (§4.1.1). Practices
+    Characterizations, making the observer-frame explicit (R3). Practices
     are perspective-agnostic shared vocabulary: they live under
     instances/shared/, not under a case/perspective.
     """
+
+
+class Agent(AntModel):
+    """A prov:Agent — the analyst/team that holds a perspective (ant:perspectiveHeldBy).
+
+    Perspective-agnostic shared identity (a name for an IRI that would otherwise
+    render as a bare slug); lives under instances/shared/, like Practice.
+    """
+
+
+class GlossaryTerm(AntModel):
+    """A skos:Concept — a load-bearing term the reading leans on that is NOT part
+    of the ANT ontology.
+
+    A reader aid: the concise definition (``description``) is taken faithfully from
+    a cited source (``sources``), never invented; ``used_as`` hooks it to how the
+    field site actually uses the word. Shared reference, under instances/shared/.
+    """
+
+    acronym: str | None = None  # skos:altLabel
+    used_as: str | None = None  # skos:scopeNote — "in this reading, …"
+    category: str | None = None  # dcterms:subject — bucket for grouping in the glossary
+    sources: list[str] = Field(default_factory=list)  # dcterms:source citations (may include a URL)
 
 
 class Characterization(BaseModel):
     """Reified n-ary role assignment with (network, practice, invariance) context.
 
     Lets the same actant be simultaneously characterized as Mediator under
-    one practice and Intermediary under another (§4.1.1).
+    one practice and Intermediary under another (R3).
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -186,6 +230,12 @@ class ImmutableMobile(Inscription):
     """An inscription that holds form constant while circulating (Law 1986)."""
 
 
+class FluidObject(Inscription):
+    """An inscription that persists through controlled mutability — it holds
+    identity and lineage while its content changes, so it can be absorbed,
+    repurposed, or redirected (de Laet & Mol 2000). Sibling of ImmutableMobile."""
+
+
 class ProgramOfAction(AntModel):
     """A scripted course of action (Latour 1991)."""
 
@@ -195,7 +245,7 @@ class ProgramOfAction(AntModel):
 
 
 # ---------------------------------------------------------------------------
-# Four-acts artifacts (§4.7)
+# Four-acts artifacts (ADR-0000 R5)
 # ---------------------------------------------------------------------------
 
 
@@ -230,7 +280,7 @@ class AnalysisReport(AntModel):
 
 
 class ConstraintWaiver(BaseModel):
-    """Append-only acknowledgement of a Tier-2 SHACL warning (§4.6).
+    """Append-only acknowledgement of a Tier-2 SHACL warning (R9b).
 
     Tier-1 violations are NOT waivable; ``ant waive add`` rejects attempts
     to waive a Violation-severity shape.

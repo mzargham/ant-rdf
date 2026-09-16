@@ -8,7 +8,7 @@
 
 ## Definition
 
-A role characterizing an interaction as TRANSMITTING WITHOUT TRANSFORMATION under a specified invariance. Observer-relative — assigned via ant:Characterization. NOT a kind of actant. NB: Callon 1991 uses 'intermediary' differently (a thing passed between actors); this ontology follows Latour 2005's sense.
+A role characterizing an interaction as TRANSMITTING WITHOUT TRANSFORMATION: it PRESERVES the invariant named by ant:invarianceCriterion directly, by pass-through, without having to vary other dimensions to hold it. (A Mediator preserves its invariant the hard way, by regulating; an Intermediary preserves its invariant the easy way, by relaying.) Observer-relative — assigned via ant:Characterization. NOT a kind of actant. The same actant can be an Intermediary on the dimensions it passes through and a Mediator on the ones it regulates simultaneously; the perspective selects which dimensions matter for the coding. (Compare ant:ImmutableMobile: a mobile that is unaltered when drawn on.) NB: Callon 1991 uses 'intermediary' differently (a thing passed between actors); this ontology follows Latour 2005's sense. See ADR-0006.
 
 ## Source
 
